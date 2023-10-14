@@ -1,0 +1,34 @@
+#Frontend
+
+client-sc/# Logs
+client-sc/logs
+client-sc/*.log
+client-sc/npm-debug.log*
+client-sc/yarn-debug.log*
+client-sc/yarn-error.log*
+client-sc/pnpm-debug.log*
+client-sc/lerna-debug.log*
+
+client-sc/node_modules
+client-sc/.DS_Store
+client-sc/dist
+client-sc/dist-ssr
+client-sc/coverage
+client-sc/*.local
+
+client-sc//cypress/videos/
+client-sc//cypress/screenshots/
+
+# Editor directories and files
+client-sc/.vscode/*
+client-sc/!.vscode/extensions.json
+client-sc/.idea
+client-sc/*.suo
+client-sc/*.ntvs*
+client-sc/*.njsproj
+client-sc/*.sln
+client-sc/*.sw?
+
+# Backend
+backend/.env
+backend/node_modules
