@@ -30,5 +30,5 @@ client-sc/*.sln
 client-sc/*.sw?
 
 # Backend
-backend/.env
-backend/node_modules
+backend-sc/.env
+backend-sc/node_modules
