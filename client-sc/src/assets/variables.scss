@@ -1,0 +1,34 @@
+/* Fonts __________*/
+@import url("https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&family=Roboto:wght@400;700&family=Space+Mono:wght@400;700&display=swap");
+/* Variables __________*/
+:root {
+  --light-gray: #fafafa;
+  --less-light-gray: #333333;
+  --blue: #3b82f6;
+  --gray: #2c3138;
+  --gray-card: #c4c4c4;
+  --white: #ffffff;
+  --black: #000000;
+  --red: #ec3434;
+  --red-alert: rgb(245, 92, 92);
+  --oswald: "Oswald", sans-serif;
+  --roboto: "Roboto", sans-serif;
+  --space-mono: "Space Mono", monospace;
+}
+
+/* semantic color variables for this project */
+:root {
+  --color-dark-border: var(--less-light-gray);
+  --color-light-border: var(--light-gray);
+  --color-blue: var(--blue);
+  --color-body-background: var(--white);
+  --color-text: var(--gray);
+}
+
+/*
+@media (prefers-color-scheme: dark) {
+  :root {
+    
+  }
+}
+*/

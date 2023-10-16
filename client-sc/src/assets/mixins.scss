@@ -1,0 +1,29 @@
+@import "./variables.scss";
+/* Button __________*/
+@mixin button($textColor, $backgroundColor) {
+  padding: 7px 14px;
+  border: 1px solid transparent;
+  border-radius: 0.25rem;
+  background-color: $backgroundColor;
+  color: $textColor;
+  font-family: var(--roboto);
+  font-weight: bold;
+  letter-spacing: 1px;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: all 0.3s ease 0s;
+  -ms-touch-action: manipulation;
+  touch-action: manipulation;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+/* Media Queries __________*/
+@mixin media-max($max-width) {
+  @media (max-width: $max-width) {
+    & {
+      @content;
+    }
+  }
+}
