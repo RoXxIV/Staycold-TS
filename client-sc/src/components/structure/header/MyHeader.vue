@@ -1,5 +1,3 @@
-<script setup lang="ts"></script>
-
 <template>
   <div>
     <header>
@@ -47,9 +45,45 @@
           <!-- Deconnexion if User <li></li> -->
         </ul>
       </nav>
+      <!-- Toggle burger ----------->
+      <div id="icon-burger">
+        <IconBurger @click="toggleBurgerMenu" id="btn-burger" />
+      </div>
     </header>
+    <!-- Mobile menu ----------->
+    <transition name="fade">
+      <MobileNav v-if="toggleMobileMenu" @closeMenu="toggleBurgerMenu" />
+    </transition>
   </div>
 </template>
+
+<script setup lang="ts">
+import { ref } from "vue";
+import IconBurger from "./IconBurger.vue";
+import MobileNav from "./MobileNav.vue";
+
+const toggleMobileMenu = ref(false);
+
+/**
+ * Toggles the burger menu and updates the mobile menu state.
+ *
+ * @param {PointerEvent} event - The pointer event triggering the menu toggle.
+ */
+const toggleBurgerMenu = (event: PointerEvent) => {
+  // Specify the event type as PointerEvent
+  const burger = document.getElementById("btn-burger");
+  if (burger) {
+    burger.classList.toggle("opened");
+    burger.setPointerCapture(event.pointerId);
+    burger.setAttribute(
+      "aria-expanded",
+      burger.classList.contains("opened").toString()
+    );
+  }
+  toggleMobileMenu.value = !toggleMobileMenu.value;
+};
+</script>
+
 <style lang="scss">
 header {
   display: flex;
@@ -59,12 +93,27 @@ header {
   border-bottom: 1px solid var(--color-dark-border);
   font-family: var(--roboto);
   font-weight: bold;
+  /* Tablet __________*/
+  @include media-max(991.98px) {
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    /* Smartphone __________*/
+    @include media-max(667.98px) {
+      flex-direction: row;
+      justify-content: space-between;
+    }
+  }
   /* Logo __________*/
   #logo {
     display: flex;
     align-items: center;
     margin-right: 100px;
     font-size: 1.5em;
+    /* Tablet __________*/
+    @include media-max(991.98px) {
+      margin-right: 0;
+    }
     svg {
       margin-right: 10px;
       .first-path,
@@ -82,6 +131,14 @@ header {
     align-items: center;
     justify-content: space-between;
     width: 100%;
+    /* Tablet __________*/
+    @include media-max(991.98px) {
+      justify-content: space-around;
+      /* Smartphone __________*/
+      @include media-max(667.98px) {
+        display: none;
+      }
+    }
     /* Default nav__________*/
     #default-nav {
       display: flex;
@@ -99,6 +156,14 @@ header {
       li {
         margin: 0px 10px;
       }
+    }
+  }
+  /* Burger __________*/
+  #icon-burger {
+    display: none;
+    /* Smartphone __________*/
+    @include media-max(667.98px) {
+      display: block;
     }
   }
 }
