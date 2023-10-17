@@ -67,19 +67,19 @@ const toggleMobileMenu = ref(false);
 /**
  * Toggles the burger menu and updates the mobile menu state.
  *
- * @param {PointerEvent} event - The pointer event triggering the menu toggle.
  */
-const toggleBurgerMenu = (event: PointerEvent) => {
-  // Specify the event type as PointerEvent
+const toggleBurgerMenu = () => {
+  console.log("Toggle burger menu called"); // Debugging line
   const burger = document.getElementById("btn-burger");
+
   if (burger) {
     burger.classList.toggle("opened");
-    burger.setPointerCapture(event.pointerId);
     burger.setAttribute(
       "aria-expanded",
       burger.classList.contains("opened").toString()
     );
   }
+
   toggleMobileMenu.value = !toggleMobileMenu.value;
 };
 </script>

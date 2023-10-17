@@ -2,19 +2,19 @@
   <div id="mobile-nav">
     <!-- Nav default ----------->
     <ul>
-      <li @click="closeMenu">
+      <li @click="closeMenuAndEmit">
         <router-link to="/">Accueil</router-link>
       </li>
-      <li @click="closeMenu">
+      <li @click="closeMenuAndEmit">
         <router-link to="/all-baths">Baignades</router-link>
       </li>
     </ul>
     <!-- Nav auth ----------->
     <ul>
-      <li @click="closeMenu">
+      <li @click="closeMenuAndEmit">
         <router-link to="/login">Connexion</router-link>
       </li>
-      <li @click="closeMenu">
+      <li @click="closeMenuAndEmit">
         <router-link to="/register">Inscription</router-link>
       </li>
     </ul>
@@ -23,13 +23,10 @@
   </div>
 </template>
 <script setup lang="ts">
-import { defineEmits } from "vue";
-
 // Define the emitted events for the component.
 const emits = defineEmits(["closeMenu"]);
 
-const closeMenu = () => {
-  // Emits the "closeMenu" event to notify external components.
+const closeMenuAndEmit = () => {
   emits("closeMenu");
 };
 </script>
