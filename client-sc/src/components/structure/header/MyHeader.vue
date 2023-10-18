@@ -117,7 +117,6 @@ const toggleMobileMenu = ref(false);
  *
  */
 const toggleBurgerMenu = () => {
-  console.log("Toggle burger menu called"); // Debugging line
   const burger = document.getElementById("btn-burger");
 
   if (burger) {

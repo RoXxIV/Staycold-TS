@@ -8,8 +8,7 @@
         aria-label="Toggle themes"
         id="toggle-theme-mobile"
       >
-        <span v-if="theme === 'darkMode'">Theme 🌞</span>
-        <span v-else>Theme 🌚</span>
+        <span>{{ themeSwitchText }}</span>
       </li>
       <li @click="closeMenuAndEmit">
         <router-link to="/">Accueil</router-link>
@@ -33,7 +32,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, computed } from "vue";
 
 // Define the emitted events for the component.
 const emits = defineEmits(["closeMenu", "toggleTheme"]);
@@ -47,8 +46,15 @@ const closeMenuAndEmit = () => {
 
 // Function to toggle the theme and emit the "toggleTheme" event.
 const toggleThemeAndEmit = () => {
+  // update theme value
+  theme.value = theme.value === "darkMode" ? "" : "darkMode";
   emits("toggleTheme");
 };
+
+// Computed property to determine the display of the theme switch icon.
+const themeSwitchText = computed(() => {
+  return theme.value === "darkMode" ? "Theme 🌞" : "Theme 🌚";
+});
 </script>
 
 <style lang="scss" scoped>
