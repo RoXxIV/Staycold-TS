@@ -1,8 +1,8 @@
 <template>
   <div>
     <header>
-      <!-- Logo ----------->
-      <router-link to="/" id="logo">
+      <!-- Logo Staycold ----------->
+      <router-link to="/" id="logo-staycold">
         <svg
           width="57px"
           height="57px"
@@ -49,16 +49,64 @@
       <div id="icon-burger">
         <IconBurger @click="toggleBurgerMenu" id="btn-burger" />
       </div>
+      <!-- Toggle theme light/dark -->
+      <span @click="toggleTheme" aria-label="Toggle themes" id="toggle-theme">
+        <!-- Sun button -->
+        <span v-if="theme === 'darkMode'"
+          ><svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="feather feather-sun"
+          >
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg
+        ></span>
+        <!-- Moon button -->
+        <span v-else
+          ><svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="feather feather-moon"
+          >
+            <path
+              d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"
+            ></path></svg
+        ></span>
+      </span>
     </header>
     <!-- Mobile menu ----------->
     <transition name="fade">
-      <MobileNav v-if="toggleMobileMenu" @closeMenu="toggleBurgerMenu" />
+      <MobileNav
+        v-if="toggleMobileMenu"
+        @closeMenu="toggleBurgerMenu"
+        @toggle-theme="toggleTheme"
+      />
     </transition>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, onMounted, onBeforeUnmount } from "vue";
 import IconBurger from "./IconBurger.vue";
 import MobileNav from "./MobileNav.vue";
 
@@ -82,6 +130,26 @@ const toggleBurgerMenu = () => {
 
   toggleMobileMenu.value = !toggleMobileMenu.value;
 };
+
+const theme = ref<string>("");
+// Function to toggle the theme (Light/dark) and set it to the local storage
+const toggleTheme = () => {
+  theme.value = theme.value === "darkMode" ? "" : "darkMode";
+  document.documentElement.setAttribute("data-theme", theme.value);
+  localStorage.setItem("theme", theme.value);
+};
+// Load theme from local storage on component mount
+onMounted(() => {
+  const savedTheme = localStorage.getItem("theme");
+  if (savedTheme) {
+    theme.value = savedTheme;
+    document.documentElement.setAttribute("data-theme", savedTheme);
+  }
+});
+// Save theme to local storage on component unmount
+onBeforeUnmount(() => {
+  localStorage.setItem("theme", theme.value);
+});
 </script>
 
 <style lang="scss">
@@ -105,7 +173,7 @@ header {
     }
   }
   /* Logo __________*/
-  #logo {
+  #logo-staycold {
     display: flex;
     align-items: center;
     margin-right: 100px;
@@ -158,12 +226,37 @@ header {
       }
     }
   }
+  /* Theme button svg __________*/
+  .feather-sun path {
+    stroke: var(--white);
+  }
+  .feather-moon path {
+    stroke: var(--gray);
+  }
   /* Burger __________*/
   #icon-burger {
     display: none;
     /* Smartphone __________*/
     @include media-max(667.98px) {
       display: block;
+    }
+  }
+  /* Toggle theme __________*/
+  #toggle-theme {
+    position: absolute;
+    left: calc(100% - 50px);
+    top: 110px;
+    z-index: 10;
+    span {
+      font-size: 1.4em;
+      user-select: none;
+      cursor: pointer;
+    }
+    @include media-max(991.98px) {
+      top: 160px;
+      @include media-max(667.98px) {
+        display: none;
+      }
     }
   }
 }

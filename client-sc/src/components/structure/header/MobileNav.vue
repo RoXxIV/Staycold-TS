@@ -2,6 +2,15 @@
   <div id="mobile-nav">
     <!-- Nav default ----------->
     <ul>
+      <!-- Toggle theme ----------->
+      <li
+        @click="toggleThemeAndEmit"
+        aria-label="Toggle themes"
+        id="toggle-theme-mobile"
+      >
+        <span v-if="theme === 'darkMode'">Theme 🌞</span>
+        <span v-else>Theme 🌚</span>
+      </li>
       <li @click="closeMenuAndEmit">
         <router-link to="/">Accueil</router-link>
       </li>
@@ -22,14 +31,26 @@
     <!--Nav User <ul></ul>-->
   </div>
 </template>
-<script setup lang="ts">
-// Define the emitted events for the component.
-const emits = defineEmits(["closeMenu"]);
 
+<script setup lang="ts">
+import { ref } from "vue";
+
+// Define the emitted events for the component.
+const emits = defineEmits(["closeMenu", "toggleTheme"]);
+
+const theme = ref<string>("");
+
+// Function to close the menu and emit the "closeMenu" event.
 const closeMenuAndEmit = () => {
   emits("closeMenu");
 };
+
+// Function to toggle the theme and emit the "toggleTheme" event.
+const toggleThemeAndEmit = () => {
+  emits("toggleTheme");
+};
 </script>
+
 <style lang="scss" scoped>
 #mobile-nav {
   position: absolute;
@@ -42,6 +63,7 @@ const closeMenuAndEmit = () => {
       padding: 15px 0px 15px 15px;
       background: var(--nav-mobile-background);
       border-bottom: 1px solid var(--color-dark-border);
+      cursor: pointer;
     }
   }
 }

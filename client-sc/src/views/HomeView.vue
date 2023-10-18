@@ -1,5 +1,3 @@
-<script setup lang="ts"></script>
-
 <template>
   <h1>Hello</h1>
   <button>Click</button>
@@ -9,6 +7,9 @@
     aliquam hic dolorum! Aliquam sequi fugiat similique magnam.
   </p>
 </template>
+
+<script setup lang="ts"></script>
+
 <style lang="scss">
 /* Your SCSS styles here */
 </style>

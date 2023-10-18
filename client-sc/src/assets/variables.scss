@@ -3,7 +3,6 @@
 /* Variables __________*/
 :root {
   --light-gray: #fafafa;
-  --less-light-gray: #333333;
   --blue: #3b82f6;
   --gray: #2c3138;
   --gray-card: #c4c4c4;
@@ -14,24 +13,25 @@
   --oswald: "Oswald", sans-serif;
   --roboto: "Roboto", sans-serif;
   --space-mono: "Space Mono", monospace;
-}
 
-/* semantic color variables for this project */
-:root {
-  --color-dark-border: var(--less-light-gray);
+  /* Default theme */
+
+  --color-dark-border: var(--gray);
   --color-light-border: var(--light-gray);
   --color-blue: var(--blue);
   --color-body-background: var(--white);
   --color-text: var(--gray);
-  --logo-svg-color: var(--less-light-gray);
-  --icon-burger: var(--less-light-gray);
+  --logo-svg-color: var(--gray);
+  --icon-burger: var(--gray);
   --nav-mobile-background: var(--white);
 }
 
-/*
-@media (prefers-color-scheme: dark) {
-  :root {
-    
-  }
+[data-theme="darkMode"] {
+  --color-dark-border: var(--white);
+  --color-light-border: var(--gray);
+  --color-body-background: var(--gray);
+  --color-text: var(--white);
+  --logo-svg-color: var(--white);
+  --icon-burger: var(--white);
+  --nav-mobile-background: var(--gray);
 }
-*/
