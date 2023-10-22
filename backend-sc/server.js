@@ -33,6 +33,8 @@ db.mongoose
   })
   .then(() => {
     console.log("Successfully connected to MongoDB.");
+    // Initialize roles after successful database connection
+    require("./plugins/init-roles")();
   })
   .catch((error) => {
     console.log("Connection error", error);
