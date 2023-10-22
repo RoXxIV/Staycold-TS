@@ -116,5 +116,9 @@ h1 {
       background-color: transparent;
     }
   }
+  /* Smartphone __________*/
+  @include media-max(667.98px) {
+    display: none;
+  }
 }
 </style>

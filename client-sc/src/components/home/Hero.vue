@@ -1,25 +1,78 @@
 <template>
-  <Banner />
-  <p>
-    Lorem ipsum dolor sit amet consectetur adipisicing elit. Debitis vero,
-    voluptatum consequuntur aperiam animi totam, odit fuga corporis voluptatem
-    nobis ullam dolorem, quam nisi quasi expedita reiciendis at sunt
-    exercitationem? Quisquam accusamus asperiores facere, eligendi officia dolor
-    inventore, nemo culpa dolorem voluptate optio ipsum. Maxime ex eligendi
-    ullam error molestiae? Eum sunt nihil aspernatur nesciunt rerum sit, dolorem
-    sequi? Illo! Amet architecto iure itaque debitis, autem voluptatem
-    recusandae ullam expedita saepe perferendis qui laboriosam eaque porro
-    excepturi harum hic cum! Sed voluptate eum nihil pariatur ratione velit quo
-    debitis eligendi! Quasi eveniet recusandae laudantium perspiciatis vero
-    nesciunt nobis reiciendis quo dolorum vel, culpa minima fuga tenetur, nam
-    min
-  </p>
+  <section id="hero">
+    <div id="hero-intro">
+      <h2>
+        <span>Staycold</span> c’est qui ?<br />
+        c’est quoi ?
+      </h2>
+      <p>
+        <strong>Staycold</strong>, votre guide pour explorer les bienfaits de
+        l'immersion en eaux froides et découvrir comment cette expérience unique
+        peut améliorer votre bien-être.
+      </p>
+      <button>Commencez votre aventure</button>
+    </div>
+
+    <div id="hero-img">
+      <img
+        src="@/assets/images/hero-shark.png"
+        alt="illustration d'un requin"
+        class="lightSpeedIn"
+      />
+    </div>
+  </section>
 </template>
 
-<script setup lang="ts">
-import Banner from "./Banner.vue";
-</script>
+<script setup lang="ts"></script>
 
 <style scoped lang="scss">
-/* Your component styles here */
+//* Hero Section __________*/
+#hero {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 80%;
+  margin: 50px auto;
+  #hero-intro {
+    width: 50%;
+    h2 {
+      font-size: 2.3em;
+      font-weight: 700;
+      line-height: 1.5;
+      span {
+        color: var(--blue);
+      }
+      /* Tablet __________*/
+      @include media-max(991.98px) {
+        font-size: 1.8em;
+      }
+    }
+    p {
+      font-size: 1.2em;
+      /* Tablet __________*/
+      @include media-max(991.98px) {
+        font-size: 1em;
+      }
+    }
+    /* hero-intro Smartphone __________*/
+    @include media-max(667.98px) {
+      width: 100%;
+    }
+  }
+  #hero-img {
+    width: 50%;
+    text-align: center;
+    img {
+      max-width: 250px;
+      margin: auto;
+      @include media-max(667.98px) {
+        max-width: 150px;
+      }
+    }
+  }
+  /* hero Smartphone __________*/
+  @include media-max(667.98px) {
+    flex-direction: column-reverse;
+  }
+}
 </style>
