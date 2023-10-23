@@ -2,10 +2,14 @@
  * @module Server
  * @requires express
  * @requires dotenv
+ * @requires cors
+ * @requires body-parser
  * @requires ./models
  */
 const express = require("express");
+const bodyParser = require("body-parser");
 const dotenv = require("dotenv");
+const cors = require("cors");
 const db = require("./models");
 
 /**
@@ -18,6 +22,17 @@ dotenv.config();
  * @type {express.Application}
  */
 const app = express();
+
+/**
+ * Middleware for enabling CORS
+ */
+app.use(cors());
+
+/**
+ * Middleware for parsing incoming request bodies
+ */
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 /**
  * Connect to MongoDB database
@@ -41,6 +56,17 @@ db.mongoose
     process.exit();
   });
 
+/**
+ * Root API endpoint
+ */
+app.get("/", (req, res) => {
+  res.json({ message: "Bienvenue sur StayCold API" });
+});
+
+/**
+ * Import authentication routes
+ */
+require("./routes/auth.routes")(app);
 /**
  * Server port
  * @type {number}
