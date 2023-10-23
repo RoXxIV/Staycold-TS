@@ -2,10 +2,11 @@
  * @module AuthRoutes
  * @requires ../middlewares
  * @requires ../controllers/user-signup.controller
+ * @requires ../controllers/user-verify-status
  */
 const { verifySignUp } = require("../middlewares");
-const controller = require("../controllers/user-signup.controller");
-
+const signupController = require("../controllers/user-signup.controller");
+const verifyUserStatus = require("../controllers/user-verify-status");
 /**
  * Configure routes for user signup.
  *
@@ -33,7 +34,7 @@ module.exports = function (app) {
    * POST route for user signup.
    * Middleware functions check for duplicate username or email and validate roles.
    *
-   * @name signup
+   * @name signupController
    * @path {POST} /api/auth/signup
    * @middleware checkDuplicateUsernameOrEmail - Checks for duplicate username or email.
    * @middleware checkRolesExisted - Validates roles.
@@ -44,6 +45,17 @@ module.exports = function (app) {
       verifySignUp.checkDuplicateUsernameOrEmail,
       verifySignUp.checkRolesExisted,
     ],
-    controller.signup
+    signupController.signup
+  );
+
+  /**
+   * POST route for user email verification.
+   *
+   * @name verifyUserStatus
+   * @path {POST} /api/auth/verify/:confirmationCode
+   */
+  app.post(
+    "/api/auth/verify/:confirmationCode",
+    verifyUserStatus.verifyUserStatus
   );
 };
