@@ -1,12 +1,15 @@
 /**
  * @module AuthRoutes
+ * @description Aggregates routes for user signup.
  * @requires ../middlewares
  * @requires ../controllers/user-signup.controller
  * @requires ../controllers/user-verify-status
+ * @requires ../controllers/user-signin.controller
  */
 const { verifySignUp } = require("../middlewares");
 const signupController = require("../controllers/user-signup.controller");
-const verifyUserStatus = require("../controllers/user-verify-status");
+const verifyUserStatus = require("../controllers/user-verify-status.controller");
+const signinController = require("../controllers/user-signin.controller");
 /**
  * Configure routes for user signup.
  *
@@ -58,4 +61,12 @@ module.exports = function (app) {
     "/api/auth/verify/:confirmationCode",
     verifyUserStatus.verifyUserStatus
   );
+
+  /**
+   * POST route for user signin.
+   *
+   * @name signin
+   * @path {POST} /api/auth/signin
+   */
+  app.post("/api/auth/signin", signinController.signin);
 };

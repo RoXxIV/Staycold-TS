@@ -1,5 +1,6 @@
 /**
  * @module EmailService
+ * @description Defines the service for sending emails.
  * @requires nodemailer
  * @requires dotenv
  */

@@ -1,5 +1,6 @@
 /**
  * @module User
+ * @description Defines the structure of the User document in MongoDB.
  * @requires mongoose
  */
 

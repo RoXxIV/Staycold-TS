@@ -1,5 +1,6 @@
 /**
  * @module ModelsIndex
+ * @description Aggregates all models.
  * @requires mongoose
  * @requires ./user.model
  * @requires ./role.model

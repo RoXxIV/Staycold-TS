@@ -1,5 +1,6 @@
 /**
  * @module RoleInitialization
+ * @description Initializes roles in the database.
  * @requires ../models
  */
 const db = require("../models");

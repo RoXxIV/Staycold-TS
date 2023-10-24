@@ -1,6 +1,8 @@
 /**
  * @module Middlewares
+ * @description Aggregates various middlewares.
  * @requires ./verify-signup
+ * @requires ./auth-jwt
  */
 
 /**
@@ -8,9 +10,12 @@
  *
  * @type {Object}
  * @property {Object} verifySignUp - Middlewares for user signup verification.
+ * @property {Object} authJwt - Middlewares for JWT authentication.
  */
 const verifySignUp = require("./verify-signup");
+const authJwt = require("./auth-jwt");
 
 module.exports = {
+  authJwt,
   verifySignUp,
 };

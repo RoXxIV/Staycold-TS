@@ -1,5 +1,6 @@
 /**
  * @module BathModel
+ * @description Defines the Bath model in MongoDB.
  * @requires mongoose
  */
 

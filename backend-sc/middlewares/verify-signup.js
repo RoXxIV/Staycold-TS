@@ -1,5 +1,6 @@
 /**
  * @module VerifySignUp
+ * @description Middleware for user signup verification.
  * @requires ../models
  */
 const db = require("../models");

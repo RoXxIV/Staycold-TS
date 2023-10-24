@@ -1,5 +1,6 @@
 /**
  * @module RoleModel
+ * @description Defines the structure of the Role document in MongoDB.
  * @requires mongoose
  */
 const mongoose = require("mongoose");

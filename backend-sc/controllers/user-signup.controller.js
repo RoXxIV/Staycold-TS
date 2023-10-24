@@ -1,5 +1,6 @@
 /**
  * @module UserSignup
+ * @description Controller for user signup.
  * @requires dotenv
  * @requires ../models
  * @requires jsonwebtoken

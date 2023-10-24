@@ -1,5 +1,6 @@
 /**
  * @module UserVerificationController
+ * @description Controller for user account verification.
  * @requires dotenv
  * @requires ../models
  */
