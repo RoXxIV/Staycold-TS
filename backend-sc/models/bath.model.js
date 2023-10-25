@@ -2,6 +2,7 @@
  * @module BathModel
  * @description Defines the Bath model in MongoDB.
  * @requires mongoose
+ * @exports module:BathModel.Bath
  */
 
 const mongoose = require("mongoose");

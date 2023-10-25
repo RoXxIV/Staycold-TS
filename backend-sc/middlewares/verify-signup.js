@@ -2,6 +2,8 @@
  * @module VerifySignUp
  * @description Middleware for user signup verification.
  * @requires ../models
+ * @exports module:VerifySignUp.checkDuplicateUsernameOrEmail
+ * @exports module:VerifySignUp.checkRolesExisted
  */
 const db = require("../models");
 const ROLES = db.ROLES;
@@ -9,7 +11,7 @@ const User = db.user;
 
 /**
  * Middleware to check if the username or email is already in use.
- *
+ * @description This function is called when the user clicks on the "Sign up" button.
  * @function
  * @async
  * @param {Object} req - Express request object.
@@ -49,7 +51,7 @@ const checkDuplicateUsernameOrEmail = async (req, res, next) => {
 
 /**
  * Middleware to check if the roles in the request exist.
- *
+ * @description This function is called when the user clicks on the "Sign up" button.
  * @function
  * @param {Object} req - Express request object.
  * @param {Object} res - Express response object.

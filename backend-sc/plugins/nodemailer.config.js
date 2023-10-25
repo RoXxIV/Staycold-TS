@@ -3,6 +3,10 @@
  * @description Defines the service for sending emails.
  * @requires nodemailer
  * @requires dotenv
+ * @exports sendActivationMail
+ * @exports sendResetPasswordMail
+ * @see {@link https://nodemailer.com/about/|Nodemailer}
+ * @see {@link https://www.npmjs.com/package/nodemailer|nodemailer}
  */
 const nodeMailer = require("nodemailer");
 const dotenv = require("dotenv");
@@ -28,7 +32,7 @@ const transporter = nodeMailer.createTransport({
 
 /**
  * Sends an activation email to a new user.
- *
+ * @description This function is called when a new user signs up.
  * @function
  * @async
  * @param {string} name - The name of the user.
@@ -84,6 +88,41 @@ module.exports.sendActivationMail = async (name, email, confirmationCode) => {
     console.log(`Activation email sent to ${email}`);
   } catch (err) {
     console.error("Failed to send activation email:", err);
+    throw err;
+  }
+};
+
+/**
+ * Sends a password reset email to a user.
+ * @description This function is called when a user clicks on the "Forgot password" button.
+ * @function
+ * @async
+ * @param {string} name - The name of the user.
+ * @param {string} email - The email address of the user.
+ * @param {string} resetCode - The password reset code.
+ * @throws Will throw an error if the email fails to send.
+ * @example
+ * sendResetPasswordMail('John', '...@example.com', '123456');
+ */
+module.exports.sendResetPasswordMail = async (name, email, resetCode) => {
+  try {
+    await transporter.sendMail({
+      from: process.env.EMAIL_USER,
+      to: email,
+      subject: "❄ Réinitialisation du mot de passe sur Staycold ❄",
+      html: `<div>
+        <h1>❄ Bonjour ${name} ❄</h1>
+        <p>Il semble que vous ayez besoin d'un nouveau mot de passe. Cliquez sur le lien ci-dessous pour confirmer votre demande.</p>
+        <br />
+        <a href=http://127.0.0.1:5173/reset-password/${resetCode}>➡ Confirmer votre demande ⬅</a>
+        <br />
+        <p>Si vous ne l'avez pas demandé, veuillez ignorer cet e-mail et votre mot de passe restera inchangé.</p>
+        <p>À bientôt, <br />
+        L'équipe StayCold</p>
+        </div>`,
+    });
+  } catch (err) {
+    console.error("Failed to send password reset email:", err);
     throw err;
   }
 };

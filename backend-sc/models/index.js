@@ -5,6 +5,12 @@
  * @requires ./user.model
  * @requires ./role.model
  * @requires ./bath.model
+ * @exports module:ModelsIndex.mongoose
+ * @exports module:ModelsIndex.user
+ * @exports module:ModelsIndex.role
+ * @exports module:ModelsIndex.ROLES
+ * @exports module:ModelsIndex.bath
+ * @exports module:ModelsIndex.db
  */
 
 const mongoose = require("mongoose");
@@ -22,6 +28,7 @@ mongoose.Promise = global.Promise;
  * @property {mongoose.Model} role - The Role model.
  * @property {mongoose.Model} bath - The Bath model.
  * @property {Array.<string>} ROLES - The available roles.
+ * @property {mongoose.Model} db - The database object.
  */
 /**
  * @type {Database}

@@ -10,6 +10,7 @@ const { verifySignUp } = require("../middlewares");
 const signupController = require("../controllers/user-signup.controller");
 const verifyUserStatus = require("../controllers/user-verify-status.controller");
 const signinController = require("../controllers/user-signin.controller");
+const resetPasswordController = require("../controllers/user-reset-password.controller");
 /**
  * Configure routes for user signup.
  *
@@ -69,4 +70,23 @@ module.exports = function (app) {
    * @path {POST} /api/auth/signin
    */
   app.post("/api/auth/signin", signinController.signin);
+
+  /**
+   * @description Envoie du mail permettant de générer un nouveau mot de passe.
+   * @name resetPasswordEmail
+   * @path {POST} /api/auth/email-reset-password/:email
+   */
+  app.post(
+    "/api/auth/email-reset-password/:email",
+    resetPasswordController.sendEmailResetPassword
+  );
+  /**
+   * @description envoie du nouveau mot de passe.
+   * @name resetPassword
+   * @path {POST} /api/auth/reset-password/:confirmationCode
+   */
+  app.post(
+    "/api/auth/reset-password/:confirmationCode",
+    resetPasswordController.resetPassword
+  );
 };

@@ -6,6 +6,7 @@
  * @requires jsonwebtoken
  * @requires bcryptjs
  * @requires ../plugins/nodemailer.config
+ * @exports module:UserSignup.signup
  */
 const dotenv = require("dotenv");
 const db = require("../models");
@@ -20,7 +21,7 @@ dotenv.config();
 
 /**
  * User signup controller.
- *
+ * @description This function is called when the user clicks on the "Sign up" button.
  * @function
  * @async
  * @param {Object} req - Express request object.

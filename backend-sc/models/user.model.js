@@ -2,6 +2,7 @@
  * @module User
  * @description Defines the structure of the User document in MongoDB.
  * @requires mongoose
+ * @exports module:User.User
  */
 
 const mongoose = require("mongoose");
@@ -14,6 +15,9 @@ const mongoose = require("mongoose");
  * @property {string} status - The account status of the user. Can be either "Pending" or "Active". Default is "Pending".
  * @property {string} confirmationCode - The unique confirmation code for account activation or password recovery.
  * @property {Array} roles - The roles assigned to the user.
+ * @property {string} createdAt - The timestamp of the user creation.
+ * @property {string} updatedAt - The timestamp of the last user update.
+ * @property {string} _id - The unique identifier of the user.
  */
 
 /**

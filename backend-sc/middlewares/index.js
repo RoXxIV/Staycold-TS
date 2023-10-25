@@ -3,6 +3,8 @@
  * @description Aggregates various middlewares.
  * @requires ./verify-signup
  * @requires ./auth-jwt
+ * @exports module:Middlewares.verifySignUp
+ * @exports module:Middlewares.authJwt
  */
 
 /**

@@ -3,6 +3,7 @@
  * @description Controller for user account verification.
  * @requires dotenv
  * @requires ../models
+ * @exports module:UserVerificationController.verifyUserStatus                                                    }
  */
 const dotenv = require("dotenv");
 const db = require("../models");
@@ -13,7 +14,7 @@ dotenv.config();
 
 /**
  * Change the status of the user account after email verification.
- *
+ * @description This function is called when the user clicks on the link in the email.
  * @async
  * @function
  * @param {Object} req - Express request object containing the confirmation code as a parameter.

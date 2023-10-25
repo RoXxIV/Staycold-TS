@@ -2,6 +2,7 @@
  * @module RoleInitialization
  * @description Initializes roles in the database.
  * @requires ../models
+ * @exports module:RoleInitialization.initRoles
  */
 const db = require("../models");
 
@@ -18,6 +19,7 @@ const Role = db.role;
  * @async
  * @function
  * @throws Will throw an error if the operation fails.
+ * @returns {Promise} Promise object representing the result of the operation.
  */
 const initRoles = async () => {
   try {

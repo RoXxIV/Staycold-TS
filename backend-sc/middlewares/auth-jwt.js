@@ -3,6 +3,8 @@
  * @description Middleware for JWT verification.
  * @requires jsonwebtoken
  * @requires dotenv
+ * @exports module:JwtVerify.verifyToken
+ * @see {@link https://www.npmjs.com/package/jsonwebtoken|jsonwebtoken}
  */
 const jwt = require("jsonwebtoken");
 const dotenv = require("dotenv");
@@ -11,7 +13,7 @@ dotenv.config();
 
 /**
  * Middleware to verify the presence of a JWT token in the request header.
- *
+ * @description This function is called before accessing a protected route.
  * @function
  * @param {Object} req - Express request object containing the authorization header.
  * @param {Object} res - Express response object.

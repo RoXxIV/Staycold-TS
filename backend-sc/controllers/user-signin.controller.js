@@ -5,6 +5,7 @@
  * @requires ../models
  * @requires jsonwebtoken
  * @requires bcryptjs
+ * @exports module:UserSignin.signin
  */
 
 const dotenv = require("dotenv");
@@ -18,7 +19,7 @@ dotenv.config();
 
 /**
  * User signin controller.
- *
+ * @description This function is called when the user clicks on the "Sign in" button.
  * @async
  * @function
  * @param {Object} req - Express request object containing the username and password.

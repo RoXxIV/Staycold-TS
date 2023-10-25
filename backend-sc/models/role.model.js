@@ -2,11 +2,13 @@
  * @module RoleModel
  * @description Defines the structure of the Role document in MongoDB.
  * @requires mongoose
+ * @exports module:RoleModel.Role
  */
 const mongoose = require("mongoose");
 /**
  * @typedef {Object} RoleSchema
  * @property {string} name - The title of the role.
+ * @property {string} _id - The unique identifier of the role.
  */
 
 /**
