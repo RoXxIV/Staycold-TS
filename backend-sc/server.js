@@ -96,6 +96,11 @@ require("./routes/auth.routes")(app);
 require("./routes/permissions.routes")(app);
 
 /**
+ * Import users routes
+ */
+require("./routes/users.routes")(app);
+
+/**
  * Server port
  * @type {number}
  */
