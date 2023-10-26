@@ -89,6 +89,12 @@ app.get("/", (req, res) => {
  * Import authentication routes
  */
 require("./routes/auth.routes")(app);
+
+/**
+ * Import permissions routes
+ */
+require("./routes/permissions.routes")(app);
+
 /**
  * Server port
  * @type {number}
