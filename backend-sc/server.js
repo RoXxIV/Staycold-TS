@@ -101,6 +101,11 @@ require("./routes/permissions.routes")(app);
 require("./routes/users.routes")(app);
 
 /**
+ * Import baths routes
+ */
+require("./routes/baths.routes")(app);
+
+/**
  * Server port
  * @type {number}
  */
