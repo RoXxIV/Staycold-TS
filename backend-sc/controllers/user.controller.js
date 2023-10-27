@@ -7,6 +7,7 @@ const db = require("../models");
 
 const User = db.user;
 const Role = db.role;
+const Bath = db.bath;
 const sortOptions = { roles: -1 };
 /**
  * Fetches all users from the database.
@@ -89,7 +90,7 @@ exports.deleteOneUser = async (req, res, next) => {
     await User.deleteOne({ _id: req.params.id });
 
     // Delete all baths associated with the user
-    // await Bath.deleteMany({ author: req.params.id });
+    await Bath.deleteMany({ author: req.params.id });
 
     // Send a success message as a JSON response
     res.status(200).json({

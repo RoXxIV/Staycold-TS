@@ -1,4 +1,7 @@
 /**
+ * @fileoverview Defines routes for permission-related operations.
+ */
+/**
  * @module UserPermissionsRoutes
  * @description Defines the routes for user permissions.
  * @requires ../controllers/user-permissions.controller

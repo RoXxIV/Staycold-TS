@@ -1,4 +1,7 @@
 /**
+ * @fileoverview Defines routes for user-related operations.
+ */
+/**
  * @module UserRoutes
  * @description Defines the routes for user-related operations.
  * @requires ../controllers/user.controller

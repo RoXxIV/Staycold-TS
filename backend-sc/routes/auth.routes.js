@@ -1,4 +1,7 @@
 /**
+ * @fileoverview Defines routes for authentication-related operations.
+ */
+/**
  * @module AuthRoutes
  * @description Aggregates routes for user signup.
  * @requires ../middlewares
