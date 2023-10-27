@@ -126,3 +126,45 @@ module.exports.sendResetPasswordMail = async (name, email, resetCode) => {
     throw err;
   }
 };
+
+/**
+ * Sends the content of the contact form to a Staycold email.
+ *
+ * @async
+ * @function
+ * @param {string} contact - The contact information of the user.
+ * @param {string} subject - The subject of the email.
+ * @param {string} message - The message content.
+ * @throws {Error} Throws an error if the email sending fails.
+ */
+module.exports.sendContactMail = async (contact, subject, message) => {
+  try {
+    await transporter.sendMail({
+      from: process.env.EMAIL_USER,
+      to: process.env.EMAIL_USER,
+      subject: subject,
+      html: `
+        <!DOCTYPE html>
+        <html>
+          <head>
+            <title>Formulaire de contact</title>
+          </head>
+          <body>
+            <div style="font-family: Arial, sans-serif;">
+              <h1 style="color: #333366;">Nouveau formulaire de contact</h1>
+              <hr>
+              <h2>Contact Information</h2>
+              <p>${contact}</p>
+              <h2>Message</h2>
+              <p>${message}</p>
+            </div>
+          </body>
+        </html>
+      `,
+    });
+    console.log("Email sent successfully.");
+  } catch (err) {
+    console.error("An error occurred while sending the email:", err);
+    throw err;
+  }
+};

@@ -106,6 +106,11 @@ require("./routes/users.routes")(app);
 require("./routes/baths.routes")(app);
 
 /**
+ * Import contact form routes
+ */
+require("./routes/contact-form.routes")(app);
+
+/**
  * Server port
  * @type {number}
  */
