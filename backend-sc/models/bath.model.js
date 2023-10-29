@@ -1,14 +1,18 @@
 /**
+ * @fileoverview Defines and exports the Bath model for MongoDB.
  * @module BathModel
- * @description Defines the Bath model in MongoDB.
- * @requires mongoose
- * @exports module:BathModel.Bath
+ * @namespace BathModel
+ * @description Defines and exports the Bath model for MongoDB.
+ * @requires mongoose - MongoDB object modeling tool.
+ * @see {@link https://mongoosejs.com/docs/models.html|mongoose}
  */
 
+// Import dependencies
 const mongoose = require("mongoose");
 
 /**
  * @typedef {Object} BathSchema
+ * @description Defines the structure of the Bath document in MongoDB.
  * @property {mongoose.Schema.Types.ObjectId} author - The user associated with the bath.
  * @property {number} waterTemperature - The temperature of the water. Min is 0.1 and max is 50.
  * @property {number} timeInWater - The time spent in water. Min is 1 and max is 1440 minutes (24h).
@@ -23,7 +27,9 @@ const mongoose = require("mongoose");
 
 /**
  * @constructor
+ * @description Defines the Bath model in MongoDB.
  * @param {BathSchema} bathSchema - Defines the structure of the Bath document in MongoDB.
+ * @exports Bath
  */
 const Bath = mongoose.model(
   "Bath",

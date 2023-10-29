@@ -1,16 +1,21 @@
 /**
- * @module EmailService
+ * @fileoverview Defines the service for sending emails.
+ * @module NodemailerConfig
+ * @namespace NodemailerConfig
  * @description Defines the service for sending emails.
- * @requires nodemailer
- * @requires dotenv
- * @exports sendActivationMail
- * @exports sendResetPasswordMail
+ * @requires nodemailer - Nodemailer module.
+ * @requires dotenv - Loads environment variables from a .env file into process.env.
+ * @exports sendActivationMail - Sends an activation email to a new user.
+ * @exports sendResetPasswordMail - Sends a password reset email to a user.
  * @see {@link https://nodemailer.com/about/|Nodemailer}
  * @see {@link https://www.npmjs.com/package/nodemailer|nodemailer}
  */
 const nodeMailer = require("nodemailer");
 const dotenv = require("dotenv");
 
+/**
+ * @description Loads environment variables from a .env file into process.env
+ */
 dotenv.config();
 
 /**
@@ -31,10 +36,9 @@ const transporter = nodeMailer.createTransport({
 });
 
 /**
- * Sends an activation email to a new user.
- * @description This function is called when a new user signs up.
- * @function
+ * @function sendActivationMail
  * @async
+ * @description Sends an activation email to a new user - This function is called when a new user signs up.
  * @param {string} name - The name of the user.
  * @param {string} email - The email address of the user.
  * @param {string} confirmationCode - The confirmation code for activating the user account.
@@ -85,18 +89,16 @@ module.exports.sendActivationMail = async (name, email, confirmationCode) => {
                     <a href="${process.env.CLIENT_URL}/activate/${confirmationCode}">Activer mon compte</a>
                 </body>`,
     });
-    console.log(`Activation email sent to ${email}`);
   } catch (err) {
-    console.error("Failed to send activation email:", err);
+    // console.error("Failed to send activation email:", err); // debug line
     throw err;
   }
 };
 
 /**
- * Sends a password reset email to a user.
- * @description This function is called when a user clicks on the "Forgot password" button.
- * @function
+ * @function sendResetPasswordMail
  * @async
+ * @description Sends a password reset email to a user - This function is called when a user clicks on the "Forgot password" button.
  * @param {string} name - The name of the user.
  * @param {string} email - The email address of the user.
  * @param {string} resetCode - The password reset code.
@@ -122,20 +124,20 @@ module.exports.sendResetPasswordMail = async (name, email, resetCode) => {
         </div>`,
     });
   } catch (err) {
-    console.error("Failed to send password reset email:", err);
+    // console.error("Failed to send password reset email:", err); // debug line
     throw err;
   }
 };
 
 /**
- * Sends the content of the contact form to a Staycold email.
- *
+ * @function sendContactMail
  * @async
- * @function
+ * @description Sends the content of the contact form to a Staycold email.
  * @param {string} contact - The contact information of the user.
  * @param {string} subject - The subject of the email.
  * @param {string} message - The message content.
  * @throws {Error} Throws an error if the email sending fails.
+ * @example
  */
 module.exports.sendContactMail = async (contact, subject, message) => {
   try {

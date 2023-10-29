@@ -1,32 +1,66 @@
 /**
+ * @fileoverview Defines the controller for user signup functionality.
  * @module UserSignup
- * @description Controller for user signup.
- * @requires dotenv
- * @requires ../models
- * @requires jsonwebtoken
- * @requires bcryptjs
- * @requires ../plugins/nodemailer.config
- * @exports module:UserSignup.signup
+ * @namespace UserSignup
+ * @description This module provides a function for user signup.
+ * @requires dotenv - Module for loading environment variables from a .env file.
+ * @requires jsonwebtoken - Module for generating JWT tokens.
+ * @requires bcryptjs - Module for hashing passwords.
+ * @requires ../plugins/nodemailer.config - Module for sending emails.
+ * @requires ../models - User and Role models from the database.
+ * @exports signup
+ * @see {@link https://www.npmjs.com/package/dotenv|dotenv}
+ * @see {@link https://www.npmjs.com/package/jsonwebtoken|jsonwebtoken}
+ * @see {@link https://www.npmjs.com/package/bcryptjs|bcryptjs}
  */
+
+// import dependencies
 const dotenv = require("dotenv");
-const db = require("../models");
-var jwt = require("jsonwebtoken");
-var bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+const bcrypt = require("bcryptjs");
 const nodemailer = require("../plugins/nodemailer.config");
 
+/**
+ * @typedef {import('../models').User} User
+ * @typedef {import('../models').Role} Role
+ */
+const db = require("../models");
+
+/**
+ * User model from the database.
+ * @type {User}
+ */
 const User = db.user;
+/**
+ * Role models from the database.
+ * @type {Role}
+ */
 const Role = db.role;
 
+/**
+ * @description Loads environment variables from a .env file into process.env
+ */
 dotenv.config();
 
 /**
- * User signup controller.
- * @description This function is called when the user clicks on the "Sign up" button.
- * @function
+ * @function signup
  * @async
- * @param {Object} req - Express request object.
+ * @description Handles user signup - This function is called when the user clicks on the "Sign up" button.
+ * @see {@link module:AuthRoutes} - This function is used in the POST /api/auth/signup route.
+ * @param {Object} req - Express request object containing user details.
  * @param {Object} res - Express response object.
- * @throws Will send a 500 status if an error occurs.
+ * @returns {Promise<void>} No return value but sends a response to the client.
+ * @throws {InternalServerError} JSON response with a 500 status if an internal server error occurs.
+ * @example
+ * // Route definition in another file
+ * app.post(
+    "/api/auth/signup",
+    [
+      verifySignUp.checkDuplicateUsernameOrEmail,
+      verifySignUp.checkRolesExisted,
+    ],
+    signupController.signup
+  );
  */
 exports.signup = async (req, res) => {
   try {
@@ -81,12 +115,14 @@ exports.signup = async (req, res) => {
         user.email,
         user.confirmationCode
       );
+      // Send response
       res.send({
         message:
           "L'utilisateur a été enregistré avec succès! merci de vérifier votre email",
       });
     }
   } catch (err) {
+    // console.log("Caught an error:", error); // Debug log
     res.status(500).send({ message: err });
   }
 };

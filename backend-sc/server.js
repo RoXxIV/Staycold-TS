@@ -1,23 +1,37 @@
 /**
- * @module Server
- * @requires express
- * @requires dotenv
- * @requires cors
- * @requires body-parser
+ * @module Server - Backend entry point
+ * @description Backend entry point - Initializes the Express application and connects to the MongoDB database
+ * @requires express - Express web framework for Node.js
+ * @requires dotenv - Loads environment variables from a .env file into process.env
+ * @requires cors - Middleware for enabling CORS with various options
+ * @requires body-parser - Middleware for parsing incoming request bodies
  * @requires ./models
- * @requires express-rate-limit
- * @requires helmet
+ * @requires express-rate-limit - Basic rate-limiting middleware for Express
+ * @requires helmet - Helmet helps you secure your Express apps by setting various HTTP headers
+ * @requires ./routes/auth.routes - Authentication routes
+ * @requires ./routes/permissions.routes - Permissions routes
+ * @requires ./routes/users.routes - Users routes
+ * @requires ./routes/baths.routes - Baths routes
+ * @requires ./routes/contact-form.routes - Contact form routes
+ * @requires ./plugins/init-roles - Initializes roles in the database
+ * @see {@link https://expressjs.com/|Express}
+ * @see {@link https://www.npmjs.com/package/dotenv|dotenv}
+ * @see {@link https://www.npmjs.com/package/cors|cors}
+ * @see {@link https://www.npmjs.com/package/body-parser|body-parser}
+ * @see {@link https://mongoosejs.com/|mongoose}
+ * @see {@link https://www.npmjs.com/package/express-rate-limit|express-rate-limit}
+ * @see {@link https://www.npmjs.com/package/helmet|helmet}
  */
+// Import dependencies
 const express = require("express");
 const bodyParser = require("body-parser");
 const dotenv = require("dotenv");
 const cors = require("cors");
-const db = require("./models");
 const rateLimit = require("express-rate-limit");
 const helmet = require("helmet");
-
+const db = require("./models");
 /**
- * Load environment variables from .env file
+ * @description Loads environment variables from a .env file into process.env
  */
 dotenv.config();
 
@@ -28,12 +42,13 @@ dotenv.config();
 const app = express();
 
 /**
- * Use Helmet for basic security
+ * @description Use Helmet for basic security.
  */
 app.use(helmet());
 
 /**
  * Rate-limiting configuration
+ * @type {express-rate-limit}
  */
 const apiLimiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
@@ -41,25 +56,23 @@ const apiLimiter = rateLimit({
 });
 
 /**
- * Apply rate-limiting to routes
+ * @description Apply rate-limiting to routes
  */
 app.use("/api/", apiLimiter);
 
 /**
- * Middleware for enabling CORS
+ * @description Middleware for enabling CORS
  */
 app.use(cors());
 
 /**
- * Middleware for parsing incoming request bodies
+ * @description Middleware for parsing incoming request bodies
  */
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 /**
- * Connect to MongoDB database
- *
- * @function
+ * @description Connect to MongoDB database
  * @async
  * @returns {Promise} Resolves if successfully connected to MongoDB, otherwise rejects and logs the error.
  */
@@ -79,39 +92,29 @@ db.mongoose
   });
 
 /**
- * Root API endpoint
+ * @description Root API endpoint
+ * @route GET /
  */
 app.get("/", (req, res) => {
   res.json({ message: "Bienvenue sur StayCold API" });
 });
 
 /**
- * Import authentication routes
+ * @description Import routes
+ * @see {@link module:AuthRoutes} - Authentication routes
+ * @see {@link module:UserRoutes} - User routes
+ * @see {@link module:BathRoutes} - Bath routes
+ * @see {@link module:ContactFormRoutes} - Contact form routes
+ * @see {@link module:PermissionsRoutes} - Permissions routes
  */
 require("./routes/auth.routes")(app);
-
-/**
- * Import permissions routes
- */
 require("./routes/permissions.routes")(app);
-
-/**
- * Import users routes
- */
 require("./routes/users.routes")(app);
-
-/**
- * Import baths routes
- */
 require("./routes/baths.routes")(app);
-
-/**
- * Import contact form routes
- */
 require("./routes/contact-form.routes")(app);
 
 /**
- * Server port
+ * @description Server port
  * @type {number}
  */
 const PORT = process.env.PORT || 5000;

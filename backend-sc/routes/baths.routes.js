@@ -1,12 +1,10 @@
 /**
- * @fileoverview Defines routes for bath-related operations.
- */
-
-/**
+ * @fileoverview Defines and configures the routes for bath-related operations.
  * @module BathRoutes
- * @description Defines the routes for bath-related operations.
- * @requires ../controllers/bath.controller
- * @requires ../middlewares
+ * @namespace BathRoutes
+ * @description This module defines and configures the routes for all CRUD operations related to baths.
+ * @requires ../controllers/bath.controller - The bath controller that handles the logic.
+ * @requires ../middlewares - Middleware for authentication and other functionalities.
  */
 
 // Import the bath controller and authentication middleware
@@ -14,16 +12,16 @@ const controller = require("../controllers/bath.controller");
 const { authJwt } = require("../middlewares");
 
 /**
- * Configures the bath-related routes.
- *
  * @function
- * @param {Object} app - The Express application object.
+ * @description Aggregates routes for bath-related operations.
+ * @see {@link module:../controllers/bath.controller} - This module provides functions for bath CRUD operations.
+ * @see {@link module:../middlewares} - This module provides middlewares used here.
+ * @param {import('express').Application} app - Express app.
  */
 module.exports = function (app) {
   /**
-   * Middleware to set headers for CORS and tokens.
-   *
    * @function
+   * @description This middleware is used to set headers for CORS and tokens.
    * @param {Object} req - Express request object.
    * @param {Object} res - Express response object.
    * @param {function} next - Express next middleware function.
@@ -37,74 +35,132 @@ module.exports = function (app) {
   });
 
   /**
-   * POST route to create a new bath record.
-   * Requires a verified token.
-   * @route POST /api/bath
+   * @name createBath
+   * @function
+   * @description POST route to create a new bath record.
    * @group Bath - Operations related to baths
+   * @path {POST} /api/bath
+   * @see {@link module:BathController.createBath} - The function that handles this route.
+   * @see {@link module:AuthJwt.verifyToken} - This function uses the verifyToken middleware.
+   * @middleware verifyToken - Verifies the JWT token.
    * @param {Bath.model} bath.body.required - Bath details
-   * @returns {Object} 201 - JSON response with a success message
-   * @returns {Error} 400 - JSON response with an error message
    * @security JWT
+   * @response {Bath.model} 201 - JSON response with a success message.
+   * @response {Error} 400 - Bad request
+   * @example <caption>Example request body:</caption>
+   * {
+      "author": "653c0489c189acbc95ec5fa7",
+      "waterTemperature": 1,
+      "timeInWater": 1,
+      "temperatureOutside": 1,
+      "weather": "ensoleillé",
+      "wind": "leger",
+      "recoveryTime": 1,
+      "afterdrop": "modéré",
+      "globalFeeling": "facile",
+      "commentary": "It was a refreshing experience."
+      }
    */
   app.post("/api/bath", [authJwt.verifyToken], controller.createBath);
 
   /**
-   * PUT route to modify an existing bath record by ID.
-   * Requires a verified token.
-   * @route PUT /api/bath/:id
+   * @name modifyBath
+   * @function
+   * @description PUT route to modify an existing bath record by ID.
    * @group Bath - Operations related to baths
+   * @path {PUT} /api/bath/:id
+   * @see {@link module:BathController.modifyBath} - The function that handles this route.
+   * @see {@link module:AuthJwt.verifyToken} - This function uses the verifyToken middleware.
+   * @middleware verifyToken - Verifies the JWT token.
    * @param {string} id.path.required - Bath ID
    * @param {Bath.model} bath.body.required - Updated bath details
-   * @returns {Object} 200 - JSON response with a success message
-   * @returns {Error} 400 - JSON response with an error message
    * @security JWT
+   * @response {Bath.model} 200 - JSON response with a success message.
+   * @response {Error} 400 - Bad request
+   * @example <caption>Example request body:</caption>
+   * {
+      "author": "653c0489c189acbc95ec5fa7",
+      "waterTemperature": 1,
+      "timeInWater": 1,
+      "temperatureOutside": 1,
+      "weather": "ensoleillé",
+      "wind": "leger",
+      "recoveryTime": 1,
+      "afterdrop": "modéré",
+      "globalFeeling": "facile",
+      "commentary": "It was a refreshing experience."
+      }
    */
   app.put("/api/bath/:id", [authJwt.verifyToken], controller.modifyBath);
 
   /**
-   * DELETE route to delete an existing bath record by ID.
-   * Requires a verified token.
-   * @route DELETE /api/bath/:id
+   * @name deleteBath
+   * @function
+   * @description DELETE route to delete an existing bath record by ID.
    * @group Bath - Operations related to baths
+   * @path {DELETE} /api/bath/:id
+   * @see {@link module:BathController.deleteBath} - The function that handles this route.
+   * @see {@link module:AuthJwt.verifyToken} - This function uses the verifyToken middleware.
+   * @middleware verifyToken - Verifies the JWT token.
    * @param {string} id.path.required - Bath ID
-   * @returns {Object} 200 - JSON response with a success message
-   * @returns {Error} 400 - JSON response with an error message
-   * @returns {Error} 403 - JSON response if the user is not authorized
    * @security JWT
+   * @response {Bath.model} 200 - JSON response with a success message.
+   * @response {Error} 400 - Bad request
    */
   app.delete("/api/bath/:id", [authJwt.verifyToken], controller.deleteBath);
 
   /**
-   * GET route to retrieve all bath records.
-   * @route GET /api/bath
+   * @name getAllBaths
+   * @function
+   * @description GET route to retrieve all bath records.
    * @group Bath - Operations related to baths
+   * @path {GET} /api/bath
+   * @see {@link module:BathController.getAllBaths} - The function that handles this route.
+   * @response {Bath.model} 200 - JSON response with a success message.
+   * @response {Error} 400 - Bad request
    * @returns {Array.<Bath>} 200 - An array of bath records
+   *
    */
   app.get("/api/bath", controller.getAllBaths);
 
   /**
-   * GET route to retrieve a single bath record by ID.
-   * @route GET /api/bath/:id
+   * @name getOneBath
+   * @function
+   * @description GET route to retrieve a single bath record by ID.
    * @group Bath - Operations related to baths
+   * @route GET /api/bath/:id
+   * @see {@link module:BathController.getOneBath} - The function that handles this route.
    * @param {string} id.path.required - Bath ID
+   * @response {Bath.model} 200 - JSON response with a success message.
+   * @response {Error} 400 - Bad request
    * @returns {Bath.model} 200 - A single bath record
    */
   app.get("/api/bath/:id", controller.getOneBath);
 
   /**
-   * GET route to retrieve all bath records by user ID.
-   * @route GET /api/bath/user/:userId
+   * @name getAllBathsByUser
+   * @function
+   * @description GET route to retrieve all bath records by user ID.
    * @group Bath - Operations related to baths
+   * @route GET /api/bath/user/:userId
+   * @see {@link module:BathController.getAllBathsByUser} - The function that handles this route.
    * @param {string} id.path.required - User ID
+   * @response {Bath.model} 200 - JSON response with a success message.
+   * @response {Error} 400 - Bad request
    * @returns {Array.<Bath>} 200 - An array of bath records for the user
    */
   app.get("/api/bath/user/:userId", controller.getAllBathsByUser);
 
   /**
-   * GET route to retrieve all recent bath.
-   * @route GET /api/bath/recent/:limit
+   * @name getRecentBaths
+   * @function
+   * @description GET route to retrieve all recent baths.
    * @group Bath - Operations related to baths
+   * @route GET /api/bath/recent/:limit
+   * @see {@link module:BathController.getRecentBaths} - The function that handles this route.
    * @param {number} limit.path.required - Number of recent baths to retrieve
+   * @response {Bath.model} 200 - JSON response with a success message.
+   * @response {Error} 400 - Bad request
    * @returns {Array.<Bath>} 200 - An array of recent bath records
    */
   app.get("/api/bath/recent/:limit", controller.getRecentBaths);

@@ -1,23 +1,55 @@
 /**
+ * @fileoverview Defines the controller for user-related operations.
  * @module UserController
- * @description Defines the controller for user-related operations.
- * @requires ../models
+ * @namespace UserController
+ * @description This module provides functions for various user-related operations.
+ * @requires ../models - Database models needed for users operations.
+ */
+
+/**
+ * @typedef {import('../models').User} User
+ * @typedef {import('../models').Role} Role
+ * @typedef {import('../models').Bath} Bath
  */
 const db = require("../models");
 
+/**
+ * User model from the database.
+ * @type {User}
+ */
 const User = db.user;
+/**
+ * Role model from the database.
+ * @type {Role}
+ */
 const Role = db.role;
+/**
+ * Bath model from the database.
+ * @type {Bath}
+ */
 const Bath = db.bath;
+/**
+ * Options for sorting the fetched users.
+ * @type {Object}
+ */
 const sortOptions = { roles: -1 };
 /**
- * Fetches all users from the database.
  * @async
- * @function
+ * @function findAllUsers
+ * @description Fetches all users from the database.
+ * @see {@link module:UserRoutes} - This function is used in the GET /api/users/all route.
  * @param {Object} req - Express request object.
  * @param {Object} res - Express response object.
  * @param {function} next - Express next middleware function.
  * @returns {Object} JSON response containing all users.
- * @throws {Object} JSON response with a 400 status if an error occurs.
+ * @throws {BadRequest} JSON response with a 400 status if an error occurs.
+ * @example
+ * // Route definition in another file
+ * app.get(
+    "/api/users/all",
+    [authJwt.verifyToken, authJwt.isModerator],
+    controller.findAllUsers
+  );
  */
 exports.findAllUsers = async (req, res) => {
   try {
@@ -31,20 +63,29 @@ exports.findAllUsers = async (req, res) => {
     // Send the fetched users as a JSON response
     res.status(200).json(users);
   } catch (error) {
+    // console.log("Caught an error:", error); // Debug log
     res.status(400).json({ message: error.message });
   }
 };
 
 /**
- * Fetches a single user from the database by ID.
- *
+ * @function getOneUser
  * @async
- * @function
+ * @description Fetches a single user from the database by ID.
+ * @see {@link module:UserRoutes} - This function is used in the GET /api/users/:id route.
  * @param {Object} req - Express request object containing the user ID in params.
  * @param {Object} res - Express response object.
  * @param {function} next - Express next middleware function.
  * @returns {Object} JSON response containing the user information.
- * @throws {Object} JSON response with a 404 status if the user is not found or an error occurs.
+ * @throws {NotFound} JSON response with a 404 status if the user is not found or an error occurs.
+ * @throws {BadRequest} JSON response with a 400 status if an error occurs.
+ * @example
+ * // Route definition in another file
+ * app.get(
+    "/api/users/:id",
+    [authJwt.verifyToken, authJwt.isModerator],
+    controller.getOneUser
+  );
  */
 exports.getOneUser = async (req, res, next) => {
   try {
@@ -62,21 +103,29 @@ exports.getOneUser = async (req, res, next) => {
     // Send the fetched user as a JSON response
     res.status(200).json(user);
   } catch (error) {
+    // console.log("Caught an error:", error); // Debug log
     res.status(400).json({ message: error.message });
   }
 };
 
 /**
- * Deletes a user and associated baths from the database by ID.
- *
+ * @function deleteOneUser
  * @async
- * @function
+ * @description Deletes a user and associated baths from the database by ID.
+ * @see {@link module:UserRoutes} - This function is used in the DELETE /api/users/:id route.
  * @param {Object} req - Express request object containing the user ID in params.
  * @param {Object} res - Express response object.
  * @param {function} next - Express next middleware function.
  * @returns {Object} JSON response confirming the deletion.
- * @throws {Object} JSON response with a 400 status if an error occurs.
- * @throws {Object} JSON response with a 404 status if the user is not found.
+ * @throws {NotFound} JSON response with a 404 status if the user is not found.
+ * @throws {BadRequest} JSON response with a 400 status if an error occurs.
+ * @example
+ * // Route definition in another file
+ * app.delete(
+    "/api/users/:id",
+    [authJwt.verifyToken, authJwt.isAdmin],
+    controller.deleteOneUser
+  );
  */
 exports.deleteOneUser = async (req, res, next) => {
   try {
@@ -98,21 +147,29 @@ exports.deleteOneUser = async (req, res, next) => {
         "L'utilisateur et les baignades associés ont bien été supprimé !",
     });
   } catch (error) {
+    // console.log("Caught an error:", error); // Debug log
     res.status(400).json({ message: error.message });
   }
 };
 
 /**
- * Updates the role of a user by ID.
- *
+ * @function updateUserRole
  * @async
- * @function
+ * @description Updates the role of a user by ID.
+ * @see {@link module:UserRoutes} - This function is used in the POST /api/users/update-role/:id route.
  * @param {Object} req - Express request object containing the user ID in params and new roles in body.
  * @param {Object} res - Express response object.
  * @returns {Object} JSON response confirming the role update.
- * @throws {Object} JSON response with a 401 status if the user is not found.
- * @throws {Object} JSON response with a 500 status if an error occurs.
- * @throws {Object} JSON response with a 400 status for other errors.
+ * @throws {Unauthorized} JSON response with a 401 status if the user is not found.
+ * @throws {InternalServerError} JSON response with a 500 status if an error occurs.
+ * @throws {BadRequest} JSON response with a 400 status for other errors.
+ * @example
+ * // Route definition in another file
+ * app.post(
+    "/api/users/update-role/:id",
+    [authJwt.verifyToken, authJwt.isAdmin],
+    controller.updateUserRole
+  );
  */
 exports.updateUserRole = async (req, res) => {
   try {
@@ -140,6 +197,7 @@ exports.updateUserRole = async (req, res) => {
     // Send a success message as a JSON response
     res.status(200).send("Le Role a été mis à jour.");
   } catch (error) {
+    // console.log("Caught an error:", error); // Debug log
     res.status(400).json({ error });
   }
 };

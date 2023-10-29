@@ -1,34 +1,55 @@
 /**
+ * @fileoverview Defines the controller for user signin functionality.
  * @module UserSignin
- * @description Controller for user signin.
- * @requires dotenv
- * @requires ../models
- * @requires jsonwebtoken
- * @requires bcryptjs
- * @exports module:UserSignin.signin
+ * @namespace UserSignin
+ * @description This module provides a function for user signin.
+ * @requires dotenv - Module for loading environment variables from a .env file.
+ * @requires ../models - User model from the database.
+ * @requires jsonwebtoken - Module for generating JWT tokens.
+ * @requires bcryptjs - Module for hashing passwords.
+ * @exports signin
+ * @see {@link https://www.npmjs.com/package/dotenv|dotenv}
+ * @see {@link https://www.npmjs.com/package/jsonwebtoken|jsonwebtoken}
+ * @see {@link https://www.npmjs.com/package/bcryptjs|bcryptjs}
  */
 
+// import dependencies
 const dotenv = require("dotenv");
-const db = require("../models");
-var jwt = require("jsonwebtoken");
-var bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+const bcrypt = require("bcryptjs");
 
+/**
+ * @typedef {import('../models').User} User
+ */
+const db = require("../models");
+
+/**
+ * User model from the database.
+ * @type {User}
+ */
 const User = db.user;
 
+/**
+ * @description Loads environment variables from a .env file into process.env
+ */
 dotenv.config();
 
 /**
- * User signin controller.
- * @description This function is called when the user clicks on the "Sign in" button.
+ *
+ * @function signin
  * @async
- * @function
+ * @description Handles user signin - This function is called when the user clicks on the "Sign in" button.
+ * @see {@link module:AuthRoutes} - This function is used in the POST /api/auth/signin route.
  * @param {Object} req - Express request object containing the username and password.
  * @param {Object} res - Express response object.
- * @returns {Object} JSON response containing user details and access token.
- * @throws {Object} JSON response with a 500 status if an internal server error occurs.
- * @throws {Object} JSON response with a 404 status if the user is not found.
- * @throws {Object} JSON response with a 401 status if the password is incorrect.
- * @throws {Object} JSON response with a 403 status if the account is not active.
+ * @returns {Promise<Object>} JSON response containing user details and access token.
+ * @throws {UserNotFound} JSON response with a 404 status if the user is not found.
+ * @throws {Unauthorized} JSON response with a 401 status if the password is incorrect.
+ * @throws {Forbidden} JSON response with a 403 status if the account is not active.
+ * @throws {InternalServerError} JSON response with a 500 status if an internal server error occurs.
+ * @example
+ * // Route definition in another file
+ * app.post("/api/auth/signin", signinController.signin);
  */
 exports.signin = async (req, res) => {
   try {
@@ -83,8 +104,7 @@ exports.signin = async (req, res) => {
       createdAt: user.createdAt,
     });
   } catch (err) {
-    // Log the error and send a 500 status code
-    console.error(err);
+    // console.log("Caught an error:", error); // Debug log
     res.status(500).send({ message: err });
   }
 };

@@ -1,26 +1,49 @@
 /**
- * @module JwtVerify
- * @description Middleware for JWT verification and permissions.
- * @requires jsonwebtoken
- * @requires dotenv
- * @requires ../models/index.js
- * @exports module:JwtVerify.verifyToken
+ * @fileoverview Middleware for JWT verification and permissions.
+ * @module AuthJwt
+ * @namespace AuthJwt
+ * @description This module handles JWT verification and role-based permissions.
+ * @requires jsonwebtoken - Used to verify the JWT token.
+ * @requires dotenv - Used to load environment variables.
+ * @requires ../models/index.js - Sequelize database models.
+ * @exports verifyToken - Middleware to verify the presence of a token in the header.
+ * @exports isAdmin - Middleware to verify if the user is an admin.
+ * @exports isModerator - Middleware to verify if the user is a moderator.
  * @see {@link https://www.npmjs.com/package/jsonwebtoken|jsonwebtoken}
+ * @see {@link https://www.npmjs.com/package/dotenv|dotenv}
  */
+
+// import dependencies
 const jwt = require("jsonwebtoken");
 const dotenv = require("dotenv");
+
+/**
+ * @typedef {import('../models').User} User
+ * @typedef {import('../models').Role} Role
+ */
 const db = require("../models");
 
+/**
+ * User model from the database.
+ * @type {User}
+ */
 const User = db.user;
+/**
+ * Role model from the database.
+ * @type {Role}
+ */
 const Role = db.role;
 
+/**
+ * @description Loads environment variables from a .env file into process.env
+ */
 dotenv.config();
 
 /**
- * Middleware to verify the presence of a token in the header.
- *
+ * @function verifyToken
  * @async
- * @function
+ * @description Middleware to verify the presence of a token in the header.
+ * @memberof AuthJwt
  * @param {Object} req - Express request object.
  * @param {Object} res - Express response object.
  * @param {function} next - Express next middleware function.
@@ -54,10 +77,12 @@ const verifyToken = async (req, res, next) => {
 };
 
 /**
- * Middleware to verify if the user is an admin.
- *
+ * @function isAdmin
  * @async
- * @function
+ * @description Middleware to verify if the user is an admin.
+ * @memberof AuthJwt
+ * @see {@link module:User} - User model from the database.
+ * @see {@link module:Role} - Role model from the database.
  * @param {Object} req - Express request object.
  * @param {Object} res - Express response object.
  * @param {function} next - Express next middleware function.
@@ -80,10 +105,13 @@ const isAdmin = async (req, res, next) => {
 };
 
 /**
- * Middleware to verify if the user is a moderator.
  *
+ * @function isModerator
  * @async
- * @function
+ * @description Middleware to verify if the user is a moderator.
+ * @memberof AuthJwt
+ * @see {@link module:User} - User model from the database.
+ * @see {@link module:Role} - Role model from the database.
  * @param {Object} req - Express request object.
  * @param {Object} res - Express response object.
  * @param {function} next - Express next middleware function.

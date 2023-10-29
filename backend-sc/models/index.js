@@ -1,65 +1,65 @@
 /**
+ * @fileoverview Aggregates and exports all models for MongoDB.
  * @module ModelsIndex
- * @description Aggregates all models.
- * @requires mongoose
- * @requires ./user.model
- * @requires ./role.model
- * @requires ./bath.model
- * @exports module:ModelsIndex.mongoose
- * @exports module:ModelsIndex.user
- * @exports module:ModelsIndex.role
- * @exports module:ModelsIndex.ROLES
- * @exports module:ModelsIndex.bath
- * @exports module:ModelsIndex.db
+ * @namespace ModelsIndex
+ * @description Aggregates all models and provides a unified interface for database operations.
+ * @requires mongoose - MongoDB object modeling tool.
+ * @see {@link https://mongoosejs.com/docs/models.html|mongoose}
+ * @requires ./user.model - User model for user-related operations.
+ * @requires ./role.model - Role model for role-related operations.
+ * @requires ./bath.model - Bath model for bath-related operations.
  */
 
+// Import dependencies
 const mongoose = require("mongoose");
 
 /**
- * Use native ES6 promises
+ * @description Use native ES6 promises for mongoose.
  */
 mongoose.Promise = global.Promise;
 
 /**
- * Database object to hold mongoose and models
  * @typedef {Object} Database
+ * @description Database object to hold mongoose and models.
  * @property {mongoose} mongoose - The mongoose instance.
  * @property {mongoose.Model} user - The User model.
  * @property {mongoose.Model} role - The Role model.
  * @property {mongoose.Model} bath - The Bath model.
  * @property {Array.<string>} ROLES - The available roles.
- * @property {mongoose.Model} db - The database object.
  */
+
 /**
  * @type {Database}
+ * @description Aggregated database object containing mongoose and models.
  */
 const db = {};
 
 /**
- * Mongoose instance
  * @type {mongoose}
+ * @description Mongoose instance for MongoDB operations.
  */
 db.mongoose = mongoose;
 
 /**
- * User model
  * @type {mongoose.Model}
+ * @description User model for user-related operations.
  */
 db.user = require("./user.model");
 /**
- * Role model
  * @type {mongoose.Model}
+ * @description Role model for role-related operations.
  */
 db.role = require("./role.model");
 /**
- * Available roles
  * @type {Array.<string>}
+ * @description Array of available roles.
  */
 db.ROLES = ["user", "moderator", "admin"];
 /**
- * Bath model
  * @type {mongoose.Model}
+ * @description Bath model for bath-related operations.
  */
 db.bath = require("./bath.model");
 
+// Export the aggregated database object
 module.exports = db;
