@@ -1,38 +1,38 @@
 /**
  * @fileoverview Middleware for user signup verification.
  * @module VerifySignUp
- * @namespace VerifySignUp
  * @description This module contains middlewares for verifying user signup.
  * @requires ../models - Sequelize database models.
- * @exports checkDuplicateUsernameOrEmail - Checks for duplicate username or email.
- * @exports checkRolesExisted - Checks if roles exist.
+ * @exports module:VerifySignUp
+ * @see {@link module:AuthRoutes} - Routes for user signup and account verification.
+ * @see {@link module:UserSignupController} - Controller for user signup.
  */
-/**
- * @typedef {import('../models').ROLES} ROLES
- * @typedef {import('../models').User} User
- */
+
+// import database models
 const db = require("../models");
-/**
- * ROLES model from the database.
- * @type {ROLES}
- */
+
 const ROLES = db.ROLES;
-/**
- * User model from the database.
- * @type {User}
- */
 const User = db.user;
 
 /**
  * @function checkDuplicateUsernameOrEmail
  * @async
  * @description Middleware to check if the username or email is already in use.
- * @memberof VerifySignUp
  * @param {Object} req - Express request object.
  * @param {Object} res - Express response object.
  * @param {function} next - Express next middleware function.
  * @throws {Object} Will send a 500 status if an error occurs.
  * @throws {Object} Will send a 400 status if the username or email is already in use.
+ * @example <caption>Example usage of checkDuplicateUsernameOrEmail middleware.</caption>
+ * // Route definition in another file
+ * app.post(
+    "/api/auth/signup",
+    [
+      verifySignUp.checkDuplicateUsernameOrEmail,
+      verifySignUp.checkRolesExisted,
+    ],
+    signupController.signup
+  );
  */
 const checkDuplicateUsernameOrEmail = async (req, res, next) => {
   try {
@@ -67,11 +67,20 @@ const checkDuplicateUsernameOrEmail = async (req, res, next) => {
  * @function checkRolesExisted
  * @async
  * @description Middleware to check if the roles in the request exist.
- * @memberof VerifySignUp
  * @param {Object} req - Express request object.
  * @param {Object} res - Express response object.
  * @param {function} next - Express next middleware function.
  * @throws {Object} Will send a 400 status if any of the roles do not exist.
+ * @example <caption>Example usage of checkRolesExisted middleware.</caption>
+ * // Route definition in another file
+ * app.post(
+    "/api/auth/signup",
+    [
+      verifySignUp.checkDuplicateUsernameOrEmail,
+      verifySignUp.checkRolesExisted,
+    ],
+    signupController.signup
+  );
  */
 checkRolesExisted = (req, res, next) => {
   if (req.body.roles) {
@@ -86,19 +95,11 @@ checkRolesExisted = (req, res, next) => {
   next();
 };
 
-/**
- * @typedef {Object} VerifySignUp
- * @property {function} checkDuplicateUsernameOrEmail - Checks for duplicate username or email.
- * @property {function} checkRolesExisted - Checks if roles exist.
- */
-
-/**
- * Object containing verification middlewares.
- * @type {VerifySignUp}
- */
+// export the middlewares functions
 const verifySignUp = {
   checkDuplicateUsernameOrEmail,
   checkRolesExisted,
 };
 
+// export the module
 module.exports = verifySignUp;

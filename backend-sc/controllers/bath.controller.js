@@ -1,32 +1,28 @@
 /**
  * @fileoverview Bath Controller - Defines the controller for bath-related operations.
  * @module BathController
- * @namespace BathController
  * @description This module handles all CRUD operations related to baths.
  * @requires ../models - Database models needed for bath operations.
+ * @exports createBath - Creates a new Bath record in the database.
+ * @exports modifyBath - Modifies an existing Bath record in the database.
+ * @exports deleteBath - Delete an existing Bath record in the database.
+ * @exports getAllBaths - Fetches all baths from the database.
+ * @exports getOneBath - Fetches a single bath by ID.
+ * @exports getRecentBaths - Fetches a specified number of recent baths.
+ * @exports getAllBathsByUser - Fetches baths belonging to a single user.
+ * @see {@link module:BathRoutes} - This module provides routes for bath-related operations.
+ * @see {@link module:BathModel} - This module provides the Bath model.
+ * @see {@link module:UserModel} - This module provides the User model.
+ * @see {@link module:UserRoutes} - This module provides routes for user-related operations.
  */
 
-/**
- * @typedef {import('../models').Bath} Bath
- * @typedef {import('../models').User} User
- */
+// Import dependencies
 const db = require("../models");
 
-/**
- * Bath model from the database.
- * @type {Bath}
- */
 const Bath = db.bath;
-/**
- * User model from the database.
- * @type {User}
- */
 const User = db.user;
 
-/**
- * Options for sorting the fetched baths.
- * @type {Object}
- */
+// Define the sort options for bath records
 const sortOptions = { createdAt: -1 };
 
 /**

@@ -1,31 +1,22 @@
 /**
  * @fileoverview Defines services for password reset functionality.
- * @module PasswordReset
- * @namespace PasswordReset
+ * @module UserPasswordResetController
  * @description This module provides functions for sending password reset emails and resetting the password.
  * @requires nodemailer - Module for sending emails.
  * @requires bcryptjs - Module for hashing passwords.
  * @requires ../models - User model from the database.
- * @exports sendEmailResetPassword
- * @exports resetPassword
  * @see {@link https://nodemailer.com/about/|Nodemailer}
  * @see {@link https://www.npmjs.com/package/bcryptjs|bcryptjs}
+ * @see {@link module:User} - User model from the database.
+ * @exports module:UserPasswordResetController
+ * @exports module:sendEmailResetPassword
  */
 
 // import dependencies
 const nodemailer = require("../plugins/nodemailer.config");
-
-/**
- * @typedef {import('../models').User} User
- */
-const db = require("../models");
-
 const bcrypt = require("bcryptjs");
-
-/**
- * User model from the database.
- * @type {User}
- */
+// import database models
+const db = require("../models");
 const User = db.user;
 
 /**

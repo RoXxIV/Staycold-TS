@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="utf-8">
+    <title>routes/baths.routes.js - Documentation</title>
+    
+    
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+    <script src="scripts/nav.js" defer></script>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav >
+    
+    <input type="text" id="nav-search" placeholder="Search" />
+    
+    
+    <h2><a href="index.html">Home</a></h2><h2><a href="https://github.com/RoXxIV/Staycold-TS" target="_blank" class="menu-item" id="repository" >Github repo</a></h2><h3>Classes</h3><ul><li><a href="Bath.html">Bath</a></li><li><a href="Role.html">Role</a></li><li><a href="User.html">User</a></li></ul><h3>Modules</h3><ul><li><a href="module-AuthJwt.html">AuthJwt</a><ul class='methods'><li data-type='method' style='display: none;'><a href="module-AuthJwt.html#~isAdmin">isAdmin</a></li><li data-type='method' style='display: none;'><a href="module-AuthJwt.html#~isModerator">isModerator</a></li><li data-type='method' style='display: none;'><a href="module-AuthJwt.html#~verifyToken">verifyToken</a></li></ul></li><li><a href="module-AuthRoutes.html">AuthRoutes</a><ul class='methods'><li data-type='method' style='display: none;'><a href="module-AuthRoutes.html#~POST/api/auth/verify/:confirmationCode">POST /api/auth/verify/:confirmationCode</a></li></ul></li><li><a href="module-BathController.html">BathController</a><ul class='methods'><li data-type='method' style='display: none;'><a href="module-BathController.html#~createBath">createBath</a></li><li data-type='method' style='display: none;'><a href="module-BathController.html#~deleteBath">deleteBath</a></li><li data-type='method' style='display: none;'><a href="module-BathController.html#~getAllBaths">getAllBaths</a></li><li data-type='method' style='display: none;'><a href="module-BathController.html#~getAllBathsByUser">getAllBathsByUser</a></li><li data-type='method' style='display: none;'><a href="module-BathController.html#~getOneBath">getOneBath</a></li><li data-type='method' style='display: none;'><a href="module-BathController.html#~getRecentBaths">getRecentBaths</a></li><li data-type='method' style='display: none;'><a href="module-BathController.html#~modifyBath">modifyBath</a></li></ul></li><li><a href="module-BathRoutes.html">BathRoutes</a></li><li><a href="module-ContactFormController.html">ContactFormController</a><ul class='methods'><li data-type='method' style='display: none;'><a href="module-ContactFormController.html#~handleFormContact">handleFormContact</a></li></ul></li><li><a href="module-ContactRoutes.html">ContactRoutes</a></li><li><a href="module-Middlewares.html">Middlewares</a></li><li><a href="module-Models.html">Models</a></li><li><a href="module-NodemailerConfig.html">NodemailerConfig</a><ul class='methods'><li data-type='method' style='display: none;'><a href="module-NodemailerConfig.html#~sendActivationMail">sendActivationMail</a></li><li data-type='method' style='display: none;'><a href="module-NodemailerConfig.html#~sendContactMail">sendContactMail</a></li><li data-type='method' style='display: none;'><a href="module-NodemailerConfig.html#~sendResetPasswordMail">sendResetPasswordMail</a></li></ul></li><li><a href="module-RoleInitialization.html">RoleInitialization</a><ul class='methods'><li data-type='method' style='display: none;'><a href="module-RoleInitialization.html#~initRoles">initRoles</a></li></ul></li><li><a href="module-Server%2520-%2520Backend%2520entry%2520point.html">Server - Backend entry point</a></li><li><a href="module-UserController.html">UserController</a><ul class='methods'><li data-type='method' style='display: none;'><a href="module-UserController.html#~deleteOneUser">deleteOneUser</a></li><li data-type='method' style='display: none;'><a href="module-UserController.html#~findAllUsers">findAllUsers</a></li><li data-type='method' style='display: none;'><a href="module-UserController.html#~getOneUser">getOneUser</a></li><li data-type='method' style='display: none;'><a href="module-UserController.html#~updateUserRole">updateUserRole</a></li></ul></li><li><a href="module-UserPasswordResetController.html">UserPasswordResetController</a><ul class='methods'><li data-type='method' style='display: none;'><a href="module-UserPasswordResetController.html#~resetPassword">resetPassword</a></li><li data-type='method' style='display: none;'><a href="module-UserPasswordResetController.html#~sendEmailResetPassword">sendEmailResetPassword</a></li></ul></li><li><a href="module-UserPermissionsController.html">UserPermissionsController</a><ul class='methods'><li data-type='method' style='display: none;'><a href="module-UserPermissionsController.html#~adminBoard">adminBoard</a></li><li data-type='method' style='display: none;'><a href="module-UserPermissionsController.html#~allAccess">allAccess</a></li><li data-type='method' style='display: none;'><a href="module-UserPermissionsController.html#~moderatorBoard">moderatorBoard</a></li><li data-type='method' style='display: none;'><a href="module-UserPermissionsController.html#~userBoard">userBoard</a></li></ul></li><li><a href="module-UserPermissionsRoutes.html">UserPermissionsRoutes</a></li><li><a href="module-UserRoutes.html">UserRoutes</a></li><li><a href="module-UserSigninController.html">UserSigninController</a><ul class='methods'><li data-type='method' style='display: none;'><a href="module-UserSigninController.html#~signin">signin</a></li></ul></li><li><a href="module-UserSignupController.html">UserSignupController</a><ul class='methods'><li data-type='method' style='display: none;'><a href="module-UserSignupController.html#~signup">signup</a></li></ul></li><li><a href="module-UserVerificationController.html">UserVerificationController</a><ul class='methods'><li data-type='method' style='display: none;'><a href="module-UserVerificationController.html#~verifyUserStatus">verifyUserStatus</a></li></ul></li><li><a href="module-VerifySignUp.html">VerifySignUp</a><ul class='methods'><li data-type='method' style='display: none;'><a href="module-VerifySignUp.html#~checkDuplicateUsernameOrEmail">checkDuplicateUsernameOrEmail</a></li><li data-type='method' style='display: none;'><a href="module-VerifySignUp.html#~checkRolesExisted">checkRolesExisted</a></li></ul></li></ul><h3>Global</h3><ul><li><a href="global.html#afterdrop">afterdrop</a></li><li><a href="global.html#author">author</a></li><li><a href="global.html#commentary">commentary</a></li><li><a href="global.html#confirmationCode">confirmationCode</a></li><li><a href="global.html#email">email</a></li><li><a href="global.html#globalFeeling">globalFeeling</a></li><li><a href="global.html#name">name</a></li><li><a href="global.html#password">password</a></li><li><a href="global.html#recoveryTime">recoveryTime</a></li><li><a href="global.html#roles">roles</a></li><li><a href="global.html#status">status</a></li><li><a href="global.html#temperatureOutside">temperatureOutside</a></li><li><a href="global.html#timeInWater">timeInWater</a></li><li><a href="global.html#timestamps">timestamps</a></li><li><a href="global.html#username">username</a></li><li><a href="global.html#waterTemperature">waterTemperature</a></li><li><a href="global.html#weather">weather</a></li><li><a href="global.html#wind">wind</a></li></ul>
+    
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">routes/baths.routes.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @fileoverview Defines and configures the routes for bath-related operations.
+ * @module BathRoutes
+ * @description This module defines and configures the routes for all CRUD operations related to baths.
+ * @requires ../controllers/bath.controller - The bath controller that handles the logic.
+ * @requires ../middlewares - Middleware for authentication and other functionalities.
+ */
+
+// Import the bath controller and authentication middleware
+const controller = require("../controllers/bath.controller");
+const { authJwt } = require("../middlewares");
+
+module.exports = function (app) {
+  /**
+   * @memberof BathRoutes
+   * @description This middleware is used to set headers for CORS and tokens.
+   * @param {Object} req - Express request object.
+   * @param {Object} res - Express response object.
+   * @param {function} next - Express next middleware function.
+   */
+  app.use(function (req, res, next) {
+    res.header(
+      "Access-Control-Allow-Headers",
+      "x-access-token, Origin, Content-Type, Accept"
+    );
+    next();
+  });
+
+  /**
+   * @name POST /api/bath
+   * @description POST route to create a new bath record.
+   * @see {@link module:BathController.createBath} - The function that handles this route.
+   * @see {@link module:AuthJwt.verifyToken} - This function uses the verifyToken middleware.
+   * @param {Bath.model} bath.body.required - Bath details
+   * @security JWT
+   * @response {Bath.model} 201 - JSON response with a success message.
+   * @response {Error} 400 - Bad request
+    * @example &lt;caption>Example&lt;/caption>
+    * app.post("/api/bath", [authJwt.verifyToken], controller.createBath);
+   * @example &lt;caption>Example request body:&lt;/caption>
+   * {
+      "author": "653c0489c189acbc95ec5fa7",
+      "waterTemperature": 1,
+      "timeInWater": 1,
+      "temperatureOutside": 1,
+      "weather": "ensoleillé",
+      "wind": "leger",
+      "recoveryTime": 1,
+      "afterdrop": "modéré",
+      "globalFeeling": "facile",
+      "commentary": "It was a refreshing experience."
+      }
+      @example &lt;caption>Example response&lt;/caption>
+      { "message": "Votre baignade a bien été enregistré" }
+   */
+  app.post("/api/bath", [authJwt.verifyToken], controller.createBath);
+
+  /**
+   * @name PUT /api/bath/:id
+   * @description PUT route to modify an existing bath record by ID.
+   * @see {@link module:BathController.modifyBath} - The function that handles this route.
+   * @see {@link module:AuthJwt.verifyToken} - This function uses the verifyToken middleware.
+   * @param {string} id.path.required - Bath ID
+   * @param {Bath.model} bath.body.required - Updated bath details
+   * @security JWT
+   * @response {Bath.model} 200 - JSON response with a success message.
+   * @response {Error} 400 - Bad request
+   * @example &lt;caption>Example&lt;/caption>
+   * app.put("/api/bath/:id", [authJwt.verifyToken], controller.modifyBath);
+   * @example &lt;caption>Example request body:&lt;/caption>
+   * {
+      "author": "653c0489c189acbc95ec5fa7",
+      "waterTemperature": 1,
+      "timeInWater": 1,
+      "temperatureOutside": 1,
+      "weather": "ensoleillé",
+      "wind": "leger",
+      "recoveryTime": 1,
+      "afterdrop": "modéré",
+      "globalFeeling": "facile",
+      "commentary": "It was a refreshing experience."
+      }
+      @example &lt;caption>Example response&lt;/caption>
+      { "message": "Votre baignade a bien été modifié" }
+   */
+  app.put("/api/bath/:id", [authJwt.verifyToken], controller.modifyBath);
+
+  /**
+   * @name DELETE /api/bath/:id
+   * @description DELETE route to delete an existing bath record by ID.
+   * @see {@link module:BathController.deleteBath} - The function that handles this route.
+   * @see {@link module:AuthJwt.verifyToken} - This function uses the verifyToken middleware.
+   * @param {string} id.path.required - Bath ID
+   * @security JWT
+   * @response {Bath.model} 200 - JSON response with a success message.
+   * @response {Error} 400 - Bad request
+   * @example &lt;caption>Example&lt;/caption>
+   * app.delete("/api/bath/:id", [authJwt.verifyToken], controller.deleteBath);
+   * @example &lt;caption>Example response&lt;/caption>
+   * { "message": "Votre baignade a bien été supprimé" }
+   */
+  app.delete("/api/bath/:id", [authJwt.verifyToken], controller.deleteBath);
+
+  /**
+   * @name GET /api/bath
+   * @description GET route to retrieve all bath records.
+   * @see {@link module:BathController.getAllBaths} - The function that handles this route.
+   * @response {Bath.model} 200 - JSON response with a success message.
+   * @response {Error} 400 - Bad request
+   * @returns {Array.&lt;Bath>} 200 - An array of bath records
+   * @example &lt;caption>Example&lt;/caption>
+   * app.get("/api/bath", controller.getAllBaths);
+   * @example &lt;caption>Example response&lt;/caption>
+   * [
+	{
+		"_id": "653c04e5c125acbc95ec5fbd",
+		"author": {
+			"_id": "653c0489c189agfc95ec5fa7",
+			"username": "Marion"
+		},
+		"waterTemperature": 1,
+		"timeInWater": 1,
+		"temperatureOutside": 1,
+		"weather": "ensoleillé",
+		"wind": "leger",
+		"recoveryTime": 1,
+		"afterdrop": "modéré",
+		"globalFeeling": "facile",
+		"commentary": "It was a refreshing experience.",
+		"createdAt": "2023-10-27T18:43:49.068Z",
+		"updatedAt": "2023-10-27T18:43:49.068Z",
+		"__v": 0
+	},
+	{
+		"_id": "653c04e4c189acbc95ec5fba",
+		"author": {
+			"_id": "653c0489c189acbc95ec5fa7",
+			"username": "Denis"
+      ...}
+    ]
+   */
+  app.get("/api/bath", controller.getAllBaths);
+
+  /**
+   * @name GET /api/bath/:id
+   * @description GET route to retrieve a single bath record by ID.
+   * @see {@link module:BathController.getOneBath} - The function that handles this route.
+   * @param {string} id.path.required - Bath ID
+   * @response {Bath.model} 200 - JSON response with a success message.
+   * @response {Error} 400 - Bad request
+   * @returns {Bath.model} 200 - A single bath record
+   * @example &lt;caption>Example&lt;/caption>
+   * app.get("/api/bath/:id", controller.getOneBath);
+   * @example &lt;caption>Example response&lt;/caption>
+   * [
+	{
+		"_id": "653c04e5c125acbc95ec5fbd",
+		"author": {
+			"_id": "653c0489c189agfc95ec5fa7",
+			"username": "Marion"
+		},
+		"waterTemperature": 1,
+		"timeInWater": 1,
+		"temperatureOutside": 1,
+		"weather": "ensoleillé",
+		"wind": "leger",
+		"recoveryTime": 1,
+		"afterdrop": "modéré",
+		"globalFeeling": "facile",
+		"commentary": "It was a refreshing experience.",
+		"createdAt": "2023-10-27T18:43:49.068Z",
+		"updatedAt": "2023-10-27T18:43:49.068Z",
+		"__v": 0
+	}
+]
+   */
+  app.get("/api/bath/:id", controller.getOneBath);
+
+  /**
+   * @name GET /api/bath/user/:userId
+   * @description GET route to retrieve all bath records by user ID.
+   * @see {@link module:BathController.getAllBathsByUser} - The function that handles this route.
+   * @param {string} id.path.required - User ID
+   * @response {Bath.model} 200 - JSON response with a success message.
+   * @response {Error} 400 - Bad request
+   * @returns {Array.&lt;Bath>} 200 - An array of bath records for the user
+   * @example &lt;caption>Example&lt;/caption>
+   * app.get("/api/bath/user/:userId", controller.getAllBathsByUser);
+   * @example &lt;caption>Example response&lt;/caption>
+   * [
+	{
+		"_id": "653c04e5c125acbc95ec5fbd",
+		"author": {
+			"_id": "653c0489c189agfc95ec5fa7",
+			"username": "Marion"
+		},
+		"waterTemperature": 1,
+		"timeInWater": 1,
+		"temperatureOutside": 1,
+		"weather": "ensoleillé",
+		"wind": "leger",
+		"recoveryTime": 1,
+		"afterdrop": "modéré",
+		"globalFeeling": "facile",
+		"commentary": "It was a refreshing experience.",
+		"createdAt": "2023-10-27T18:43:49.068Z",
+		"updatedAt": "2023-10-27T18:43:49.068Z",
+		"__v": 0
+	}
+]
+   */
+  app.get("/api/bath/user/:userId", controller.getAllBathsByUser);
+
+  /**
+   * @name GET /api/bath/recent/:limit
+   * @description GET route to retrieve all recent baths.
+   * @see {@link module:BathController.getRecentBaths} - The function that handles this route.
+   * @param {number} limit.path.required - Number of recent baths to retrieve
+   * @response {Bath.model} 200 - JSON response with a success message.
+   * @response {Error} 400 - Bad request
+   * @returns {Array.&lt;Bath>} 200 - An array of recent bath records
+   * @example &lt;caption>Example&lt;/caption>
+   * app.get("/api/bath/recent/:limit", controller.getRecentBaths);
+   * @example &lt;caption>Example response&lt;/caption>
+   * [
+	{
+		"_id": "653c04e5c125acbc95ec5fbd",
+		"author": {
+			"_id": "653c0489c189agfc95ec5fa7",
+			"username": "Marion"
+		},
+		"waterTemperature": 1,
+		"timeInWater": 1,
+		"temperatureOutside": 1,
+		"weather": "ensoleillé",
+		"wind": "leger",
+		"recoveryTime": 1,
+		"afterdrop": "modéré",
+		"globalFeeling": "facile",
+		"commentary": "It was a refreshing experience.",
+		"createdAt": "2023-10-27T18:43:49.068Z",
+		"updatedAt": "2023-10-27T18:43:49.068Z",
+		"__v": 0
+	},
+	{
+		"_id": "653c04e4c189acbc95ec5fba",
+		"author": {
+			"_id": "653c0489c189acbc95ec5fa7",
+			"username": "Denis"
+      ...}
+    ]
+   */
+  app.get("/api/bath/recent/:limit", controller.getRecentBaths);
+};
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+    
+    
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 4.0.2</a> on Mon Oct 30 2023 20:04:09 GMT+0100 (heure normale d’Europe centrale) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/polyfill.js"></script>
+<script src="scripts/linenumber.js"></script>
+
+<script src="scripts/search.js" defer></script>
+
+
+<script src="scripts/collapse.js" defer></script>
+
+
+</body>
+</html>

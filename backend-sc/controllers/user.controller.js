@@ -1,41 +1,27 @@
 /**
  * @fileoverview Defines the controller for user-related operations.
  * @module UserController
- * @namespace UserController
  * @description This module provides functions for various user-related operations.
  * @requires ../models - Database models needed for users operations.
+ * @see {@link module:UserRoutes} - Router for user routes.
+ * @see {@link module:User} - User model from the database.
+ * @see {@link module:Role} - Role model from the database.
+ * @exports module:UserController
  */
 
-/**
- * @typedef {import('../models').User} User
- * @typedef {import('../models').Role} Role
- * @typedef {import('../models').Bath} Bath
- */
+// Import dependencies
 const db = require("../models");
 
-/**
- * User model from the database.
- * @type {User}
- */
 const User = db.user;
-/**
- * Role model from the database.
- * @type {Role}
- */
 const Role = db.role;
-/**
- * Bath model from the database.
- * @type {Bath}
- */
 const Bath = db.bath;
-/**
- * Options for sorting the fetched users.
- * @type {Object}
- */
+
+// Define the sort options for user records
 const sortOptions = { roles: -1 };
+
 /**
- * @async
  * @function findAllUsers
+ * @async
  * @description Fetches all users from the database.
  * @see {@link module:UserRoutes} - This function is used in the GET /api/users/all route.
  * @param {Object} req - Express request object.

@@ -1,7 +1,6 @@
 /**
  * @fileoverview Defines the service for sending emails.
  * @module NodemailerConfig
- * @namespace NodemailerConfig
  * @description Defines the service for sending emails.
  * @requires nodemailer - Nodemailer module.
  * @requires dotenv - Loads environment variables from a .env file into process.env.
@@ -19,13 +18,16 @@ const dotenv = require("dotenv");
 dotenv.config();
 
 /**
- * @typedef {Object} AuthCredentials
- * @property {string} user - The email address used for sending emails.
- * @property {string} pass - The password associated with the email address.
- */
-/**
- * SMTP settings for sending emails.
- * @type {import("nodemailer").Transporter}
+ * @constant {object} transporter
+ * @description The transporter object that will be used to send emails.
+ * @see {@link https://www.npmjs.com/package/nodemailer|nodemailer}
+ * @example
+ * const transporter = nodeMailer.createTransport({
+ * service: "gmail",
+ * auth: {
+ *    user: process.env.EMAIL_USER,
+ *   pass: process.env.EMAIL_PASS,
+ * },
  */
 const transporter = nodeMailer.createTransport({
   service: "gmail",
@@ -137,7 +139,6 @@ module.exports.sendResetPasswordMail = async (name, email, resetCode) => {
  * @param {string} subject - The subject of the email.
  * @param {string} message - The message content.
  * @throws {Error} Throws an error if the email sending fails.
- * @example
  */
 module.exports.sendContactMail = async (contact, subject, message) => {
   try {

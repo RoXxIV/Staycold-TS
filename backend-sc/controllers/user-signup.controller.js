@@ -1,17 +1,19 @@
 /**
  * @fileoverview Defines the controller for user signup functionality.
- * @module UserSignup
- * @namespace UserSignup
+ * @module UserSignupController
  * @description This module provides a function for user signup.
  * @requires dotenv - Module for loading environment variables from a .env file.
  * @requires jsonwebtoken - Module for generating JWT tokens.
  * @requires bcryptjs - Module for hashing passwords.
  * @requires ../plugins/nodemailer.config - Module for sending emails.
  * @requires ../models - User and Role models from the database.
- * @exports signup
  * @see {@link https://www.npmjs.com/package/dotenv|dotenv}
  * @see {@link https://www.npmjs.com/package/jsonwebtoken|jsonwebtoken}
  * @see {@link https://www.npmjs.com/package/bcryptjs|bcryptjs}
+ * @see {@link module:NodemailerConfig} - Nodemailer configuration for sending emails.
+ * @see {@link module:User} - User model from the database.
+ * @see {@link module:Role} - Role model from the database.
+ * @exports module:UserSignupController
  */
 
 // import dependencies
@@ -20,26 +22,13 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const nodemailer = require("../plugins/nodemailer.config");
 
-/**
- * @typedef {import('../models').User} User
- * @typedef {import('../models').Role} Role
- */
+// import database models
 const db = require("../models");
 
-/**
- * User model from the database.
- * @type {User}
- */
 const User = db.user;
-/**
- * Role models from the database.
- * @type {Role}
- */
 const Role = db.role;
 
-/**
- * @description Loads environment variables from a .env file into process.env
- */
+// Load environment variables
 dotenv.config();
 
 /**

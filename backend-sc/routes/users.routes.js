@@ -1,7 +1,6 @@
 /**
  * @fileoverview Defines and configures the routes for user-related operations.
  * @module UserRoutes
- * @namespace UserRoutes
  * @description Defines the routes for user-related operations.
  * @requires ../controllers/user.controller - UserController
  * @requires ../middlewares - authJwt
@@ -9,17 +8,9 @@
 const controller = require("../controllers/user.controller");
 const { authJwt } = require("../middlewares");
 
-/**
- * @function
- * @description Configures user-related routes.
- * @see {@link module:UserController} - This function uses the UserController for handling routes.
- * @see {@link module:AuthJwt} - This function uses the authJwt middleware.
- * @param {import('express').Application} app - The Express application object.
- */
 module.exports = function (app) {
   /**
-   * @function
-   * @description Middleware to set allowed headers.
+   * @description This middleware is used to set headers for CORS and tokens.
    * @param {Object} req - Express request object.
    * @param {Object} res - Express response object.
    * @param {function} next - Express next middleware function.
@@ -33,17 +24,38 @@ module.exports = function (app) {
   });
 
   /**
-   * @name findAllUsers
-   * @function
-   * @group User - Operations related to users.
+   * @name GET /api/users/all
    * @description Route to get all users.
-   * @path {GET} /api/users/all
    * @see {@link module:UserController.findAllUsers} - This function uses the UserController for handling routes.
    * @see {@link module:AuthJwt.verifyToken} - This function uses the verifyToken middleware.
-   * @middleware authJwt.verifyToken, authJwt.isModerator
+   * @see {@link module:AuthJwt.isModerator} - This function uses the isModerator middleware.
    * @returns {Object} 200 - JSON response containing all users.
    * @returns {Object} 400 - JSON response with an error message.
    * @security JWT
+   * @example <caption>Example</caption>
+   * app.get(
+    "/api/users/all",
+    [authJwt.verifyToken, authJwt.isModerator],
+    controller.findAllUsers
+  );
+   * @example <caption>Example response</caption>
+   * [
+	{
+		"_id": "65397ab056b046754cebcb12",
+		"username": "john",
+		"email": "john.doe@gmail.com",
+		"status": "Active",
+		"roles": [
+			{
+				"_id": "65355ab097a4d34bf4956020",
+				"name": "admin"
+			}
+		],
+		"createdAt": "2023-10-25T20:29:36.373Z",
+		"updatedAt": "2023-10-25T20:32:49.009Z",
+		"__v": 1
+	}
+]
    */
   app.get(
     "/api/users/all",
@@ -52,18 +64,38 @@ module.exports = function (app) {
   );
 
   /**
-   * @name getOneUser
-   * @function
-   * @group User - Operations related to users.
-   * @description Route to get a single user.
-   * @path {GET} /api/users/:id
-   * @see {@link module:UserController.getOneUser} - This function uses the UserController for handling routes.
+   * @name GET /api/users/:id
+   * @description Route to get a single user by ID.
+   * @see {@link module:UserController.getOneUser} - This function uses the getOneUser controller.
    * @see {@link module:AuthJwt.verifyToken} - This function uses the verifyToken middleware.
-   * @middleware authJwt.verifyToken, authJwt.isModerator
-   * @param {string} id.path.required - User ID
-   * @returns {Object} 200 - JSON response containing the user information.
-   * @returns {Object} 404 - JSON response if the user is not found.
+   * @see {@link module:AuthJwt.isModerator} - This function uses the isModerator middleware.
+   * @returns {Object} 200 - JSON response containing the user.
+   * @returns {Object} 400 - JSON response with an error message.
    * @security JWT
+   * @example <caption>Example</caption>
+   * app.get(
+    "/api/users/:id",
+    [authJwt.verifyToken, authJwt.isModerator],
+    controller.getOneUser
+  );
+    * @example <caption>Example response</caption>
+    * [
+	{
+		"_id": "65397ab056b046754cebcb12",
+		"username": "john",
+		"email": "john.doe@gmail.com",
+		"status": "Active",
+		"roles": [
+			{
+				"_id": "65355ab097a4d34bf4956020",
+				"name": "admin"
+			}
+		],
+		"createdAt": "2023-10-25T20:29:36.373Z",
+		"updatedAt": "2023-10-25T20:32:49.009Z",
+		"__v": 1
+	}
+]
    */
   app.get(
     "/api/users/:id",
@@ -72,18 +104,22 @@ module.exports = function (app) {
   );
 
   /**
-   * @name deleteOneUser
-   * @function
-   * @group User - Operations related to users.
-   * @description Route to delete a single user.
-   * @path {DELETE} /api/users/:id
-   * @see {@link module:UserController.deleteOneUser} - This function uses the UserController for handling routes.
+   * @name DELETE /api/users/:id
+   * @description Route to delete a single user and all associated baths by ID.
+   * @see {@link module:UserController.deleteOneUser} - This function uses the deleteOneUser controller.
    * @see {@link module:AuthJwt.verifyToken} - This function uses the verifyToken middleware.
-   * @middleware authJwt.verifyToken, authJwt.isAdmin
-   * @param {string} id.path.required - User ID
-   * @returns {Object} 200 - JSON response confirming the deletion.
+   * @see {@link module:AuthJwt.isAdmin} - This function uses the isAdmin middleware.
+   * @returns {Object} 200 - JSON response containing a success message.
    * @returns {Object} 400 - JSON response with an error message.
    * @security JWT
+   * @example <caption>Example</caption>
+   * app.delete(
+    "/api/users/:id",
+    [authJwt.verifyToken, authJwt.isAdmin],
+    controller.deleteOneUser
+  );
+    * @example <caption>Example response</caption>
+    * { "message": "L'utilisateur et les baignades associés ont bien été supprimé !" }
    */
   app.delete(
     "/api/users/:id",
@@ -92,18 +128,22 @@ module.exports = function (app) {
   );
 
   /**
-   * @name updateUserRole
-   * @function
-   * @group User - Operations related to users.
-   * @description Route to update a user's role.
-   * @path {POST} /api/users/update-role/:id
-   * @see {@link module:UserController.updateUserRole} - This function uses the UserController for handling routes.
+   * @name POST /api/users/update-role/:id
+   * @description Route to update a user's role by ID.
+   * @see {@link module:UserController.updateUserRole} - This function uses the updateUserRole controller.
    * @see {@link module:AuthJwt.verifyToken} - This function uses the verifyToken middleware.
-   * @middleware authJwt.verifyToken, authJwt.isAdmin
-   * @param {string} id.path.required - User ID
-   * @returns {Object} 200 - JSON response confirming the role update.
+   * @see {@link module:AuthJwt.isAdmin} - This function uses the isAdmin middleware.
+   * @returns {Object} 200 - JSON response containing a success message.
    * @returns {Object} 400 - JSON response with an error message.
    * @security JWT
+   * @example <caption>Example</caption>
+   * app.post(
+    "/api/users/update-role/:id",
+    [authJwt.verifyToken, authJwt.isAdmin],
+    controller.updateUserRole
+  );
+    * @example <caption>Example response</caption>
+    * { "message": "Le rôle de l'utilisateur a été mis à jour !" }
    */
   app.post(
     "/api/users/update-role/:id",

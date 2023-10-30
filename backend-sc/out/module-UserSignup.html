@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="utf-8">
+    <title>UserSignup - Documentation</title>
+    
+    
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+    <script src="scripts/nav.js" defer></script>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav >
+    
+    <input type="text" id="nav-search" placeholder="Search" />
+    
+    
+    <h2><a href="index.html">Home</a></h2><h2><a href="https://github.com/RoXxIV/Staycold-TS" target="_blank" class="menu-item" id="repository" >Github repo</a></h2><h3>Classes</h3><ul><li><a href="Bath.html">Bath</a></li><li><a href="Role.html">Role</a></li><li><a href="User.html">User</a></li></ul><h3>Modules</h3><ul><li><a href="module-ContactRoutes.html">ContactRoutes</a><ul class='methods'><li data-type='method' style='display: none;'><a href="module-ContactRoutes.html#~handleFormContact">handleFormContact</a></li></ul></li><li><a href="module-Middlewares.html">Middlewares</a></li><li><a href="module-Models.html">Models</a></li><li><a href="module-NodemailerConfig.html">NodemailerConfig</a><ul class='methods'><li data-type='method' style='display: none;'><a href="module-NodemailerConfig.html#~sendActivationMail">sendActivationMail</a></li><li data-type='method' style='display: none;'><a href="module-NodemailerConfig.html#~sendContactMail">sendContactMail</a></li><li data-type='method' style='display: none;'><a href="module-NodemailerConfig.html#~sendResetPasswordMail">sendResetPasswordMail</a></li></ul></li><li><a href="module-RoleInitialization.html">RoleInitialization</a><ul class='methods'><li data-type='method' style='display: none;'><a href="module-RoleInitialization.html#~initRoles">initRoles</a></li></ul></li><li><a href="module-Server%2520-%2520Backend%2520entry%2520point.html">Server - Backend entry point</a></li><li><a href="module-UserSignin.html">UserSignin</a></li><li><a href="module-UserSignup.html">UserSignup</a></li><li><a href="module-UserVerificationController.html">UserVerificationController</a></li></ul><h3>Namespaces</h3><ul><li><a href="AuthJwt.html">AuthJwt</a><ul class='methods'><li data-type='method' style='display: none;'><a href="AuthJwt.html#.isAdmin">isAdmin</a></li><li data-type='method' style='display: none;'><a href="AuthJwt.html#.isModerator">isModerator</a></li><li data-type='method' style='display: none;'><a href="AuthJwt.html#.verifyToken">verifyToken</a></li></ul></li><li><a href="AuthRoutes.html">AuthRoutes</a></li><li><a href="BathController.html">BathController</a><ul class='methods'><li data-type='method' style='display: none;'><a href="BathController.html#.createBath">createBath</a></li><li data-type='method' style='display: none;'><a href="BathController.html#.deleteBath">deleteBath</a></li><li data-type='method' style='display: none;'><a href="BathController.html#.getAllBaths">getAllBaths</a></li><li data-type='method' style='display: none;'><a href="BathController.html#.getAllBathsByUser">getAllBathsByUser</a></li><li data-type='method' style='display: none;'><a href="BathController.html#.getOneBath">getOneBath</a></li><li data-type='method' style='display: none;'><a href="BathController.html#.getRecentBaths">getRecentBaths</a></li><li data-type='method' style='display: none;'><a href="BathController.html#.modifyBath">modifyBath</a></li></ul></li><li><a href="BathRoutes.html">BathRoutes</a></li><li><a href="ContactFormController.html">ContactFormController</a><ul class='methods'><li data-type='method' style='display: none;'><a href="ContactFormController.html#.handleFormContact">handleFormContact</a></li></ul></li><li><a href="UserController.html">UserController</a><ul class='methods'><li data-type='method' style='display: none;'><a href="UserController.html#.deleteOneUser">deleteOneUser</a></li><li data-type='method' style='display: none;'><a href="UserController.html#.findAllUsers">findAllUsers</a></li><li data-type='method' style='display: none;'><a href="UserController.html#.getOneUser">getOneUser</a></li><li data-type='method' style='display: none;'><a href="UserController.html#.updateUserRole">updateUserRole</a></li></ul></li><li><a href="UserPasswordResetController.html">UserPasswordResetController</a><ul class='methods'><li data-type='method' style='display: none;'><a href="UserPasswordResetController.html#.resetPassword">resetPassword</a></li><li data-type='method' style='display: none;'><a href="UserPasswordResetController.html#.sendEmailResetPassword">sendEmailResetPassword</a></li></ul></li><li><a href="UserPermissionsController.html">UserPermissionsController</a><ul class='methods'><li data-type='method' style='display: none;'><a href="UserPermissionsController.html#.adminBoard">adminBoard</a></li><li data-type='method' style='display: none;'><a href="UserPermissionsController.html#.allAccess">allAccess</a></li><li data-type='method' style='display: none;'><a href="UserPermissionsController.html#.moderatorBoard">moderatorBoard</a></li><li data-type='method' style='display: none;'><a href="UserPermissionsController.html#.userBoard">userBoard</a></li></ul></li><li><a href="UserPermissionsRoutes.html">UserPermissionsRoutes</a></li><li><a href="UserRoutes.html">UserRoutes</a></li><li><a href="VerifySignUp.html">VerifySignUp</a><ul class='methods'><li data-type='method' style='display: none;'><a href="VerifySignUp.html#.checkDuplicateUsernameOrEmail">checkDuplicateUsernameOrEmail</a></li><li data-type='method' style='display: none;'><a href="VerifySignUp.html#.checkRolesExisted">checkRolesExisted</a></li></ul></li></ul><h3>Global</h3><ul><li><a href="global.html#adminBoard">adminBoard</a></li><li><a href="global.html#afterdrop">afterdrop</a></li><li><a href="global.html#allAccess">allAccess</a></li><li><a href="global.html#author">author</a></li><li><a href="global.html#commentary">commentary</a></li><li><a href="global.html#confirmationCode">confirmationCode</a></li><li><a href="global.html#createBath">createBath</a></li><li><a href="global.html#deleteBath">deleteBath</a></li><li><a href="global.html#deleteOneUser">deleteOneUser</a></li><li><a href="global.html#email">email</a></li><li><a href="global.html#findAllUsers">findAllUsers</a></li><li><a href="global.html#getAllBaths">getAllBaths</a></li><li><a href="global.html#getAllBathsByUser">getAllBathsByUser</a></li><li><a href="global.html#getOneBath">getOneBath</a></li><li><a href="global.html#getOneUser">getOneUser</a></li><li><a href="global.html#getRecentBaths">getRecentBaths</a></li><li><a href="global.html#globalFeeling">globalFeeling</a></li><li><a href="global.html#moderatorBoard">moderatorBoard</a></li><li><a href="global.html#modifyBath">modifyBath</a></li><li><a href="global.html#name">name</a></li><li><a href="global.html#password">password</a></li><li><a href="global.html#recoveryTime">recoveryTime</a></li><li><a href="global.html#resetPassword">resetPassword</a></li><li><a href="global.html#resetPasswordEmail">resetPasswordEmail</a></li><li><a href="global.html#roles">roles</a></li><li><a href="global.html#signin">signin</a></li><li><a href="global.html#signup">signup</a></li><li><a href="global.html#status">status</a></li><li><a href="global.html#temperatureOutside">temperatureOutside</a></li><li><a href="global.html#timeInWater">timeInWater</a></li><li><a href="global.html#timestamps">timestamps</a></li><li><a href="global.html#updateUserRole">updateUserRole</a></li><li><a href="global.html#userBoard">userBoard</a></li><li><a href="global.html#username">username</a></li><li><a href="global.html#verifyUserStatus">verifyUserStatus</a></li><li><a href="global.html#waterTemperature">waterTemperature</a></li><li><a href="global.html#weather">weather</a></li><li><a href="global.html#wind">wind</a></li></ul>
+    
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">UserSignup</h1>
+    
+
+    
+
+
+
+
+<section>
+
+<header>
+    
+</header>
+
+<article>
+    
+        <div class="container-overview">
+        
+            
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li><p>This module provides a function for user signup.</p></li></ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="controllers_user-signup.controller.js.html">controllers/user-signup.controller.js</a>, <a href="controllers_user-signup.controller.js.html#line1">line 1</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-see">See:</dt>
+    <dd class="tag-see">
+        <ul>
+            <li><a href="https://www.npmjs.com/package/dotenv">dotenv</a></li>
+        
+            <li><a href="https://www.npmjs.com/package/jsonwebtoken">jsonwebtoken</a></li>
+        
+            <li><a href="https://www.npmjs.com/package/bcryptjs">bcryptjs</a></li>
+        </ul>
+    </dd>
+    
+
+    
+</dl>
+
+
+
+
+            
+                <div class="description usertext"><p>This module provides a function for user signup.</p></div>
+            
+
+            
+        
+        </div>
+    
+
+    
+
+    
+        <h3 class="subsection-title">Requires</h3>
+
+        <ul>
+            <li>module:dotenv</li>
+        
+            <li>module:jsonwebtoken</li>
+        
+            <li>module:bcryptjs</li>
+        
+            <li>module:../plugins/nodemailer.config</li>
+        
+            <li>module:../models</li>
+        </ul>
+    
+
+    
+    
+    
+
+     
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+    
+    
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 4.0.2</a> on Sun Oct 29 2023 23:36:28 GMT+0100 (heure normale d’Europe centrale) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/polyfill.js"></script>
+<script src="scripts/linenumber.js"></script>
+
+<script src="scripts/search.js" defer></script>
+
+
+<script src="scripts/collapse.js" defer></script>
+
+
+</body>
+</html>

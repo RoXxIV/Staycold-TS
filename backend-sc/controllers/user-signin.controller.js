@@ -1,16 +1,16 @@
 /**
  * @fileoverview Defines the controller for user signin functionality.
- * @module UserSignin
- * @namespace UserSignin
+ * @module UserSigninController
  * @description This module provides a function for user signin.
  * @requires dotenv - Module for loading environment variables from a .env file.
  * @requires ../models - User model from the database.
  * @requires jsonwebtoken - Module for generating JWT tokens.
  * @requires bcryptjs - Module for hashing passwords.
- * @exports signin
  * @see {@link https://www.npmjs.com/package/dotenv|dotenv}
  * @see {@link https://www.npmjs.com/package/jsonwebtoken|jsonwebtoken}
  * @see {@link https://www.npmjs.com/package/bcryptjs|bcryptjs}
+ * @see {@link module:User} - User model from the database.
+ * @exports module:UserSigninController
  */
 
 // import dependencies
@@ -18,24 +18,15 @@ const dotenv = require("dotenv");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 
-/**
- * @typedef {import('../models').User} User
- */
+// import database models
 const db = require("../models");
 
-/**
- * User model from the database.
- * @type {User}
- */
 const User = db.user;
 
-/**
- * @description Loads environment variables from a .env file into process.env
- */
+// Load environment variables
 dotenv.config();
 
 /**
- *
  * @function signin
  * @async
  * @description Handles user signin - This function is called when the user clicks on the "Sign in" button.

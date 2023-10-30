@@ -1,8 +1,10 @@
 /**
  * @fileoverview Defines the controller for user permissions.
  * @module UserPermissionsController
- * @namespace UserPermissionsController
  * @description This module handles all operations related to user permissions.
+ * @requires ../middlewares/auth-jwt - Middleware for verifying JWT tokens.
+ * @exports module:UserPermissionsController
+ * @see {@link module:UserPermissionsRoutes} - Router for user permissions routes.
  */
 
 /**

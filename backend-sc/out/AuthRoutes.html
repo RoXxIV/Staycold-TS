@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="utf-8">
+    <title>AuthRoutes - Documentation</title>
+    
+    
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+    <script src="scripts/nav.js" defer></script>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav >
+    
+    <input type="text" id="nav-search" placeholder="Search" />
+    
+    
+    <h2><a href="index.html">Home</a></h2><h2><a href="https://github.com/RoXxIV/Staycold-TS" target="_blank" class="menu-item" id="repository" >Github repo</a></h2><h3>Classes</h3><ul><li><a href="Bath.html">Bath</a></li><li><a href="Role.html">Role</a></li><li><a href="User.html">User</a></li></ul><h3>Modules</h3><ul><li><a href="module-AuthJwt.html">AuthJwt</a><ul class='methods'><li data-type='method' style='display: none;'><a href="module-AuthJwt.html#~isAdmin">isAdmin</a></li><li data-type='method' style='display: none;'><a href="module-AuthJwt.html#~isModerator">isModerator</a></li><li data-type='method' style='display: none;'><a href="module-AuthJwt.html#~verifyToken">verifyToken</a></li></ul></li><li><a href="module-BathController.html">BathController</a><ul class='methods'><li data-type='method' style='display: none;'><a href="module-BathController.html#~createBath">createBath</a></li><li data-type='method' style='display: none;'><a href="module-BathController.html#~deleteBath">deleteBath</a></li><li data-type='method' style='display: none;'><a href="module-BathController.html#~getAllBaths">getAllBaths</a></li><li data-type='method' style='display: none;'><a href="module-BathController.html#~getAllBathsByUser">getAllBathsByUser</a></li><li data-type='method' style='display: none;'><a href="module-BathController.html#~getOneBath">getOneBath</a></li><li data-type='method' style='display: none;'><a href="module-BathController.html#~getRecentBaths">getRecentBaths</a></li><li data-type='method' style='display: none;'><a href="module-BathController.html#~modifyBath">modifyBath</a></li></ul></li><li><a href="module-ContactFormController.html">ContactFormController</a><ul class='methods'><li data-type='method' style='display: none;'><a href="module-ContactFormController.html#~handleFormContact">handleFormContact</a></li></ul></li><li><a href="module-Middlewares.html">Middlewares</a></li><li><a href="module-Models.html">Models</a></li><li><a href="module-NodemailerConfig.html">NodemailerConfig</a><ul class='methods'><li data-type='method' style='display: none;'><a href="module-NodemailerConfig.html#~sendActivationMail">sendActivationMail</a></li><li data-type='method' style='display: none;'><a href="module-NodemailerConfig.html#~sendContactMail">sendContactMail</a></li><li data-type='method' style='display: none;'><a href="module-NodemailerConfig.html#~sendResetPasswordMail">sendResetPasswordMail</a></li></ul></li><li><a href="module-RoleInitialization.html">RoleInitialization</a><ul class='methods'><li data-type='method' style='display: none;'><a href="module-RoleInitialization.html#~initRoles">initRoles</a></li></ul></li><li><a href="module-Server%2520-%2520Backend%2520entry%2520point.html">Server - Backend entry point</a></li><li><a href="module-UserController.html">UserController</a><ul class='methods'><li data-type='method' style='display: none;'><a href="module-UserController.html#~deleteOneUser">deleteOneUser</a></li><li data-type='method' style='display: none;'><a href="module-UserController.html#~findAllUsers">findAllUsers</a></li><li data-type='method' style='display: none;'><a href="module-UserController.html#~getOneUser">getOneUser</a></li><li data-type='method' style='display: none;'><a href="module-UserController.html#~updateUserRole">updateUserRole</a></li></ul></li><li><a href="module-UserPasswordResetController.html">UserPasswordResetController</a><ul class='methods'><li data-type='method' style='display: none;'><a href="module-UserPasswordResetController.html#~resetPassword">resetPassword</a></li><li data-type='method' style='display: none;'><a href="module-UserPasswordResetController.html#~sendEmailResetPassword">sendEmailResetPassword</a></li></ul></li><li><a href="module-UserPermissionsController.html">UserPermissionsController</a><ul class='methods'><li data-type='method' style='display: none;'><a href="module-UserPermissionsController.html#~adminBoard">adminBoard</a></li><li data-type='method' style='display: none;'><a href="module-UserPermissionsController.html#~allAccess">allAccess</a></li><li data-type='method' style='display: none;'><a href="module-UserPermissionsController.html#~moderatorBoard">moderatorBoard</a></li><li data-type='method' style='display: none;'><a href="module-UserPermissionsController.html#~userBoard">userBoard</a></li></ul></li><li><a href="module-UserSigninController.html">UserSigninController</a><ul class='methods'><li data-type='method' style='display: none;'><a href="module-UserSigninController.html#~signin">signin</a></li></ul></li><li><a href="module-UserSignupController.html">UserSignupController</a><ul class='methods'><li data-type='method' style='display: none;'><a href="module-UserSignupController.html#~signup">signup</a></li></ul></li><li><a href="module-UserVerificationController.html">UserVerificationController</a><ul class='methods'><li data-type='method' style='display: none;'><a href="module-UserVerificationController.html#~verifyUserStatus">verifyUserStatus</a></li></ul></li><li><a href="module-VerifySignUp.html">VerifySignUp</a><ul class='methods'><li data-type='method' style='display: none;'><a href="module-VerifySignUp.html#~checkDuplicateUsernameOrEmail">checkDuplicateUsernameOrEmail</a></li><li data-type='method' style='display: none;'><a href="module-VerifySignUp.html#~checkRolesExisted">checkRolesExisted</a></li></ul></li></ul><h3>Namespaces</h3><ul><li><a href="AuthRoutes.html">AuthRoutes</a><ul class='members'><li data-type='member' style='display: none;'><a href="AuthRoutes.html#.POST/api/auth/email-reset-password/:email">POST /api/auth/email-reset-password/:email</a></li><li data-type='member' style='display: none;'><a href="AuthRoutes.html#.POST/api/auth/reset-password/:confirmationCode">POST /api/auth/reset-password/:confirmationCode</a></li><li data-type='member' style='display: none;'><a href="AuthRoutes.html#.POST/api/auth/signin">POST /api/auth/signin</a></li><li data-type='member' style='display: none;'><a href="AuthRoutes.html#.POST/api/auth/signup">POST /api/auth/signup</a></li></ul><ul class='methods'><li data-type='method' style='display: none;'><a href="AuthRoutes.html#.POST/api/auth/verify/:confirmationCode">POST /api/auth/verify/:confirmationCode</a></li></ul></li><li><a href="BathRoutes.html">BathRoutes</a><ul class='members'><li data-type='member' style='display: none;'><a href="BathRoutes.html#.DELETE/api/bath/:id">DELETE /api/bath/:id</a></li><li data-type='member' style='display: none;'><a href="BathRoutes.html#.GET/api/bath">GET /api/bath</a></li><li data-type='member' style='display: none;'><a href="BathRoutes.html#.GET/api/bath/:id">GET /api/bath/:id</a></li><li data-type='member' style='display: none;'><a href="BathRoutes.html#.GET/api/bath/recent/:limit">GET /api/bath/recent/:limit</a></li><li data-type='member' style='display: none;'><a href="BathRoutes.html#.GET/api/bath/user/:userId">GET /api/bath/user/:userId</a></li><li data-type='member' style='display: none;'><a href="BathRoutes.html#.POST/api/bath">POST /api/bath</a></li><li data-type='member' style='display: none;'><a href="BathRoutes.html#.PUT/api/bath/:id">PUT /api/bath/:id</a></li></ul></li><li><a href="ContactRoutes.html">ContactRoutes</a><ul class='members'><li data-type='member' style='display: none;'><a href="ContactRoutes.html#.POST/api/contact">POST /api/contact</a></li></ul></li><li><a href="UserPermissionsRoutes.html">UserPermissionsRoutes</a><ul class='members'><li data-type='member' style='display: none;'><a href="UserPermissionsRoutes.html#.GET/api/permissions/admin">GET /api/permissions/admin</a></li><li data-type='member' style='display: none;'><a href="UserPermissionsRoutes.html#.GET/api/permissions/all">GET /api/permissions/all</a></li><li data-type='member' style='display: none;'><a href="UserPermissionsRoutes.html#.GET/api/permissions/mod">GET /api/permissions/mod</a></li><li data-type='member' style='display: none;'><a href="UserPermissionsRoutes.html#.GET/api/permissions/user">GET /api/permissions/user</a></li></ul></li><li><a href="UserRoutes.html">UserRoutes</a><ul class='members'><li data-type='member' style='display: none;'><a href="UserRoutes.html#.DELETE/api/users/:id">DELETE /api/users/:id</a></li><li data-type='member' style='display: none;'><a href="UserRoutes.html#.GET/api/users/:id">GET /api/users/:id</a></li><li data-type='member' style='display: none;'><a href="UserRoutes.html#.GET/api/users/all">GET /api/users/all</a></li><li data-type='member' style='display: none;'><a href="UserRoutes.html#.POST/api/users/update-role/:id">POST /api/users/update-role/:id</a></li></ul></li></ul><h3>Global</h3><ul><li><a href="global.html#afterdrop">afterdrop</a></li><li><a href="global.html#author">author</a></li><li><a href="global.html#commentary">commentary</a></li><li><a href="global.html#confirmationCode">confirmationCode</a></li><li><a href="global.html#email">email</a></li><li><a href="global.html#globalFeeling">globalFeeling</a></li><li><a href="global.html#name">name</a></li><li><a href="global.html#password">password</a></li><li><a href="global.html#recoveryTime">recoveryTime</a></li><li><a href="global.html#roles">roles</a></li><li><a href="global.html#status">status</a></li><li><a href="global.html#temperatureOutside">temperatureOutside</a></li><li><a href="global.html#timeInWater">timeInWater</a></li><li><a href="global.html#timestamps">timestamps</a></li><li><a href="global.html#username">username</a></li><li><a href="global.html#waterTemperature">waterTemperature</a></li><li><a href="global.html#weather">weather</a></li><li><a href="global.html#wind">wind</a></li></ul>
+    
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">AuthRoutes</h1>
+    
+
+    
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>
+        
+            Namespace
+        
+        </h2>
+        
+    
+</header>
+
+<article>
+    
+        <div class="container-overview">
+        
+            
+
+
+    
+
+    <h4 class="name" id="AuthRoutes">AuthRoutes</h4>
+
+    
+
+
+
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li><p>This module aggregates routes for user signup, signin, and account verification.</p></li></ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="routes_auth.routes.js.html">routes/auth.routes.js</a>, <a href="routes_auth.routes.js.html#line1">line 1</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5 class="h5-requires">Requires:</h5>
+<ul>
+    <li>module:../middlewares</li>
+
+    <li>module:../controllers/user-signup.controller</li>
+
+    <li>module:../controllers/user-verify-status.controller</li>
+
+    <li>module:../controllers/user-signin.controller</li>
+
+    <li>module:../controllers/user-reset-password.controller</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+        </div>
+    
+
+    
+
+    
+        <h3 class="subsection-title">Requires</h3>
+
+        <ul>
+            <li>module:../middlewares</li>
+        
+            <li>module:../controllers/user-signup.controller</li>
+        
+            <li>module:../controllers/user-verify-status.controller</li>
+        
+            <li>module:../controllers/user-signin.controller</li>
+        
+            <li>module:../controllers/user-reset-password.controller</li>
+        </ul>
+    
+
+    
+    
+    
+
+     
+
+    
+
+    
+        <h3 class="subsection-title">Members</h3>
+
+        
+            
+<h4 class="name" id=".POST/api/auth/email-reset-password/:email"><span class="type-signature type-signature-static">(static) </span>POST /api/auth/email-reset-password/:email<span class="type-signature"></span></h4>
+
+
+
+
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li><p>Envoie du mail permettant de générer un nouveau mot de passe.</p></li></ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="routes_auth.routes.js.html">routes/auth.routes.js</a>, <a href="routes_auth.routes.js.html#line107">line 107</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-see">See:</dt>
+    <dd class="tag-see">
+        <ul>
+            <li>module:PasswordReset.sendEmailResetPassword</li>
+        </ul>
+    </dd>
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    <p>Envoie du mail permettant de générer un nouveau mot de passe.</p>
+</div>
+
+
+
+
+
+
+
+    <h5 class="h5-examples">Examples</h5>
+    
+        <p class="code-caption">Example</p>
+    
+    <pre class="prettyprint"><code>app.post(
+    "/api/auth/email-reset-password/:email",
+    resetPasswordController.sendEmailResetPassword
+  );
+  </code></pre>
+
+        <p class="code-caption">Example response</p>
+    
+    <pre class="prettyprint"><code>  {
+    "message": "Un email a été envoyé à l'adresse indiquée"
+  }</code></pre>
+
+
+
+        
+            
+<h4 class="name" id=".POST/api/auth/reset-password/:confirmationCode"><span class="type-signature type-signature-static">(static) </span>POST /api/auth/reset-password/:confirmationCode<span class="type-signature"></span></h4>
+
+
+
+
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li><p>envoie du nouveau mot de passe.</p></li></ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="routes_auth.routes.js.html">routes/auth.routes.js</a>, <a href="routes_auth.routes.js.html#line128">line 128</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-see">See:</dt>
+    <dd class="tag-see">
+        <ul>
+            <li>module:PasswordReset.resetPassword</li>
+        </ul>
+    </dd>
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    <p>envoie du nouveau mot de passe.</p>
+</div>
+
+
+
+
+
+
+
+    <h5 class="h5-examples">Examples</h5>
+    
+        <p class="code-caption">Example</p>
+    
+    <pre class="prettyprint"><code>app.post(
+    "/api/auth/reset-password/:confirmationCode",
+    resetPasswordController.resetPassword
+  );</code></pre>
+
+        <p class="code-caption">Example request body:</p>
+    
+    <pre class="prettyprint"><code>{"password": "StrongPassword123!"}</code></pre>
+
+        <p class="code-caption">Example response</p>
+    
+    <pre class="prettyprint"><code>{"message": "Votre mot de passe a bien été modifié"}</code></pre>
+
+
+
+        
+            
+<h4 class="name" id=".POST/api/auth/signin"><span class="type-signature type-signature-static">(static) </span>POST /api/auth/signin<span class="type-signature"></span></h4>
+
+
+
+
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li><p>This route is used for user signin.</p></li></ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="routes_auth.routes.js.html">routes/auth.routes.js</a>, <a href="routes_auth.routes.js.html#line90">line 90</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-see">See:</dt>
+    <dd class="tag-see">
+        <ul>
+            <li>module:UserSignin.signin</li>
+        </ul>
+    </dd>
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    <p>This route is used for user signin.</p>
+</div>
+
+
+
+
+
+
+
+    <h5 class="h5-examples">Examples</h5>
+    
+        <p class="code-caption">Example</p>
+    
+    <pre class="prettyprint"><code>app.post("/api/auth/signin", signinController.signin);</code></pre>
+
+        <p class="code-caption">Example request body:</p>
+    
+    <pre class="prettyprint"><code>{
+      "username": "john",
+      "password": "StrongPassword123!"
+    }</code></pre>
+
+
+
+        
+            
+<h4 class="name" id=".POST/api/auth/signup"><span class="type-signature type-signature-static">(static) </span>POST /api/auth/signup<span class="type-signature"></span></h4>
+
+
+
+
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li><p>This route is used for user signup.</p></li></ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="routes_auth.routes.js.html">routes/auth.routes.js</a>, <a href="routes_auth.routes.js.html#line34">line 34</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-see">See:</dt>
+    <dd class="tag-see">
+        <ul>
+            <li>module:UserSignup.signup</li>
+        
+            <li>module:UserSignup.checkDuplicateUsernameOrEmail</li>
+        
+            <li>module:UserSignup.checkRolesExisted</li>
+        </ul>
+    </dd>
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    <p>This route is used for user signup.</p>
+</div>
+
+
+
+
+
+
+
+    <h5 class="h5-examples">Examples</h5>
+    
+        <p class="code-caption">Example</p>
+    
+    <pre class="prettyprint"><code>app.post(
+    "/api/auth/signup",
+    [
+      verifySignUp.checkDuplicateUsernameOrEmail,
+      verifySignUp.checkRolesExisted,
+    ],
+    signupController.signup
+  );</code></pre>
+
+        <p class="code-caption">Example request body:</p>
+    
+    <pre class="prettyprint"><code>{
+      "username": "john",
+      "email": "john-doe@gmail.com",
+      "password": "StrongPassword123!",
+      "status": "Pending",
+      "roles": ["user"]
+    }</code></pre>
+
+
+
+        
+    
+
+    
+        <h3 class="subsection-title">Methods</h3>
+
+        
+            
+
+    
+
+    <h4 class="name" id=".POST/api/auth/verify/:confirmationCode"><span class="type-signature type-signature-static">(static) </span>POST /api/auth/verify/:confirmationCode<span class="signature">(confirmationCode)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="routes_auth.routes.js.html">routes/auth.routes.js</a>, <a href="routes_auth.routes.js.html#line69">line 69</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-see">See:</dt>
+    <dd class="tag-see">
+        <ul>
+            <li>module:UserVerificationController.verifyUserStatus</li>
+        </ul>
+    </dd>
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+    <h5 class="h5-examples">Examples</h5>
+    
+        <p class="code-caption">Example</p>
+    
+    <pre class="prettyprint"><code>app.post(
+    "/api/auth/verify/:confirmationCode",
+    verifyUserStatus.verifyUserStatus
+  );
+  </code></pre>
+
+        <p class="code-caption">Example response</p>
+    
+    <pre class="prettyprint"><code>  {
+    "message": "Votre compte a bien été vérifié"
+  }</code></pre>
+
+
+
+
+    <h5 class="h5-parameters">Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>confirmationCode</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The confirmation code for email verification.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+    
+    
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 4.0.2</a> on Mon Oct 30 2023 19:59:50 GMT+0100 (heure normale d’Europe centrale) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/polyfill.js"></script>
+<script src="scripts/linenumber.js"></script>
+
+<script src="scripts/search.js" defer></script>
+
+
+<script src="scripts/collapse.js" defer></script>
+
+
+</body>
+</html>

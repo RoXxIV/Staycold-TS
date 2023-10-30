@@ -21,5 +21,11 @@
     "mongoose": "^7.6.3",
     "nodemailer": "^6.9.6",
     "nodemon": "^3.0.1"
+  },
+  "devDependencies": {
+    "docdash": "^2.0.2",
+    "jsdoc": "^4.0.2",
+    "jsdoc-template": "^1.2.0",
+    "jsdoc-to-markdown": "^8.0.0"
   }
 }

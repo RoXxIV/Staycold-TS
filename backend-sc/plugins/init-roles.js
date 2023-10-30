@@ -1,28 +1,14 @@
 /**
  * @fileoverview Initializes roles in the database.
  * @module RoleInitialization
- * @namespace RoleInitialization
- * @module RoleInitialization
  * @description This module provides a function to initialize roles in the database.
  *              It is intended to run once when the application starts.
  * @requires ../models - Mongoose database models.
- * @exports initRoles - Initializes roles in the database.
  */
 
-/**
- * @typedef {import('../models').Role} Role
- */
-
-/**
- * Role model from the database.
- * @type {Role}
- */
+// import database models
 const db = require("../models");
 
-/**
- * Role model
- * @type {mongoose.Model}
- */
 const Role = db.role;
 
 /**
@@ -43,6 +29,11 @@ const ROLE_NAMES = {
  * @description Initializes roles in the database if they do not exist - This function is intended to run once when the application starts.
  * @throws {Error} Will throw an error if the operation fails.
  * @returns {Promise<void>} Promise object representing the completion of the operation.
+ * @example <caption>Example usage of initRoles.</caption>
+ * // Import the function
+ * const initRoles = require("./plugins/init-roles");
+ * // Call the function
+ * initRoles();
  */
 const initRoles = async () => {
   try {

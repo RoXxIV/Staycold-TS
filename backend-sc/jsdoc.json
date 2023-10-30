@@ -1,0 +1,44 @@
+{
+  "source": {
+    "include": [
+      "./controllers",
+      "./middlewares",
+      "./models",
+      "./routes",
+      "./plugins",
+      "./server.js"
+    ],
+    "includePattern": ".+\\.js(doc|x)?$",
+    "excludePattern": "(^|\\/|\\\\)_"
+  },
+  "opts": {
+    "destination": "./out/",
+    "encoding": "utf8",
+    "private": true,
+    "recurse": true,
+    "template": "node_modules/docdash"
+  },
+  "plugins": ["plugins/markdown"],
+  "docdash": {
+    "static": true,
+    "sort": true,
+    "search": true,
+    "collapse": true,
+    "typedefs": true,
+    "removeQuotes": "none",
+    "scripts": [],
+    "menu": {
+      "Github repo": {
+        "href": "https://github.com/RoXxIV/Staycold-TS",
+        "target": "_blank",
+        "class": "menu-item",
+        "id": "repository"
+      }
+    }
+  },
+  "templates": {
+    "default": {
+      "useLongnameInNav": true
+    }
+  }
+}

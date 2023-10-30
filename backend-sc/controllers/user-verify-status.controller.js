@@ -1,31 +1,21 @@
 /**
  * @fileoverview Defines the controller for user account verification.
  * @module UserVerificationController
- * @namespace UserVerificationController
  * @description This module provides a function for verifying user accounts.
  * @requires dotenv
  * @requires ../models
- * @exports verifyUserStatus
  * @see {@link https://www.npmjs.com/package/dotenv|dotenv}
+ * @see {@link module:User} - User model from the database.
+ * @exports module:UserVerificationController
  */
 
 // import dependencies
 const dotenv = require("dotenv");
 
-/**
- * @typedef {import('../models').User} User
- */
 const db = require("../models");
-
-/**
- * User model from the database.
- * @type {User}
- */
 const User = db.user;
 
-/**
- * @description Loads environment variables from a .env file into process.env
- */
+// Load environment variables
 dotenv.config();
 
 /**
