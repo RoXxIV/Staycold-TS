@@ -126,6 +126,12 @@ const PORT = process.env.PORT || 5000;
  * @param {number} PORT - The port number on which the server will listen.
  * @param {function} callback - A callback function to execute when the server starts.
  */
+
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}.`);
 });
+
+/**
+ * @module Server
+ */
+module.exports = app;

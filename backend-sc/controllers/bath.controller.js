@@ -33,7 +33,7 @@ const sortOptions = { createdAt: -1 };
  * @param {Object} req - Express request object, containing the Bath details in the body.
  * @param {Object} res - Express response object.
  * @param {function} next - Express next middleware function.
- * @returns {Object} JSON response with a success message.
+ * @returns {Object} JSON response with a success message and the newly created bath.
  * @throws {BadRequest} JSON response with a 400 status if an error occurs.
  * @example
  * // Route definition in another file
@@ -58,10 +58,10 @@ exports.createBath = async (req, res, next) => {
       ...req.body,
     });
     // Save the bath record
-    await bath.save();
+    const savedBath = await bath.save();
 
     // Send a success message as a JSON response
-    res.status(201).json({ message: "Baignade enregistré !" });
+    res.status(201).json({ message: "Baignade enregistré !", bath: savedBath });
   } catch (error) {
     // console.log("Caught an error:", error); // Debug log
     res.status(400).json({ error });
@@ -97,9 +97,9 @@ exports.modifyBath = async (req, res, next) => {
       { _id: req.params.id },
       { ...req.body, _id: req.params.id }
     );
-
+    const updatedBath = await Bath.findById(req.params.id);
     // Send a success message as a JSON response
-    res.status(200).json({ message: "Baignade edité !" });
+    res.status(200).json({ message: "Baignade edité !", bath: updatedBath });
   } catch (error) {
     // console.log("Caught an error:", error); // Debug log
     res.status(400).json({ error });
@@ -116,6 +116,7 @@ exports.modifyBath = async (req, res, next) => {
  * @param {function} next - Express next middleware function.
  * @returns {Object} JSON response with a success message.
  * @throws {BadRequest} JSON response with a 400 status if an error occurs.
+ * @throws {NotFound} JSON response with a 404 status if the bath is not found.
  * @example
  * // Route definition in another file
  * app.delete("/api/bath/:id", [authJwt.verifyToken], controller.deleteBath);
@@ -130,11 +131,15 @@ exports.deleteBath = async (req, res, next) => {
       // Return a generic error message or a misleading success message
       return res.status(400).json({ message: "Une erreur s'est produite." });
     }
-    // Delete the bath record
-    await Bath.deleteOne({ _id: req.params.id });
+    // Delete the bath record and get the deleted record
+    const deletedBath = await Bath.findOneAndDelete({ _id: req.params.id });
+
+    if (!deletedBath) {
+      return res.status(404).json({ message: "Baignade non trouvée." });
+    }
 
     // Send a success message as a JSON response
-    res.status(200).json({ message: "Baignade supprimé !" });
+    res.status(200).json({ message: "Baignade supprimé !", bath: deletedBath });
   } catch (error) {
     // console.log("Caught an error:", error); // Debug log
     res.status(400).json({ error });
