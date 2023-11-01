@@ -1,3 +1,9 @@
+/**
+ * @module dbConnection
+ * @description Module for connecting to MongoDB database.
+ * @requires dotenv
+ * @requires ../models
+ */
 const dotenv = require("dotenv");
 const db = require("../models");
 
@@ -5,8 +11,9 @@ const db = require("../models");
 dotenv.config();
 
 /**
- * @description Connect to MongoDB database
+ * @function connectToMongoDB
  * @async
+ * @description Connect to MongoDB database using Mongoose.
  * @returns {Promise} Resolves if successfully connected to MongoDB, otherwise rejects and logs the error.
  */
 db.mongoose
@@ -21,4 +28,4 @@ db.mongoose
     console.log("Connection error", error);
     process.exit();
   });
-console.log("Script terminé");
+// console.log("Script terminé"); // debug line

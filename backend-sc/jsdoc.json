@@ -6,7 +6,8 @@
       "./models",
       "./routes",
       "./plugins",
-      "./server.js"
+      "./server.js",
+      "./tests"
     ],
     "includePattern": ".+\\.js(doc|x)?$",
     "excludePattern": "(^|\\/|\\\\)_"

@@ -3,7 +3,7 @@
 <head>
     
     <meta charset="utf-8">
-    <title>Server - Backend entry point - Documentation</title>
+    <title>tests/refresh-db-script.js - Documentation</title>
     
     
     <script src="scripts/prettify/prettify.js"></script>
@@ -37,391 +37,50 @@
 
 <div id="main">
     
-    <h1 class="page-title">Server - Backend entry point</h1>
-    
-
-    
-
-
-
-
-<section>
-
-<header>
-    
-</header>
-
-<article>
-    
-        <div class="container-overview">
-        
-            
-
-<dl class="details">
-    
-    <dt class="tag-description">Description:</dt>
-    <dd class="tag-description"><ul class="dummy"><li><p>Backend entry point - Initializes the Express application and connects to the MongoDB database</p></li></ul></dd>
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="server.js.html">server.js</a>, <a href="server.js.html#line1">line 1</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-see">See:</dt>
-    <dd class="tag-see">
-        <ul>
-            <li><a href="https://expressjs.com/">Express</a></li>
-        
-            <li><a href="https://www.npmjs.com/package/dotenv">dotenv</a></li>
-        
-            <li><a href="https://www.npmjs.com/package/cors">cors</a></li>
-        
-            <li><a href="https://www.npmjs.com/package/body-parser">body-parser</a></li>
-        
-            <li><a href="https://mongoosejs.com/">mongoose</a></li>
-        
-            <li><a href="https://www.npmjs.com/package/express-rate-limit">express-rate-limit</a></li>
-        
-            <li><a href="https://www.npmjs.com/package/helmet">helmet</a></li>
-        </ul>
-    </dd>
-    
-
-    
-</dl>
-
-
-
-
-            
-                <div class="description usertext"><p>Backend entry point - Initializes the Express application and connects to the MongoDB database</p></div>
-            
-
-            
-        
-        </div>
-    
-
-    
-
-    
-        <h3 class="subsection-title">Requires</h3>
-
-        <ul>
-            <li>module:express</li>
-        
-            <li>module:dotenv</li>
-        
-            <li>module:cors</li>
-        
-            <li>module:body-parser</li>
-        
-            <li>module:./models</li>
-        
-            <li>module:express-rate-limit</li>
-        
-            <li>module:helmet</li>
-        
-            <li>module:./routes/auth.routes</li>
-        
-            <li>module:./routes/permissions.routes</li>
-        
-            <li>module:./routes/users.routes</li>
-        
-            <li>module:./routes/baths.routes</li>
-        
-            <li>module:./routes/contact-form.routes</li>
-        
-            <li>module:./plugins/init-roles</li>
-        </ul>
-    
-
-    
-    
-    
-
-     
-
-    
-
-    
-        <h3 class="subsection-title">Members</h3>
-
-        
-            
-<h4 class="name" id="~PORT"><span class="type-signature type-signature-inner, constant">(inner, constant) </span>PORT<span class="type-signature"> :number</span></h4>
-
-
-
-
-
-<dl class="details">
-    
-    <dt class="tag-description">Description:</dt>
-    <dd class="tag-description"><ul class="dummy"><li><p>Server port</p></li></ul></dd>
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="server.js.html">server.js</a>, <a href="server.js.html#line120">line 120</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-<div class="description usertext">
-    <p>Server port</p>
-</div>
-
-
-
-    <h5 class="h5-types">Type:</h5>
-    <ul>
-        <li>
-            
-<span class="param-type">number</span>
-
-
-
-        </li>
-    </ul>
-
-
-
-
-
-
-        
-            
-<h4 class="name" id="~apiLimiter"><span class="type-signature type-signature-inner, constant">(inner, constant) </span>apiLimiter<span class="type-signature"> :express-rate-limit</span></h4>
-
-
-
-
-
-<dl class="details">
-    
-    <dt class="tag-description">Description:</dt>
-    <dd class="tag-description"><ul class="dummy"><li><p>Rate-limiting configuration</p></li></ul></dd>
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="server.js.html">server.js</a>, <a href="server.js.html#line53">line 53</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-<div class="description usertext">
-    <p>Rate-limiting configuration</p>
-</div>
-
-
-
-    <h5 class="h5-types">Type:</h5>
-    <ul>
-        <li>
-            
-<span class="param-type">express-rate-limit</span>
-
-
-
-        </li>
-    </ul>
-
-
-
-
-
-
-        
-            
-<h4 class="name" id="~app"><span class="type-signature type-signature-inner, constant">(inner, constant) </span>app<span class="type-signature"> :express.Application</span></h4>
-
-
-
-
-
-<dl class="details">
-    
-    <dt class="tag-description">Description:</dt>
-    <dd class="tag-description"><ul class="dummy"><li><p>Initialize Express application</p></li></ul></dd>
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="server.js.html">server.js</a>, <a href="server.js.html#line42">line 42</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-<div class="description usertext">
-    <p>Initialize Express application</p>
-</div>
-
-
-
-    <h5 class="h5-types">Type:</h5>
-    <ul>
-        <li>
-            
-<span class="param-type">express.Application</span>
-
-
-
-        </li>
-    </ul>
-
-
-
-
-
-
-        
-    
-
-    
-
-    
-
-    
-</article>
-
-</section>
+    <h1 class="page-title">tests/refresh-db-script.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @module dbConnection
+ * @description Module for connecting to MongoDB database.
+ * @requires dotenv
+ * @requires ../models
+ */
+const dotenv = require("dotenv");
+const db = require("../models");
+
+// Load environment variables from a .env file into process.env
+dotenv.config();
+
+/**
+ * @function connectToMongoDB
+ * @async
+ * @description Connect to MongoDB database using Mongoose.
+ * @returns {Promise} Resolves if successfully connected to MongoDB, otherwise rejects and logs the error.
+ */
+db.mongoose
+  .connect(process.env.MONGO_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then(() => {
+    console.log("Successfully connected to MongoDB.");
+  })
+  .catch((error) => {
+    console.log("Connection error", error);
+    process.exit();
+  });
+// console.log("Script terminé"); // debug line
+</code></pre>
+        </article>
+    </section>
 
 
 
