@@ -3,7 +3,7 @@
  * @module UserVerificationController
  * @description This module provides a function for verifying user accounts.
  * @requires dotenv
- * @requires ../models
+ * @requires ../../models
  * @see {@link https://www.npmjs.com/package/dotenv|dotenv}
  * @see {@link module:User} - User model from the database.
  * @exports module:UserVerificationController
@@ -12,7 +12,7 @@
 // import dependencies
 const dotenv = require("dotenv");
 
-const db = require("../models");
+const db = require("../../models");
 const User = db.user;
 
 // Load environment variables

@@ -6,7 +6,7 @@
  * @see {@link https://www.npmjs.com/package/dotenv|dotenv}
  * @requires jsonwebtoken - Used to verify the JWT token.
  * @requires dotenv - Used to load environment variables.
- * @requires ../models/index.js - Sequelize database models.
+ * @requires ../../models/index.js - Sequelize database models.
  * @exports module:AuthJwt
  */
 
@@ -15,7 +15,7 @@ const jwt = require("jsonwebtoken");
 const dotenv = require("dotenv");
 
 // import database models
-const db = require("../models");
+const db = require("../../models");
 
 const User = db.user;
 const Role = db.role;

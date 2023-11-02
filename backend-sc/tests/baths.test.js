@@ -2,7 +2,7 @@
  * @fileoverview Test suite for CRUD operations on Bath records.
  * @module crud-baths.test
  * @requires {@link https://www.npmjs.com/package/supertest|supertest}
- * @requires ../server
+ * @requires ../src/app
  * @see {@link https://jestjs.io/docs/en/getting-started|Jest Getting Started}
  * @see {@link https://jestjs.io/docs/en/api|Jest API Reference}
  * @see {@link https://www.npmjs.com/package/supertest|supertest}
@@ -10,7 +10,7 @@
 
 // Import supertest and the server
 const request = require("supertest");
-const app = require("../server");
+const app = require("../src/app");
 
 let token; // auth token to use for tests
 let bathId; // bath id to use for tests

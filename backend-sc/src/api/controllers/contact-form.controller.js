@@ -2,13 +2,13 @@
  * @fileoverview Handles operations related to the contact form.
  * @module ContactFormController
  * @description This module handles all operations related to the contact form.
- * @requires ../plugins/nodemailer.config - Nodemailer configuration for sending emails.
+ * @requires ../../plugins/nodemailer.config - Nodemailer configuration for sending emails.
  * @see {@link module:NodemailerConfig} - The Nodemailer configuration used for sending emails.
  * @exports module:ContactFormController
  */
 
 // import dependencies
-const nodemailer = require("../plugins/nodemailer.config");
+const nodemailer = require("../../plugins/nodemailer.config");
 
 /**
  * @function handleFormContact

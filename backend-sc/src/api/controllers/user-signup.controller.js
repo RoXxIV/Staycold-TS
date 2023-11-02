@@ -5,8 +5,8 @@
  * @requires dotenv - Module for loading environment variables from a .env file.
  * @requires jsonwebtoken - Module for generating JWT tokens.
  * @requires bcryptjs - Module for hashing passwords.
- * @requires ../plugins/nodemailer.config - Module for sending emails.
- * @requires ../models - User and Role models from the database.
+ * @requires ../../plugins/nodemailer.config - Module for sending emails.
+ * @requires ../../models - User and Role models from the database.
  * @see {@link https://www.npmjs.com/package/dotenv|dotenv}
  * @see {@link https://www.npmjs.com/package/jsonwebtoken|jsonwebtoken}
  * @see {@link https://www.npmjs.com/package/bcryptjs|bcryptjs}
@@ -20,10 +20,10 @@
 const dotenv = require("dotenv");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
-const nodemailer = require("../plugins/nodemailer.config");
+const nodemailer = require("../../plugins/nodemailer.config");
 
 // import database models
-const db = require("../models");
+const db = require("../../models");
 
 const User = db.user;
 const Role = db.role;

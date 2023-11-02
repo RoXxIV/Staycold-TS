@@ -2,8 +2,10 @@
   "name": "backend-sc",
   "version": "1.0.0",
   "description": "",
-  "main": "server.js",
+  "main": "src/app.js",
   "scripts": {
+    "start": "node src/app.js",
+    "dev": "nodemon src/app.js",
     "pretest": "cross-env NODE_ENV=test && node tests/refresh-db-script.js",
     "test": "cross-env NODE_ENV=test jest --testTimeout=10000"
   },

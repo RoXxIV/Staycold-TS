@@ -2,7 +2,7 @@
  * @fileoverview Defines the controller for user-related operations.
  * @module UserController
  * @description This module provides functions for various user-related operations.
- * @requires ../models - Database models needed for users operations.
+ * @requires ../../models - Database models needed for users operations.
  * @see {@link module:UserRoutes} - Router for user routes.
  * @see {@link module:User} - User model from the database.
  * @see {@link module:Role} - Role model from the database.
@@ -10,7 +10,7 @@
  */
 
 // Import dependencies
-const db = require("../models");
+const db = require("../../models");
 
 const User = db.user;
 const Role = db.role;

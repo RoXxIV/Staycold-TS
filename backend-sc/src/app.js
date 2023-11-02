@@ -8,11 +8,11 @@
  * @requires ./models
  * @requires express-rate-limit - Basic rate-limiting middleware for Express
  * @requires helmet - Helmet helps you secure your Express apps by setting various HTTP headers
- * @requires ./routes/auth.routes - Authentication routes
- * @requires ./routes/permissions.routes - Permissions routes
- * @requires ./routes/users.routes - Users routes
- * @requires ./routes/baths.routes - Baths routes
- * @requires ./routes/contact-form.routes - Contact form routes
+ * @requires ./api/routes/auth.routes - Authentication routes
+ * @requires ./api/routes/permissions.routes - Permissions routes
+ * @requires ./api/routes/users.routes - Users routes
+ * @requires ./api/routes/baths.routes - Baths routes
+ * @requires ./api/routes/contact-form.routes - Contact form routes
  * @requires ./plugins/init-roles - Initializes roles in the database
  * @see {@link https://expressjs.com/|Express}
  * @see {@link https://www.npmjs.com/package/dotenv|dotenv}
@@ -84,7 +84,7 @@ db.mongoose
   .then(() => {
     console.log("Successfully connected to MongoDB.");
     // Initialize roles after successful database connection
-    require("./plugins/init-roles")();
+    // require("./plugins/init-roles")();
   })
   .catch((error) => {
     console.log("Connection error", error);
@@ -107,11 +107,11 @@ app.get("/", (req, res) => {
  * @see {@link module:ContactFormRoutes} - Contact form routes
  * @see {@link module:PermissionsRoutes} - Permissions routes
  */
-require("./routes/auth.routes")(app);
-require("./routes/permissions.routes")(app);
-require("./routes/users.routes")(app);
-require("./routes/baths.routes")(app);
-require("./routes/contact-form.routes")(app);
+require("./api/routes/auth.routes")(app);
+require("./api/routes/permissions.routes")(app);
+require("./api/routes/users.routes")(app);
+require("./api/routes/baths.routes")(app);
+require("./api/routes/contact-form.routes")(app);
 
 /**
  * @description Server port

@@ -3,7 +3,7 @@
  * @module UserSigninController
  * @description This module provides a function for user signin.
  * @requires dotenv - Module for loading environment variables from a .env file.
- * @requires ../models - User model from the database.
+ * @requires ../../models - User model from the database.
  * @requires jsonwebtoken - Module for generating JWT tokens.
  * @requires bcryptjs - Module for hashing passwords.
  * @see {@link https://www.npmjs.com/package/dotenv|dotenv}
@@ -19,7 +19,7 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 
 // import database models
-const db = require("../models");
+const db = require("../../models");
 
 const User = db.user;
 

@@ -1,12 +1,12 @@
 {
   "source": {
     "include": [
-      "./controllers",
-      "./middlewares",
-      "./models",
-      "./routes",
-      "./plugins",
-      "./server.js",
+      "./src/api/controllers",
+      "./src/api/middlewares",
+      "./src/models",
+      "./src/api/routes",
+      "./src/plugins",
+      "./src/app.js",
       "./tests"
     ],
     "includePattern": ".+\\.js(doc|x)?$",
