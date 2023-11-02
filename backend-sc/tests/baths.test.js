@@ -7,12 +7,29 @@
  * @see {@link https://jestjs.io/docs/en/api|Jest API Reference}
  * @see {@link https://www.npmjs.com/package/supertest|supertest}
  */
+
+// Import supertest and the server
 const request = require("supertest");
 const app = require("../server");
+
 let token; // auth token to use for tests
 let bathId; // bath id to use for tests
 let userId = "65414ffac4528cf7f45f9fa8"; // testUser id to use for tests
-let limit = 1; // number of recent baths to get
+let limit = 6; // number of recent baths to get
+// bath data to use for tests
+const newBathData = {
+  author: userId,
+  waterTemperature: 1,
+  timeInWater: 1,
+  temperatureOutside: 1,
+  weather: "ensoleillé",
+  wind: "leger",
+  recoveryTime: 1,
+  afterdrop: "modéré",
+  globalFeeling: "facile",
+  commentary: "It was a refreshing experience.",
+};
+let invalidBathId = "60f72dbf4d440a001fbb10de"; // invalid bath id to use for tests
 
 /**
  * @function beforeAll
@@ -43,75 +60,100 @@ beforeAll((done) => {
 /**
  * @function describeCreateBath
  * @description Test suite for POST /api/bath endpoint.
-    In this test, we are verifying the following:
-    The status code should be 201 (Created).
-    The response should contain a message indicating "Baignade enregistré !".
-    The response should contain a bath object.
-    The bath object should contain all the properties that were sent in the request.
-    The bath object should have an _id property, which is stored for future tests.
+ * @test {POST} /api/bath
  */
 describe("POST /api/bath", () => {
   /**
-   * @test {POST} /api/bath
    * @description Should create a new bath record.
    */
   it("should create a new bath", async () => {
-    const newBathData = {
-      author: userId,
-      waterTemperature: 1,
-      timeInWater: 1,
-      temperatureOutside: 1,
-      weather: "ensoleillé",
-      wind: "leger",
-      recoveryTime: 1,
-      afterdrop: "modéré",
-      globalFeeling: "facile",
-      commentary: "It was a refreshing experience.",
-    };
     const res = await request(app)
       .post("/api/bath")
       .set("Authorization", `Bearer ${token}`)
       .send(newBathData);
     expect(res.statusCode).toEqual(201);
-    expect(res.body).toHaveProperty("message", "Baignade enregistré !");
+    expect(res.body).toHaveProperty(
+      "message",
+      "La baignade a correctement été enregistrée."
+    );
     expect(res.body).toHaveProperty("bath");
     // test that the bath object contains all the properties we sent
     for (const key in newBathData) {
       expect(res.body.bath[key]).toEqual(newBathData[key]);
     }
+    // save the bathId for later use
     bathId = res.body.bath._id;
-    console.log("bathId:", bathId);
+    // console.log("bathId:", bathId); // debug line
+  });
+  /**
+   * @description should return 400 if required fields are missing
+   */
+  it("should return 400 if required fields are missing", async () => {
+    const incompleteData = {
+      author: userId,
+      waterTemperature: 1,
+      // Missing other required fields
+    };
+    const res = await request(app)
+      .post("/api/bath")
+      .set("Authorization", `Bearer ${token}`)
+      .send(incompleteData);
+    expect(res.statusCode).toEqual(400);
+    expect(res.body).toHaveProperty("message", "Champs requis manquants.");
+  });
+  /**
+   * @description should return 404 if the user ID does not exist
+   */
+  it("should return 404 if the user ID does not exist", async () => {
+    const InvalidNewBathData = {
+      author: "65414ffac4528cf7f45f9fa9",
+      waterTemperature: 1,
+      timeInWater: 1,
+      temperatureOutside: 1,
+      weather: "ensoleillé",
+    };
+    const res = await request(app)
+      .post("/api/bath")
+      .set("Authorization", `Bearer ${token}`)
+      .send(InvalidNewBathData);
+    expect(res.statusCode).toEqual(404);
+    expect(res.body).toHaveProperty("message", "Une erreur s'est produite.");
+  });
+  /**
+   * @description should return 401 if the token is missing
+   * */
+  it("should return 401 if the token is invalid", async () => {
+    const res = await request(app)
+      .post("/api/bath")
+      .set("Authorization", `Bearer someInvalidToken`)
+      .send(newBathData);
+    expect(res.statusCode).toEqual(401);
+    expect(res.body).toHaveProperty("message", "Non autorisé!");
   });
 });
 
 /**
  * @function describeModifyBath
  * @description Test suite for PUT /api/bath/:id endpoint.
-    In this test, we are verifying the following:
-    The status code should be 200 (OK).
-    The response should contain a message indicating "Baignade edité !".
-    The response should contain a bath object.
-    The bath object should contain all the updated properties.
-    The waterTemperature of the bath object should be updated to 2.
+ * @test {PUT} /api/bath/:id
  */
 describe("PUT /api/bath/:id", () => {
   /**
-   * @test {PUT} /api/bath/:id
    * @description Should edit an existing bath record.
    */
+  const updatedBathData = {
+    author: userId,
+    waterTemperature: 2,
+    timeInWater: 1,
+    temperatureOutside: 1,
+    weather: "ensoleillé",
+    wind: "leger",
+    recoveryTime: 1,
+    afterdrop: "modéré",
+    globalFeeling: "facile",
+    commentary: "It was a refreshing experience.",
+  };
   it("should edit an existing bath", async () => {
-    const updatedBathData = {
-      author: userId,
-      waterTemperature: 2,
-      timeInWater: 1,
-      temperatureOutside: 1,
-      weather: "ensoleillé",
-      wind: "leger",
-      recoveryTime: 1,
-      afterdrop: "modéré",
-      globalFeeling: "facile",
-      commentary: "It was a refreshing experience.",
-    };
     const res = await request(app)
       .put(`/api/bath/${bathId}`)
       .set("Authorization", `Bearer ${token}`)
@@ -125,20 +167,54 @@ describe("PUT /api/bath/:id", () => {
     }
     expect(res.body.bath.waterTemperature).toEqual(2);
   });
+  /**
+   * @description should return 404 if the bath ID does not exist
+   */
+  it("should return 404 if the bath ID does not exist", async () => {
+    const invalidBathId = "654168b3ab75733a3611fb35";
+    const res = await request(app)
+      .put(`/api/bath/${invalidBathId}`)
+      .set("Authorization", `Bearer ${token}`)
+      .send(updatedBathData);
+    expect(res.statusCode).toEqual(404);
+    expect(res.body).toHaveProperty("message", "Une erreur s'est produite.");
+  });
+  /**
+   * @description should return 404 if the user ID does not exist
+   */
+  it("should return 404 if the user ID does not exist", async () => {
+    const invalidUserData = {
+      ...updatedBathData,
+      author: "65414ffac4528cf7f45f9fa9",
+    };
+    const res = await request(app)
+      .put(`/api/bath/${bathId}`)
+      .set("Authorization", `Bearer ${token}`)
+      .send(invalidUserData);
+    expect(res.statusCode).toEqual(404);
+    expect(res.body).toHaveProperty("message", "Une erreur s'est produite.");
+  });
+  /**
+   * @description should return 400 if required fields are missing
+   * */
+  it("should return 400 if required fields are missing", async () => {
+    const incompleteData = { author: userId }; // Missing other required fields
+    const res = await request(app)
+      .put(`/api/bath/${bathId}`)
+      .set("Authorization", `Bearer ${token}`)
+      .send(incompleteData);
+    expect(res.statusCode).toEqual(400);
+    expect(res.body).toHaveProperty("message", "Champs requis manquants.");
+  });
 });
 
 /**
  * @function describeGetAllBaths
- * @description Test suite for GET /api/bath endpoint. 
-    In this test, we are verifying the following:
-    The status code should be 200 (OK).
-    The response should be an array.
-    The array should contain at least one object.
-    The content-type header should indicate JSON. 
+ * @description Test suite for GET /api/bath endpoint.
+ * @test {GET} /api/bath
  */
 describe("GET /api/bath", () => {
   /**
-   * @test {GET} /api/bath
    * @description Should get all bath records.
    */
   it("should get all bath records", async () => {
@@ -156,21 +232,15 @@ describe("GET /api/bath", () => {
 /**
  * @function describeGetOneBath
  * @description Test suite for GET /api/bath/:id endpoint.
-    In this test, we are verifying the following:
-    The status code should be 200 (OK).
-    The response should be an object.
-    The _id of the object should match the bathId used for retrieval.
-    The content-type header should indicate JSON.
+ * @test {GET} /api/bath/:id
  */
 describe("GET /api/bath/:id", () => {
   /**
-   * @test {GET} /api/bath/:id
    * @description Should get one bath record by ID.
    */
   it("should get one bath record by ID", async () => {
     const res = await request(app).get(`/api/bath/${bathId}`);
-    console.log("res.body:", res.body);
-    console.log(bathId);
+    // console.log("res.body:", res.body); // debug line
     expect(res.statusCode).toEqual(200);
     expect(typeof res.body).toBe("object");
     expect(res.body._id).toEqual(bathId);
@@ -178,21 +248,32 @@ describe("GET /api/bath/:id", () => {
       expect.stringContaining("json")
     );
   });
-});
 
+  /**
+   * @description Should return 400 for invalid bath ID.
+   */
+  it("should return 400 for invalid bath ID", async () => {
+    const res = await request(app).get(`/api/bath/someInvalidId`);
+    expect(res.statusCode).toEqual(400);
+    expect(res.body).toHaveProperty("message", "Une erreur s'est produite.");
+  });
+
+  /**
+   * @description Should return 404 if bath not found.
+   */
+  it("should return 404 if bath not found", async () => {
+    const res = await request(app).get(`/api/bath/${invalidBathId}`);
+    expect(res.statusCode).toEqual(404);
+    expect(res.body).toHaveProperty("message", "Une erreur s'est produite.");
+  });
+});
 /**
  * @function describeGetRecentBaths
  * @description Test suite for GET /api/bath/recent/:limit endpoint.
-    In this test, we are verifying the following:
-    The status code should be 200 (OK).
-    The response should be an array.
-    The length of the array should match the limit specified.
-    The array should contain at least one object.
-    The content-type header should indicate JSON.
+ * @test {GET} /api/bath/recent/:limit
  */
 describe("GET /api/bath/recent/:limit", () => {
   /**
-   * @test {GET} /api/bath/recent/:limit
    * @description Should get all recent bath records by limit.
    */
   it("should get all recent bath records by limit", async () => {
@@ -206,17 +287,36 @@ describe("GET /api/bath/recent/:limit", () => {
       expect.stringContaining("json")
     );
   });
+  /**
+   * @description Should return 400 for missing limit.
+   */
+  it("should return 400 for missing limit", async () => {
+    const res = await request(app).get(`/api/bath/recent/`);
+    expect(res.statusCode).toEqual(400);
+    expect(res.body).toHaveProperty("message", "Une erreur s'est produite.");
+  });
+  /**
+   * @description Should return 400 for invalid limit.
+   */
+  it("should return 400 for invalid limit", async () => {
+    const res = await request(app).get(`/api/bath/recent/someInvalidLimit`);
+    expect(res.statusCode).toEqual(400);
+    expect(res.body).toHaveProperty("message", "Une erreur s'est produite.");
+  });
+  /**
+   * @description Should return 400 for limit !== 6.
+   */
+  it("should return 400 for limit !== 6", async () => {
+    const res = await request(app).get(`/api/bath/recent/7`);
+    expect(res.statusCode).toEqual(400);
+    expect(res.body).toHaveProperty("message", "Une erreur s'est produite.");
+  });
 });
 
 /**
  * @function describeGetAllBathsByUser
  * @description Test suite for GET /api/bath/user/:userId endpoint.
-    In this test, we are verifying the following:
-    The status code should be 200 (OK).
-    The response should be an array.
-    The array should contain at least one object.
-    The author._id of the first object should match the userId used for retrieval.
-    The content-type header should indicate JSON.
+ * @test {GET} /api/bath/user/:userId
  */
 describe("GET /api/bath/user/:userId", () => {
   /**
@@ -234,20 +334,33 @@ describe("GET /api/bath/user/:userId", () => {
       expect.stringContaining("json")
     );
   });
+  /**
+   * @description Should return 400 for invalid user ID format.
+   */
+  it("should return 400 for invalid user ID format", async () => {
+    const res = await request(app).get(`/api/bath/user/someInvalidId`);
+    expect(res.statusCode).toEqual(400);
+    expect(res.body).toHaveProperty("message", "Une erreur s'est produite.");
+  });
+  /**
+   * @description Should return 404 when the user ID does not exist.
+   */
+  it("should return 404 when the user ID does not exist", async () => {
+    const res = await request(app).get(
+      `/api/bath/user/65414ffac4528cf7f45f9fa9`
+    );
+    expect(res.statusCode).toEqual(404);
+    expect(res.body).toHaveProperty("message", "Une erreur s'est produite.");
+  });
 });
 
 /**
  * @function describeDeleteBath
  * @description Test suite for DELETE /api/bath/:id endpoint.
-    In this test, we would verify the following:
-    The status code should be 200 (OK).
-    The response should contain a message indicating "Baignade supprimé !".
-    The response should contain a bath object.
-    The _id of the bath object should match the bathId used for deletion.
+ * @test {DELETE} /api/bath/:id
  */
 describe("DELETE /api/bath/:id", () => {
   /**
-   * @test {DELETE} /api/bath/:id
    * @description Should delete an existing bath record.
    */
   it("should delete an existing bath", async () => {
@@ -259,5 +372,41 @@ describe("DELETE /api/bath/:id", () => {
     expect(res.body).toHaveProperty("message", "Baignade supprimé !");
     expect(res.body).toHaveProperty("bath");
     expect(res.body.bath._id).toEqual(bathId);
+  });
+  /**
+   * @description should return 400 if the user ID is not valid
+   */
+  it("should return 400 if the user ID is not valid", async () => {
+    const res = await request(app)
+      .delete(`/api/bath/${bathId}`)
+      .set("Authorization", `Bearer ${token}`)
+      .send({ author: "someInvalidId" });
+
+    expect(res.statusCode).toEqual(400);
+    expect(res.body).toHaveProperty("message", "Une erreur s'est produite.");
+  });
+  /**
+   * @description should return 404 if the user ID does not exist
+   */
+  it("should return 404 if the user ID does not exist", async () => {
+    const res = await request(app)
+      .delete(`/api/bath/${bathId}`)
+      .set("Authorization", `Bearer ${token}`)
+      .send({ author: "65414ffac4528cf7f45f9fa9" });
+
+    expect(res.statusCode).toEqual(404);
+    expect(res.body).toHaveProperty("message", "Une erreur s'est produite.");
+  });
+  /**
+   * @description should return 404 if the bath ID does not exist
+   */
+  it("should return 404 if the bath ID does not exist", async () => {
+    const res = await request(app)
+      .delete(`/api/bath/654168b3ab75733a3611fb35`)
+      .set("Authorization", `Bearer ${token}`)
+      .send({ author: userId });
+
+    expect(res.statusCode).toEqual(404);
+    expect(res.body).toHaveProperty("message", "Baignade non trouvée.");
   });
 });

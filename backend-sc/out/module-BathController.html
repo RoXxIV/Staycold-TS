@@ -133,6 +133,8 @@
 
         <ul>
             <li>module:../models</li>
+        
+            <li>module:../config.js/errorMessages</li>
         </ul>
     
 
@@ -164,13 +166,13 @@
 <dl class="details">
     
     <dt class="tag-description">Description:</dt>
-    <dd class="tag-description"><ul class="dummy"><li><p>Creates a new Bath record in the database.</p></li></ul></dd>
+    <dd class="tag-description"><ul class="dummy"><li><p>Creates a new Bath record in the database and returns the newly created record.</p></li></ul></dd>
     
 
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="controllers_bath.controller.js.html">controllers/bath.controller.js</a>, <a href="controllers_bath.controller.js.html#line28">line 28</a>
+        <a href="controllers_bath.controller.js.html">controllers/bath.controller.js</a>, <a href="controllers_bath.controller.js.html#line41">line 41</a>
     </li></ul></dd>
     
 
@@ -224,7 +226,7 @@
 
     <h5 class="h5-examples">Example</h5>
     
-    <pre class="prettyprint"><code>// Route definition in another fileapp.post("/api/bath", [authJwt.verifyToken], controller.createBath);</code></pre>
+    <pre class="prettyprint"><code>app.post("/api/bath", [authJwt.verifyToken], controller.createBath);</code></pre>
 
 
 
@@ -340,13 +342,13 @@
 
 
 <h5 class="h5-throws">Throws:</h5>
-
-        
+<ul>
+        <li>
 
 <dl>
     <dt>
         <div class="param-desc usertext">
-        <p>JSON response with a 400 status if an error occurs.</p>
+        <p>JSON response with a 500 status if an error occurs.</p>
         </div>
     </dt>
     <dd></dd>
@@ -367,8 +369,92 @@
     <dd></dd>
 </dl>
 
-
+</li>
     
+        <li>
+
+<dl>
+    <dt>
+        <div class="param-desc usertext">
+        <p>JSON response with a 400 status if a required field is missing.</p>
+        </div>
+    </dt>
+    <dd></dd>
+    <dt>
+        <dl class="param-type">
+            <dt>
+                Type
+            </dt>
+            <dd>
+                
+<span class="param-type">BadRequest</span>
+
+
+
+            </dd>
+        </dl>
+    </dt>
+    <dd></dd>
+</dl>
+
+</li>
+    
+        <li>
+
+<dl>
+    <dt>
+        <div class="param-desc usertext">
+        <p>JSON response with a 400 status if the user ID is invalid.</p>
+        </div>
+    </dt>
+    <dd></dd>
+    <dt>
+        <dl class="param-type">
+            <dt>
+                Type
+            </dt>
+            <dd>
+                
+<span class="param-type">BadRequest</span>
+
+
+
+            </dd>
+        </dl>
+    </dt>
+    <dd></dd>
+</dl>
+
+</li>
+    
+        <li>
+
+<dl>
+    <dt>
+        <div class="param-desc usertext">
+        <p>JSON response with a 404 status if the user is not found.</p>
+        </div>
+    </dt>
+    <dd></dd>
+    <dt>
+        <dl class="param-type">
+            <dt>
+                Type
+            </dt>
+            <dd>
+                
+<span class="param-type">NotFound</span>
+
+
+
+            </dd>
+        </dl>
+    </dt>
+    <dd></dd>
+</dl>
+
+</li>
+    </ul>
 
 
 <h5 class="h5-returns">Returns:</h5>
@@ -418,7 +504,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="controllers_bath.controller.js.html">controllers/bath.controller.js</a>, <a href="controllers_bath.controller.js.html#line109">line 109</a>
+        <a href="controllers_bath.controller.js.html">controllers/bath.controller.js</a>, <a href="controllers_bath.controller.js.html#line153">line 153</a>
     </li></ul></dd>
     
 
@@ -472,7 +558,7 @@
 
     <h5 class="h5-examples">Example</h5>
     
-    <pre class="prettyprint"><code>// Route definition in another fileapp.delete("/api/bath/:id", [authJwt.verifyToken], controller.deleteBath);</code></pre>
+    <pre class="prettyprint"><code>app.delete("/api/bath/:id", [authJwt.verifyToken], controller.deleteBath);</code></pre>
 
 
 
@@ -594,7 +680,63 @@
 <dl>
     <dt>
         <div class="param-desc usertext">
-        <p>JSON response with a 400 status if an error occurs.</p>
+        <p>JSON response with a 500 status if an error occurs.</p>
+        </div>
+    </dt>
+    <dd></dd>
+    <dt>
+        <dl class="param-type">
+            <dt>
+                Type
+            </dt>
+            <dd>
+                
+<span class="param-type">BadRequest</span>
+
+
+
+            </dd>
+        </dl>
+    </dt>
+    <dd></dd>
+</dl>
+
+</li>
+    
+        <li>
+
+<dl>
+    <dt>
+        <div class="param-desc usertext">
+        <p>JSON response with a 400 status if the bath ID is invalid.</p>
+        </div>
+    </dt>
+    <dd></dd>
+    <dt>
+        <dl class="param-type">
+            <dt>
+                Type
+            </dt>
+            <dd>
+                
+<span class="param-type">BadRequest</span>
+
+
+
+            </dd>
+        </dl>
+    </dt>
+    <dd></dd>
+</dl>
+
+</li>
+    
+        <li>
+
+<dl>
+    <dt>
+        <div class="param-desc usertext">
+        <p>JSON response with a 400 status if the user ID is invalid.</p>
         </div>
     </dt>
     <dd></dd>
@@ -623,6 +765,34 @@
     <dt>
         <div class="param-desc usertext">
         <p>JSON response with a 404 status if the bath is not found.</p>
+        </div>
+    </dt>
+    <dd></dd>
+    <dt>
+        <dl class="param-type">
+            <dt>
+                Type
+            </dt>
+            <dd>
+                
+<span class="param-type">NotFound</span>
+
+
+
+            </dd>
+        </dl>
+    </dt>
+    <dd></dd>
+</dl>
+
+</li>
+    
+        <li>
+
+<dl>
+    <dt>
+        <div class="param-desc usertext">
+        <p>JSON response with a 404 status if the user is not found.</p>
         </div>
     </dt>
     <dd></dd>
@@ -694,7 +864,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="controllers_bath.controller.js.html">controllers/bath.controller.js</a>, <a href="controllers_bath.controller.js.html#line149">line 149</a>
+        <a href="controllers_bath.controller.js.html">controllers/bath.controller.js</a>, <a href="controllers_bath.controller.js.html#line200">line 200</a>
     </li></ul></dd>
     
 
@@ -748,7 +918,7 @@
 
     <h5 class="h5-examples">Example</h5>
     
-    <pre class="prettyprint"><code>// Route definition in another fileapp.get("/api/bath", controller.getAllBaths);</code></pre>
+    <pre class="prettyprint"><code>app.get("/api/bath", controller.getAllBaths);</code></pre>
 
 
 
@@ -870,7 +1040,7 @@
 <dl>
     <dt>
         <div class="param-desc usertext">
-        <p>JSON response with a 400 status if an error occurs.</p>
+        <p>JSON response with a 500 status if an error occurs.</p>
         </div>
     </dt>
     <dd></dd>
@@ -942,7 +1112,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="controllers_bath.controller.js.html">controllers/bath.controller.js</a>, <a href="controllers_bath.controller.js.html#line244">line 244</a>
+        <a href="controllers_bath.controller.js.html">controllers/bath.controller.js</a>, <a href="controllers_bath.controller.js.html#line303">line 303</a>
     </li></ul></dd>
     
 
@@ -996,7 +1166,7 @@
 
     <h5 class="h5-examples">Example</h5>
     
-    <pre class="prettyprint"><code>// Route definition in another fileapp.get("/api/bath/recent/:limit", controller.getRecentBaths);</code></pre>
+    <pre class="prettyprint"><code>app.get("/api/bath/recent/:limit", controller.getRecentBaths);</code></pre>
 
 
 
@@ -1112,13 +1282,13 @@
 
 
 <h5 class="h5-throws">Throws:</h5>
-
-        
+<ul>
+        <li>
 
 <dl>
     <dt>
         <div class="param-desc usertext">
-        <p>JSON response with a 400 status if an error occurs.</p>
+        <p>JSON response with a 500 status if an error occurs.</p>
         </div>
     </dt>
     <dd></dd>
@@ -1139,8 +1309,64 @@
     <dd></dd>
 </dl>
 
-
+</li>
     
+        <li>
+
+<dl>
+    <dt>
+        <div class="param-desc usertext">
+        <p>JSON response with a 400 status if the user ID is invalid.</p>
+        </div>
+    </dt>
+    <dd></dd>
+    <dt>
+        <dl class="param-type">
+            <dt>
+                Type
+            </dt>
+            <dd>
+                
+<span class="param-type">BadRequest</span>
+
+
+
+            </dd>
+        </dl>
+    </dt>
+    <dd></dd>
+</dl>
+
+</li>
+    
+        <li>
+
+<dl>
+    <dt>
+        <div class="param-desc usertext">
+        <p>JSON response with a 404 status if the user is not found.</p>
+        </div>
+    </dt>
+    <dd></dd>
+    <dt>
+        <dl class="param-type">
+            <dt>
+                Type
+            </dt>
+            <dd>
+                
+<span class="param-type">NotFound</span>
+
+
+
+            </dd>
+        </dl>
+    </dt>
+    <dd></dd>
+</dl>
+
+</li>
+    </ul>
 
 
 <h5 class="h5-returns">Returns:</h5>
@@ -1190,7 +1416,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="controllers_bath.controller.js.html">controllers/bath.controller.js</a>, <a href="controllers_bath.controller.js.html#line178">line 178</a>
+        <a href="controllers_bath.controller.js.html">controllers/bath.controller.js</a>, <a href="controllers_bath.controller.js.html#line226">line 226</a>
     </li></ul></dd>
     
 
@@ -1244,7 +1470,7 @@
 
     <h5 class="h5-examples">Example</h5>
     
-    <pre class="prettyprint"><code>// Route definition in another fileapp.get("/api/bath/:id", controller.getOneBath);</code></pre>
+    <pre class="prettyprint"><code>app.get("/api/bath/:id", controller.getOneBath);</code></pre>
 
 
 
@@ -1360,13 +1586,13 @@
 
 
 <h5 class="h5-throws">Throws:</h5>
-
-        
+<ul>
+        <li>
 
 <dl>
     <dt>
         <div class="param-desc usertext">
-        <p>JSON response with a 400 status if an error occurs.</p>
+        <p>JSON response with a 500 status if an error occurs.</p>
         </div>
     </dt>
     <dd></dd>
@@ -1387,8 +1613,64 @@
     <dd></dd>
 </dl>
 
-
+</li>
     
+        <li>
+
+<dl>
+    <dt>
+        <div class="param-desc usertext">
+        <p>JSON response with a 400 status if the bath ID is invalid.</p>
+        </div>
+    </dt>
+    <dd></dd>
+    <dt>
+        <dl class="param-type">
+            <dt>
+                Type
+            </dt>
+            <dd>
+                
+<span class="param-type">BadRequest</span>
+
+
+
+            </dd>
+        </dl>
+    </dt>
+    <dd></dd>
+</dl>
+
+</li>
+    
+        <li>
+
+<dl>
+    <dt>
+        <div class="param-desc usertext">
+        <p>JSON response with a 404 status if the bath is not found.</p>
+        </div>
+    </dt>
+    <dd></dd>
+    <dt>
+        <dl class="param-type">
+            <dt>
+                Type
+            </dt>
+            <dd>
+                
+<span class="param-type">NotFound</span>
+
+
+
+            </dd>
+        </dl>
+    </dt>
+    <dd></dd>
+</dl>
+
+</li>
+    </ul>
 
 
 <h5 class="h5-returns">Returns:</h5>
@@ -1438,7 +1720,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="controllers_bath.controller.js.html">controllers/bath.controller.js</a>, <a href="controllers_bath.controller.js.html#line213">line 213</a>
+        <a href="controllers_bath.controller.js.html">controllers/bath.controller.js</a>, <a href="controllers_bath.controller.js.html#line263">line 263</a>
     </li></ul></dd>
     
 
@@ -1492,7 +1774,7 @@
 
     <h5 class="h5-examples">Example</h5>
     
-    <pre class="prettyprint"><code>// Route definition in another fileapp.get("/api/bath/recent/:limit", controller.getRecentBaths);</code></pre>
+    <pre class="prettyprint"><code>app.get("/api/bath/recent/:limit", controller.getRecentBaths);</code></pre>
 
 
 
@@ -1608,13 +1890,13 @@
 
 
 <h5 class="h5-throws">Throws:</h5>
-
-        
+<ul>
+        <li>
 
 <dl>
     <dt>
         <div class="param-desc usertext">
-        <p>JSON response with a 400 status if an error occurs.</p>
+        <p>JSON response with a 500 status if an error occurs.</p>
         </div>
     </dt>
     <dd></dd>
@@ -1635,8 +1917,64 @@
     <dd></dd>
 </dl>
 
-
+</li>
     
+        <li>
+
+<dl>
+    <dt>
+        <div class="param-desc usertext">
+        <p>JSON response with a 400 status if the limit is missing.</p>
+        </div>
+    </dt>
+    <dd></dd>
+    <dt>
+        <dl class="param-type">
+            <dt>
+                Type
+            </dt>
+            <dd>
+                
+<span class="param-type">BadRequest</span>
+
+
+
+            </dd>
+        </dl>
+    </dt>
+    <dd></dd>
+</dl>
+
+</li>
+    
+        <li>
+
+<dl>
+    <dt>
+        <div class="param-desc usertext">
+        <p>JSON response with a 400 status if the limit is invalid.</p>
+        </div>
+    </dt>
+    <dd></dd>
+    <dt>
+        <dl class="param-type">
+            <dt>
+                Type
+            </dt>
+            <dd>
+                
+<span class="param-type">NotFound</span>
+
+
+
+            </dd>
+        </dl>
+    </dt>
+    <dd></dd>
+</dl>
+
+</li>
+    </ul>
 
 
 <h5 class="h5-returns">Returns:</h5>
@@ -1680,13 +2018,13 @@
 <dl class="details">
     
     <dt class="tag-description">Description:</dt>
-    <dd class="tag-description"><ul class="dummy"><li><p>Modifies an existing Bath record in the database.</p></li></ul></dd>
+    <dd class="tag-description"><ul class="dummy"><li><p>Modifies an existing Bath record in the database and returns the updated record.</p></li></ul></dd>
     
 
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="controllers_bath.controller.js.html">controllers/bath.controller.js</a>, <a href="controllers_bath.controller.js.html#line71">line 71</a>
+        <a href="controllers_bath.controller.js.html">controllers/bath.controller.js</a>, <a href="controllers_bath.controller.js.html#line96">line 96</a>
     </li></ul></dd>
     
 
@@ -1740,7 +2078,7 @@
 
     <h5 class="h5-examples">Example</h5>
     
-    <pre class="prettyprint"><code>// Route definition in another fileapp.put("/api/bath/:id", [authJwt.verifyToken], controller.modifyBath);</code></pre>
+    <pre class="prettyprint"><code>app.put("/api/bath/:id", [authJwt.verifyToken], controller.modifyBath);</code></pre>
 
 
 
@@ -1856,13 +2194,13 @@
 
 
 <h5 class="h5-throws">Throws:</h5>
-
-        
+<ul>
+        <li>
 
 <dl>
     <dt>
         <div class="param-desc usertext">
-        <p>JSON response with a 400 status if an error occurs.</p>
+        <p>JSON response with a 500 status if an error occurs.</p>
         </div>
     </dt>
     <dd></dd>
@@ -1883,8 +2221,120 @@
     <dd></dd>
 </dl>
 
-
+</li>
     
+        <li>
+
+<dl>
+    <dt>
+        <div class="param-desc usertext">
+        <p>JSON response with a 400 status if a required field is missing.</p>
+        </div>
+    </dt>
+    <dd></dd>
+    <dt>
+        <dl class="param-type">
+            <dt>
+                Type
+            </dt>
+            <dd>
+                
+<span class="param-type">BadRequest</span>
+
+
+
+            </dd>
+        </dl>
+    </dt>
+    <dd></dd>
+</dl>
+
+</li>
+    
+        <li>
+
+<dl>
+    <dt>
+        <div class="param-desc usertext">
+        <p>JSON response with a 400 status if the user ID is invalid.</p>
+        </div>
+    </dt>
+    <dd></dd>
+    <dt>
+        <dl class="param-type">
+            <dt>
+                Type
+            </dt>
+            <dd>
+                
+<span class="param-type">BadRequest</span>
+
+
+
+            </dd>
+        </dl>
+    </dt>
+    <dd></dd>
+</dl>
+
+</li>
+    
+        <li>
+
+<dl>
+    <dt>
+        <div class="param-desc usertext">
+        <p>JSON response with a 404 status if the bath is not found.</p>
+        </div>
+    </dt>
+    <dd></dd>
+    <dt>
+        <dl class="param-type">
+            <dt>
+                Type
+            </dt>
+            <dd>
+                
+<span class="param-type">NotFound</span>
+
+
+
+            </dd>
+        </dl>
+    </dt>
+    <dd></dd>
+</dl>
+
+</li>
+    
+        <li>
+
+<dl>
+    <dt>
+        <div class="param-desc usertext">
+        <p>JSON response with a 404 status if the user is not found.</p>
+        </div>
+    </dt>
+    <dd></dd>
+    <dt>
+        <dl class="param-type">
+            <dt>
+                Type
+            </dt>
+            <dd>
+                
+<span class="param-type">NotFound</span>
+
+
+
+            </dd>
+        </dl>
+    </dt>
+    <dd></dd>
+</dl>
+
+</li>
+    </ul>
 
 
 <h5 class="h5-returns">Returns:</h5>
@@ -1933,7 +2383,7 @@
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 4.0.2</a> on Wed Nov 01 2023 17:37:17 GMT+0100 (heure normale d’Europe centrale) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 4.0.2</a> on Thu Nov 02 2023 21:27:52 GMT+0100 (heure normale d’Europe centrale) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
 </footer>
 
 <script>prettyPrint();</script>
