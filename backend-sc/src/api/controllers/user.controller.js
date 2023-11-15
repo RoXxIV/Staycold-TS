@@ -133,7 +133,7 @@ exports.deleteOneUser = async (req, res, next) => {
         "L'utilisateur et les baignades associés ont bien été supprimé !",
     });
   } catch (error) {
-    // console.log("Caught an error:", error); // Debug log
+    console.log("Caught an error:", error); // Debug log
     res.status(400).json({ message: error.message });
   }
 };

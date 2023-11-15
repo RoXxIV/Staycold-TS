@@ -24,6 +24,7 @@ const nodemailer = require("../../plugins/nodemailer.config");
 
 // import database models
 const db = require("../../models");
+const errorMessages = require("../../utils/errorMessages");
 
 const User = db.user;
 const Role = db.role;
@@ -40,9 +41,7 @@ dotenv.config();
  * @param {Object} res - Express response object.
  * @returns {Promise<void>} No return value but sends a response to the client.
  * @throws {InternalServerError} JSON response with a 500 status if an internal server error occurs.
- * @example
- * // Route definition in another file
- * app.post(
+ * @example app.post(
     "/api/auth/signup",
     [
       verifySignUp.checkDuplicateUsernameOrEmail,
@@ -60,58 +59,53 @@ exports.signup = async (req, res) => {
       })
       .replace(/\./g, "0");
 
-    // Create a new user
-    const user = new User({
+    const newUser = {
       username: req.body.username,
       email: req.body.email,
       password: bcrypt.hashSync(req.body.password, 8),
       confirmationCode: token,
-    });
+    };
+
+    // Create a new user
+    const user = new User(newUser);
+
+    // Assign roles to the user
+    await assignRolesToUser(req, user);
 
     // Save the user to the database
     await user.save();
 
-    // Role management
-    if (req.body.roles) {
-      const roles = await Role.find({
-        name: { $in: req.body.roles },
-      });
+    nodemailer.sendActivationMail(
+      user.username,
+      user.email,
+      user.confirmationCode
+    );
 
-      // Add roles to the user
-      user.roles = roles.map((role) => role._id);
-      await user.save();
-
-      // Send confirmation email
-      nodemailer.sendActivationMail(
-        user.username,
-        user.email,
-        user.confirmationCode
-      );
-      res.send({
-        message:
-          "L'utilisateur a été enregistré avec succès! merci de vérifier votre email",
-      });
-    } else {
-      const role = await Role.findOne({ name: "user" });
-
-      // Add 'user' role to the user
-      user.roles = [role._id];
-      await user.save();
-
-      // Send confirmation email
-      nodemailer.sendActivationMail(
-        user.username,
-        user.email,
-        user.confirmationCode
-      );
-      // Send response
-      res.send({
-        message:
-          "L'utilisateur a été enregistré avec succès! merci de vérifier votre email",
-      });
-    }
+    // Send response
+    res.send({
+      id: user._id,
+      message:
+        "L'utilisateur a été enregistré avec succès! merci de vérifier votre email",
+    });
   } catch (err) {
     // console.log("Caught an error:", error); // Debug log
-    res.status(500).send({ message: err });
+    res.status(500).send({ message: errorMessages.INTERNAL_SERVER_ERROR });
   }
 };
+
+/**
+ * @function assignRolesToUser
+ * @description Assigns roles to the user.
+ * @param {*} req
+ * @param {*} user
+ * @returns {Promise<void>} No return value but assigns roles to the user.
+ */
+async function assignRolesToUser(req, user) {
+  if (req.body.roles) {
+    const roles = await Role.find({ name: { $in: req.body.roles } });
+    user.roles = roles.map((role) => role._id);
+  } else {
+    const defaultRole = await Role.findOne({ name: "user" });
+    user.roles = [defaultRole._id];
+  }
+}

@@ -17,12 +17,10 @@
 const dotenv = require("dotenv");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
-
-// import database models
+const errorMessages = require("../../utils/errorMessages");
 const db = require("../../models");
 
 const User = db.user;
-
 // Load environment variables
 dotenv.config();
 
@@ -38,9 +36,7 @@ dotenv.config();
  * @throws {Unauthorized} JSON response with a 401 status if the password is incorrect.
  * @throws {Forbidden} JSON response with a 403 status if the account is not active.
  * @throws {InternalServerError} JSON response with a 500 status if an internal server error occurs.
- * @example
- * // Route definition in another file
- * app.post("/api/auth/signin", signinController.signin);
+ * @example app.post("/api/auth/signin", signinController.signin);
  */
 exports.signin = async (req, res) => {
   try {
@@ -48,18 +44,15 @@ exports.signin = async (req, res) => {
     const user = await User.findOne({ username: req.body.username })
       .populate("roles", "-__v")
       .exec();
-
     // Check if user exists
     if (!user) {
       return res.status(404).send({ message: "Utilisateur non trouvé." });
     }
-
     // Validate password
     const passwordIsValid = bcrypt.compareSync(
       req.body.password,
       user.password
     );
-
     // Check if password is valid
     if (!passwordIsValid) {
       return res.status(401).send({
@@ -67,24 +60,20 @@ exports.signin = async (req, res) => {
         message: "Mot de passe incorrect!",
       });
     }
-
     // Check if account is active
     if (user.status !== "Active") {
       return res.status(403).send({
         message: "Veuillez vérifier votre email pour activer votre compte!",
       });
     }
-
     // Generate JWT token
     const token = jwt.sign({ id: user.id }, process.env.JWT_KEY, {
       expiresIn: 86400, // 24 hours
     });
-
     // Map roles to authorities
     const authorities = user.roles.map(
       (role) => `ROLE_${role.name.toUpperCase()}`
     );
-
     // Send response
     res.status(200).send({
       id: user._id,
@@ -95,7 +84,7 @@ exports.signin = async (req, res) => {
       createdAt: user.createdAt,
     });
   } catch (err) {
-    // console.log("Caught an error:", error); // Debug log
-    res.status(500).send({ message: err });
+    // console.log("Caught an error:", err); // Debug log
+    res.status(500).send({ message: errorMessages.INTERNAL_SERVER_ERROR });
   }
 };

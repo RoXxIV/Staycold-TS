@@ -17,7 +17,7 @@ dotenv.config();
  * @returns {Promise} Resolves if successfully connected to MongoDB, otherwise rejects and logs the error.
  */
 db.mongoose
-  .connect(process.env.MONGO_URI, {
+  .connect(process.env.MONGO_URI_TEST, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
