@@ -6,11 +6,14 @@
  * @requires jsonwebtoken - Module for generating JWT tokens.
  * @requires bcryptjs - Module for hashing passwords.
  * @requires ../../plugins/nodemailer.config - Module for sending emails.
+ * @requires express-validator - Module for validating user input.
+ * @requires ../../utils/errorMessages - Error messages for various HTTP status codes.
  * @requires ../../models - User and Role models from the database.
  * @see {@link https://www.npmjs.com/package/dotenv|dotenv}
  * @see {@link https://www.npmjs.com/package/jsonwebtoken|jsonwebtoken}
  * @see {@link https://www.npmjs.com/package/bcryptjs|bcryptjs}
  * @see {@link module:NodemailerConfig} - Nodemailer configuration for sending emails.
+ * @see {@link https://express-validator.github.io/docs/|express-validator}
  * @see {@link module:User} - User model from the database.
  * @see {@link module:Role} - Role model from the database.
  * @exports module:UserSignupController
@@ -21,10 +24,10 @@ const dotenv = require("dotenv");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const nodemailer = require("../../plugins/nodemailer.config");
-
+const { validationResult } = require("express-validator");
+const errorMessages = require("../../utils/errorMessages");
 // import database models
 const db = require("../../models");
-const errorMessages = require("../../utils/errorMessages");
 
 const User = db.user;
 const Role = db.role;
@@ -51,6 +54,11 @@ dotenv.config();
   );
  */
 exports.signup = async (req, res) => {
+  // Validate request body
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(422).json({ errors: errors.array() });
+  }
   try {
     // Generate unique confirmationCode for email verification
     const token = jwt
@@ -95,10 +103,13 @@ exports.signup = async (req, res) => {
 
 /**
  * @function assignRolesToUser
+ * @async
  * @description Assigns roles to the user.
- * @param {*} req
- * @param {*} user
+ * @param {*} req - Express request object containing user details.
+ * @param {*} user - User object.
  * @returns {Promise<void>} No return value but assigns roles to the user.
+ * @throws {InternalServerError} JSON response with a 500 status if an internal server error occurs.
+ * @example await assignRolesToUser(req, user);
  */
 async function assignRolesToUser(req, user) {
   if (req.body.roles) {

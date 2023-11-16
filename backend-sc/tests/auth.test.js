@@ -49,6 +49,64 @@ describe("POST /api/auth/signup", () => {
     expect(user.username).toBe(userSignup.username);
     expect(user.email).toBe(userSignup.email);
   });
+  /**
+   * @description Test the signup process with an invalid email.
+   */
+  it("should return a validation error for invalid email", async () => {
+    const res = await request(app)
+      .post("/api/auth/signup")
+      .send({
+        username: "newerUserTestEmail",
+        email: "newerusertestemailexample.com",
+        password: "password123",
+        roles: ["user"],
+      });
+
+    expect(res.statusCode).toEqual(422);
+    expect(res.body).toHaveProperty("errors");
+    console.log(res.body.errors);
+    expect(
+      res.body.errors.some((error) => error.path === "email")
+    ).toBeTruthy();
+  });
+  /**
+   * @description Test the signup process with a short password.
+   */
+  it("should return a validation error for short password", async () => {
+    const res = await request(app)
+      .post("/api/auth/signup")
+      .send({
+        username: "newerUserTestPass",
+        email: "newerusertestpass@example.com",
+        password: "pa",
+        roles: ["user"],
+      });
+
+    expect(res.statusCode).toEqual(422);
+    expect(res.body).toHaveProperty("errors");
+    expect(
+      res.body.errors.some((error) => error.path === "password")
+    ).toBeTruthy();
+  });
+  /**
+   * @description Test the signup process with an invalid username.
+   */
+  it("should return a validation error for short password", async () => {
+    const res = await request(app)
+      .post("/api/auth/signup")
+      .send({
+        username: "ne",
+        email: "newerusertestusername@example.com",
+        password: "password123",
+        roles: ["user"],
+      });
+
+    expect(res.statusCode).toEqual(422);
+    expect(res.body).toHaveProperty("errors");
+    expect(
+      res.body.errors.some((error) => error.path === "username")
+    ).toBeTruthy();
+  });
 });
 
 /**

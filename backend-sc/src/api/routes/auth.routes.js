@@ -9,11 +9,12 @@
  * @requires ../controllers/user-reset-password.controller - This module provides functions for user password reset.
  */
 
-const { verifySignUp } = require("../middlewares");
+const { verifySignUp, signupValidatorRules } = require("../middlewares");
 const signupController = require("../controllers/user-signup.controller");
 const verifyUserStatus = require("../controllers/user-verify-status.controller");
 const signinController = require("../controllers/user-signin.controller");
 const resetPasswordController = require("../controllers/user-reset-password.controller");
+const { validationResult } = require("express-validator");
 
 module.exports = function (app) {
   /**
@@ -37,6 +38,7 @@ module.exports = function (app) {
    * @see {@link module:UserSignup.signup}
    * @see {@link module:UserSignup.checkDuplicateUsernameOrEmail}
    * @see {@link module:UserSignup.checkRolesExisted}
+   * @see {@link https://express-validator.github.io/docs/|express-validator}
    * @param {User.model} user.body.required - User details
    * @example <caption>Example</caption>
    * app.post(
@@ -44,6 +46,7 @@ module.exports = function (app) {
     [
       verifySignUp.checkDuplicateUsernameOrEmail,
       verifySignUp.checkRolesExisted,
+      ...signupValidatorRules(),
     ],
     signupController.signup
   );
@@ -61,7 +64,15 @@ module.exports = function (app) {
     [
       verifySignUp.checkDuplicateUsernameOrEmail,
       verifySignUp.checkRolesExisted,
+      ...signupValidatorRules(),
     ],
+    (req, res, next) => {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        return res.status(422).json({ errors: errors.array() });
+      }
+      next();
+    },
     signupController.signup
   );
 
