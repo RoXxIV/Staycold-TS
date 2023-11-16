@@ -26,9 +26,9 @@ const bcrypt = require("bcryptjs");
 const nodemailer = require("../../plugins/nodemailer.config");
 const { validationResult } = require("express-validator");
 const errorMessages = require("../../utils/errorMessages");
+
 // import database models
 const db = require("../../models");
-
 const User = db.user;
 const Role = db.role;
 
@@ -59,6 +59,7 @@ exports.signup = async (req, res) => {
   if (!errors.isEmpty()) {
     return res.status(422).json({ errors: errors.array() });
   }
+
   try {
     // Generate unique confirmationCode for email verification
     const token = jwt
@@ -74,22 +75,18 @@ exports.signup = async (req, res) => {
       confirmationCode: token,
     };
 
-    // Create a new user
+    // Create a new user, assign roles and save to the database
     const user = new User(newUser);
-
-    // Assign roles to the user
     await assignRolesToUser(req, user);
-
-    // Save the user to the database
     await user.save();
 
+    // Send email
     nodemailer.sendActivationMail(
       user.username,
       user.email,
       user.confirmationCode
     );
 
-    // Send response
     res.send({
       id: user._id,
       message:

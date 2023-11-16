@@ -30,5 +30,4 @@ const Role = mongoose.model(
   })
 );
 
-// Export the Role model
 module.exports = Role;

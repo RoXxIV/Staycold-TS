@@ -10,7 +10,6 @@
 
 // import database models
 const db = require("../../models");
-
 const ROLES = db.ROLES;
 const User = db.user;
 
@@ -24,7 +23,6 @@ const User = db.user;
  * @throws {Object} Will send a 500 status if an error occurs.
  * @throws {Object} Will send a 400 status if the username or email is already in use.
  * @example <caption>Example usage of checkDuplicateUsernameOrEmail middleware.</caption>
- * // Route definition in another file
  * app.post(
     "/api/auth/signup",
     [
@@ -40,6 +38,8 @@ const checkDuplicateUsernameOrEmail = async (req, res, next) => {
     const userByUsername = await User.findOne({
       username: req.body.username,
     }).exec();
+
+    // If username is already taken
     if (userByUsername) {
       return res.status(400).send({
         message: "Ce Nom d'utilisateur est déjà utilisé!",
@@ -72,7 +72,6 @@ const checkDuplicateUsernameOrEmail = async (req, res, next) => {
  * @param {function} next - Express next middleware function.
  * @throws {Object} Will send a 400 status if any of the roles do not exist.
  * @example <caption>Example usage of checkRolesExisted middleware.</caption>
- * // Route definition in another file
  * app.post(
     "/api/auth/signup",
     [
@@ -95,11 +94,9 @@ checkRolesExisted = (req, res, next) => {
   next();
 };
 
-// export the middlewares functions
 const verifySignUp = {
   checkDuplicateUsernameOrEmail,
   checkRolesExisted,
 };
 
-// export the module
 module.exports = verifySignUp;

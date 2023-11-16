@@ -20,9 +20,9 @@
 // Import dependencies
 const mongoose = require("mongoose");
 const errorMessages = require("../../utils/errorMessages");
-const db = require("../../models");
-const e = require("express");
 
+// import database models
+const db = require("../../models");
 const Bath = db.bath;
 const User = db.user;
 
@@ -55,8 +55,8 @@ const requiredFields = [
  */
 exports.createBath = async (req, res, next) => {
   try {
-    // Remove the fake_id sent by the front-end
-    delete req.body._id;
+    delete req.body._id; // Remove the fake_id sent by the front-end
+
     // Verify if all required fields are present
     for (const field of requiredFields) {
       if (!req.body.hasOwnProperty(field)) {
@@ -67,22 +67,20 @@ exports.createBath = async (req, res, next) => {
 
     const userId = req.body.author;
 
-    // Check if userId is valid
+    // Check if userId is valid and if it exists
     if (!mongoose.Types.ObjectId.isValid(userId)) {
       return res.status(400).json({ message: errorMessages.GENERIC_ERROR });
     }
-    // Verify if the user ID exists
+
     const userExists = await User.findById(userId);
     if (!userExists) {
       return res.status(404).json({ message: errorMessages.GENERIC_ERROR });
     }
-    // Create a new bath record
-    const bath = new Bath({
-      ...req.body,
-    });
-    // Save the bath record
+
+    // Create and save a new bath record
+    const bath = new Bath({ ...req.body });
     const savedBath = await bath.save();
-    // Send a success message as a JSON response
+
     res.status(201).json({
       message: "La baignade a correctement été enregistrée.",
       bath: savedBath,
@@ -119,27 +117,31 @@ exports.modifyBath = async (req, res, next) => {
     }
 
     const userId = req.body.author;
+
     // Check if userId is valid
     if (!mongoose.Types.ObjectId.isValid(userId)) {
       return res.status(400).json({ message: errorMessages.GENERIC_ERROR });
     }
-    // Verify if the user ID exists
+
+    // Verify if the user exists
     const userExists = await User.findById(userId);
     if (!userExists) {
       return res.status(404).json({ message: errorMessages.GENERIC_ERROR });
     }
-    // Verify if the bath ID exists
+
+    // Verify if the bath exists
     const bathExists = await Bath.findById(req.params.id);
     if (!bathExists) {
       return res.status(404).json({ message: errorMessages.GENERIC_ERROR });
     }
+
     // Update the bath record
     await Bath.updateOne(
       { _id: req.params.id },
       { ...req.body, _id: req.params.id }
     );
     const updatedBath = await Bath.findById(req.params.id);
-    // Send a success message as a JSON response
+
     res.status(200).json({ message: "Baignade edité !", bath: updatedBath });
   } catch (error) {
     if (error.name === "CastError") {
@@ -174,22 +176,24 @@ exports.deleteBath = async (req, res, next) => {
 
   try {
     const userId = req.body.author;
+
     // Check if userId is valid
     if (!mongoose.Types.ObjectId.isValid(userId)) {
       return res.status(400).json({ message: errorMessages.GENERIC_ERROR });
     }
-    const userExists = await User.findById(userId);
+
     // Verify if the user ID exists
+    const userExists = await User.findById(userId);
     if (!userExists) {
       return res.status(404).json({ message: errorMessages.GENERIC_ERROR });
     }
+
     // Delete the bath record and get the deleted record
     const deletedBath = await Bath.findOneAndDelete({ _id: req.params.id });
-
     if (!deletedBath) {
       return res.status(404).json({ message: "Baignade non trouvée." });
     }
-    // Send a success message as a JSON response
+
     res.status(200).json({ message: "Baignade supprimé !", bath: deletedBath });
   } catch (error) {
     // console.log("Caught an error:", error); // Debug log
@@ -215,7 +219,7 @@ exports.getAllBaths = async (req, res, next) => {
     const baths = await Bath.find()
       .sort(sortOptions)
       .populate("author", "username");
-    // Send the fetched baths as a JSON response
+
     res.status(200).json(baths);
   } catch (error) {
     // console.log("Caught an error:", error); // Debug log
@@ -243,16 +247,18 @@ exports.getOneBath = async (req, res, next) => {
     if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
       return res.status(400).json({ message: errorMessages.GENERIC_ERROR });
     }
+
     // Fetch a single bath by ID
     const bath = await Bath.findOne({ _id: req.params.id }).populate(
       "author",
       "username"
     );
+
     // If the bath is not found, return a 404 error
     if (!bath) {
       return res.status(404).json({ message: errorMessages.GENERIC_ERROR });
     }
-    // Send the fetched bath as a JSON response
+
     res.status(200).json(bath);
   } catch (error) {
     // console.log("Caught an error:", error); // Debug log
@@ -280,19 +286,19 @@ exports.getRecentBaths = async (req, res, next) => {
     if (!req.params.limit) {
       return res.status(400).json({ message: errorMessages.GENERIC_ERROR });
     }
-    // Get the limit from the request parameters
+
+    // Get the limit from the request parameters and check if the limit is valid
     const limit = Number(req.params.limit);
-    // Check if the limit is valid
     if (isNaN(limit) || limit !== 6) {
       return res.status(400).json({ message: errorMessages.GENERIC_ERROR });
     }
+
     // Fetch recent baths
     const baths = await Bath.find()
       .limit(limit)
       .sort(sortOptions)
       .populate("author", "username -_id");
 
-    // Send the fetched baths as a JSON response
     res.status(200).json(baths);
   } catch (error) {
     // console.log("Caught an error:", error); // Debug log
@@ -321,19 +327,18 @@ exports.getAllBathsByUser = async (req, res, next) => {
       return res.status(400).json({ message: errorMessages.GENERIC_ERROR });
     }
 
-    const userId = req.params.userId;
-
-    const userExists = await User.findById(userId);
     // Verify if the user ID exists
+    const userId = req.params.userId;
+    const userExists = await User.findById(userId);
     if (!userExists) {
       return res.status(404).json({ message: errorMessages.GENERIC_ERROR });
     }
+
     // Fetch baths belonging to a single user
     const baths = await Bath.find({ author: userId })
       .sort(sortOptions)
       .populate("author", "username");
 
-    // Send the fetched baths as a JSON response
     res.status(200).json(baths);
   } catch (error) {
     // console.log("Caught an error:", error); // Debug log

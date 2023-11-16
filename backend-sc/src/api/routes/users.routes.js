@@ -5,6 +5,8 @@
  * @requires ../controllers/user.controller - UserController
  * @requires ../middlewares - authJwt
  */
+
+// Import dependencies
 const controller = require("../controllers/user.controller");
 const { authJwt } = require("../middlewares");
 

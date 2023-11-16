@@ -29,51 +29,35 @@ const dotenv = require("dotenv");
 const cors = require("cors");
 const rateLimit = require("express-rate-limit");
 const helmet = require("helmet");
+
+// Import database models
 const db = require("./models");
-/**
- * @description Loads environment variables from a .env file into process.env
- */
+
+// Load environment variables
 dotenv.config();
 
-/**
- * Initialize Express application
- * @type {express.Application}
- */
+// Initialize Express application
 const app = express();
 
-/**
- * @description Use Helmet for basic security.
- */
+// Use Helmet for basic security.
 app.use(helmet());
 
-/**
- * Rate-limiting configuration
- * @type {express-rate-limit}
- */
+// Rate-limiting configuration for API routes and apply rate-limiting to routes starting with /api/
 const apiLimiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
   max: 100, // Limit each IP to 100 requests per windowMs
 });
-
-/**
- * @description Apply rate-limiting to routes
- */
 app.use("/api/", apiLimiter);
 
-/**
- * @description Middleware for enabling CORS
- */
+// Middleware for enabling CORS
 app.use(cors());
 
-/**
- * @description Middleware for parsing incoming request bodies
- */
+// Middleware for parsing incoming request bodies
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 /**
  * @description Connect to MongoDB database
- * @async
  * @returns {Promise} Resolves if successfully connected to MongoDB, otherwise rejects and logs the error.
  */
 db.mongoose
@@ -84,7 +68,7 @@ db.mongoose
   })
   .then(() => {
     console.log("Successfully connected to MongoDB.");
-    // Initialize roles after successful database connection
+    // Initialize roles after successful database connection - Uncomment to initialize roles
     // require("./plugins/init-roles")();
   })
   .catch((error) => {
@@ -92,10 +76,7 @@ db.mongoose
     process.exit();
   });
 
-/**
- * @description Root API endpoint
- * @route GET /
- */
+// Root API endpoint - GET /
 app.get("/", (req, res) => {
   res.json({ message: "Bienvenue sur StayCold API" });
 });
@@ -114,25 +95,13 @@ require("./api/routes/users.routes")(app);
 require("./api/routes/baths.routes")(app);
 require("./api/routes/contact-form.routes")(app);
 
-/**
- * @description Server port
- * @type {number}
- */
+// Set server port, use environment variable if available
 const PORT = process.env.PORT || 5000;
 
-/**
- * Start the Express server
- *
- * @function
- * @param {number} PORT - The port number on which the server will listen.
- * @param {function} callback - A callback function to execute when the server starts.
- */
-
+// Start server
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}.`);
 });
 
-/**
- * @module Server
- */
+// Export Express application
 module.exports = app;

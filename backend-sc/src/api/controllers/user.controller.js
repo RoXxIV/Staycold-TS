@@ -9,9 +9,8 @@
  * @exports module:UserController
  */
 
-// Import dependencies
+// Import database models
 const db = require("../../models");
-
 const User = db.user;
 const Role = db.role;
 const Bath = db.bath;
@@ -29,9 +28,7 @@ const sortOptions = { roles: -1 };
  * @param {function} next - Express next middleware function.
  * @returns {Object} JSON response containing all users.
  * @throws {BadRequest} JSON response with a 400 status if an error occurs.
- * @example
- * // Route definition in another file
- * app.get(
+ * @example app.get(
     "/api/users/all",
     [authJwt.verifyToken, authJwt.isModerator],
     controller.findAllUsers
@@ -39,14 +36,15 @@ const sortOptions = { roles: -1 };
  */
 exports.findAllUsers = async (req, res) => {
   try {
-    // Fetch all users while excluding password and confirmationCode fields
-    // Also populate the 'roles' field with the role name
+    /**
+     * Fetch all users while excluding password and confirmationCode fields
+     * Also populate the 'roles' field with the role name
+     */
     const users = await User.find()
       .select({ password: 0, confirmationCode: 0 })
       .populate("roles", "name")
       .sort(sortOptions);
 
-    // Send the fetched users as a JSON response
     res.status(200).json(users);
   } catch (error) {
     // console.log("Caught an error:", error); // Debug log
@@ -65,9 +63,7 @@ exports.findAllUsers = async (req, res) => {
  * @returns {Object} JSON response containing the user information.
  * @throws {NotFound} JSON response with a 404 status if the user is not found or an error occurs.
  * @throws {BadRequest} JSON response with a 400 status if an error occurs.
- * @example
- * // Route definition in another file
- * app.get(
+ * @example app.get(
     "/api/users/:id",
     [authJwt.verifyToken, authJwt.isModerator],
     controller.getOneUser
@@ -75,8 +71,10 @@ exports.findAllUsers = async (req, res) => {
  */
 exports.getOneUser = async (req, res, next) => {
   try {
-    // Fetch the user by ID while excluding password and confirmationCode fields
-    // Also populate the 'roles' field with the role name
+    /**
+     * Fetch the user by ID while excluding password and confirmationCode fields
+     * Also populate the 'roles' field with the role name
+     */
     const user = await User.findOne({ _id: req.params.id })
       .select({ password: 0, confirmationCode: 0 })
       .populate("roles", "name");
@@ -86,7 +84,6 @@ exports.getOneUser = async (req, res, next) => {
       return res.status(404).json({ message: "Utilisateur non trouvé." });
     }
 
-    // Send the fetched user as a JSON response
     res.status(200).json(user);
   } catch (error) {
     // console.log("Caught an error:", error); // Debug log
@@ -105,9 +102,7 @@ exports.getOneUser = async (req, res, next) => {
  * @returns {Object} JSON response confirming the deletion.
  * @throws {NotFound} JSON response with a 404 status if the user is not found.
  * @throws {BadRequest} JSON response with a 400 status if an error occurs.
- * @example
- * // Route definition in another file
- * app.delete(
+ * @example app.delete(
     "/api/users/:id",
     [authJwt.verifyToken, authJwt.isAdmin],
     controller.deleteOneUser
@@ -149,9 +144,7 @@ exports.deleteOneUser = async (req, res, next) => {
  * @throws {Unauthorized} JSON response with a 401 status if the user is not found.
  * @throws {InternalServerError} JSON response with a 500 status if an error occurs.
  * @throws {BadRequest} JSON response with a 400 status for other errors.
- * @example
- * // Route definition in another file
- * app.post(
+ * @example app.post(
     "/api/users/update-role/:id",
     [authJwt.verifyToken, authJwt.isAdmin],
     controller.updateUserRole

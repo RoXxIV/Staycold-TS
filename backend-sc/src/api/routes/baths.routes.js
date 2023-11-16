@@ -6,7 +6,7 @@
  * @requires ../middlewares - Middleware for authentication and other functionalities.
  */
 
-// Import the bath controller and authentication middleware
+// Import dependencies
 const controller = require("../controllers/bath.controller");
 const { authJwt } = require("../middlewares");
 

@@ -8,10 +8,10 @@
 
 // import database models
 const db = require("../models");
-
 const Role = db.role;
 
 /**
+ * @description The names of the available roles.
  * @typedef {Object} RoleNames
  * @property {string} USER - The name of the user role.
  * @property {string} MODERATOR - The name of the moderator role.
@@ -30,22 +30,19 @@ const ROLE_NAMES = {
  * @throws {Error} Will throw an error if the operation fails.
  * @returns {Promise<void>} Promise object representing the completion of the operation.
  * @example <caption>Example usage of initRoles.</caption>
- * // Import the function
  * const initRoles = require("./plugins/init-roles");
  * // Call the function
  * initRoles();
  */
 const initRoles = async () => {
   try {
+    // Check if the roles collection is empty - If it is empty, add the roles
     const count = await Role.estimatedDocumentCount();
     if (count === 0) {
-      // Create 'user' role
       await new Role({ name: ROLE_NAMES.USER }).save();
       console.log(`Added ${ROLE_NAMES.USER} to roles collection`);
-      // Create 'moderator' role
       await new Role({ name: ROLE_NAMES.MODERATOR }).save();
       console.log(`Added ${ROLE_NAMES.MODERATOR} to roles collection`);
-      // Create 'admin' role
       await new Role({ name: ROLE_NAMES.ADMIN }).save();
       console.log(`Added ${ROLE_NAMES.ADMIN} to roles collection`);
     }

@@ -9,6 +9,7 @@
 
 // import dependencies
 const nodemailer = require("../../plugins/nodemailer.config");
+const errorMessages = require("../../utils/errorMessages");
 
 /**
  * @function handleFormContact
@@ -25,9 +26,7 @@ const nodemailer = require("../../plugins/nodemailer.config");
  * @returns {Object} JSON response with a success or error message.
  * @throws {BadRequest} JSON response with a 400 status if the request body is empty.
  * @throws {InternalServerError} JSON response with a 500 status if an internal server error occurs.
- * @example
- * // Route definition in another file
- * app.post("/api/contact", controller.handleFormContact);
+ * @example app.post("/api/contact", controller.handleFormContact);
  */
 exports.handleFormContact = async (req, res, next) => {
   try {
@@ -39,24 +38,20 @@ exports.handleFormContact = async (req, res, next) => {
         req.body.subject,
         req.body.message
       );
-
       res.setHeader("Content-Type", "application/json");
-      // Return a success message
       res.status(200).json({
         message: `Votre message a bien été envoyé,
         il sera traitée dans les meilleurs délais`,
       });
     } else {
-      // Return a generic error message
       res.status(400).json({
         message: "Une erreur est survenue",
       });
     }
   } catch (error) {
-    // console.error("An error occurred while handling the contact form:", error); // Debug log
     res.status(500).json({
       // console.log("Caught an error:", error); // Debug log
-      message: "An internal server error occurred.",
+      message: errorMessages.INTERNAL_SERVER_ERROR,
     });
   }
 };

@@ -5,6 +5,7 @@
  * @see {@link https://express-validator.github.io/docs/|express-validator}
  * @exports module:signupValidatorRules
  */
+// import dependencies
 const { body } = require("express-validator");
 
 /**

@@ -9,12 +9,12 @@
  * @see {@link https://nodemailer.com/about/|Nodemailer}
  * @see {@link https://www.npmjs.com/package/nodemailer|nodemailer}
  */
+
+// import dependencies
 const nodeMailer = require("nodemailer");
 const dotenv = require("dotenv");
 
-/**
- * @description Loads environment variables from a .env file into process.env
- */
+// Load environment variables
 dotenv.config();
 
 /**

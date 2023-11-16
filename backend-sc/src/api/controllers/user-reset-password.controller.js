@@ -15,6 +15,8 @@
 // import dependencies
 const nodemailer = require("../../plugins/nodemailer.config");
 const bcrypt = require("bcryptjs");
+const errorMessages = require("../../utils/errorMessages");
+
 // import database models
 const db = require("../../models");
 const User = db.user;
@@ -30,20 +32,19 @@ const User = db.user;
  * @returns {Promise<Object>} JSON response with a message indicating the email sending status.
  * @throws {BadRequest} JSON response with a 401 status if the user is not found or the confirmation code is invalid.
  * @throws {InternalServerError} JSON response with a 500 status if an internal server error occurs, such as failure in updating the password.
- * @example 
- * // Route definition in another file
- * app.post(
+ * @example app.post(
     "/api/auth/email-reset-password/:email",
     resetPasswordController.sendEmailResetPassword
   );
  */
 exports.sendEmailResetPassword = async (req, res) => {
   try {
-    // Find user by email
+    // Find user by email and check if user exists
     const user = await User.findOne({ email: req.body.email });
     if (!user) {
       return res.status(401).send({ message: "Utilisateur non trouvé" });
     }
+
     // Send email
     await nodemailer.sendResetPasswordMail(
       user.username,
@@ -51,11 +52,12 @@ exports.sendEmailResetPassword = async (req, res) => {
       user.confirmationCode
     );
 
-    // Send response
     return res.send({ message: "Un email a été envoyé à l'adresse indiquée" });
   } catch (err) {
     // console.log("Caught an error:", error); // Debug log
-    return res.status(500).send({ message: err });
+    return res
+      .status(500)
+      .send({ message: errorMessages.INTERNAL_SERVER_ERROR });
   }
 };
 
@@ -69,9 +71,7 @@ exports.sendEmailResetPassword = async (req, res) => {
  * @returns {Promise<Object>} JSON response with a message indicating the password reset status.
  * @throws {Object} JSON response with a 401 status if the user is not found.
  * @throws {Object} JSON response with a 500 status if an error occurs.
- * @example 
- * // Route definition in another file
- * app.post(
+ * @example app.post(
     "/api/auth/reset-password/:confirmationCode",
     resetPasswordController.resetPassword
   );
@@ -87,16 +87,14 @@ exports.resetPassword = async (req, res) => {
     if (!user) {
       return res.status(401).send({ message: "Utilisateur non trouvé." });
     }
-    // Update password
-    user.password = bcrypt.hashSync(req.body.password, 8);
 
-    // Save user
+    // Update password and save user
+    user.password = bcrypt.hashSync(req.body.password, 8);
     await user.save();
 
-    // Send response
     return res.json({ message: "Votre demande a bien été prise en compte" });
   } catch (err) {
     // console.log("Caught an error:", error); // Debug log
-    res.status(500).send({ message: err });
+    res.status(500).send({ message: errorMessages.INTERNAL_SERVER_ERROR });
   }
 };

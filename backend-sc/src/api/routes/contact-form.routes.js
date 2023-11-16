@@ -4,6 +4,8 @@
  * @description Defines the routes for contact form operations.
  * @requires ../controllers/contact-form.controller - ContactFormController
  */
+
+// Import dependencies
 const controller = require("../controllers/contact-form.controller");
 
 module.exports = function (app) {

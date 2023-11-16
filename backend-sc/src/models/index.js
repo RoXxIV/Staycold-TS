@@ -24,16 +24,12 @@ mongoose.Promise = global.Promise;
  * @property {Array.<string>} ROLES - The available roles.
  */
 
-// Create the database object
+// Create the database object and add the mongoose instance to the database object
 const db = {};
-
-// Add the mongoose instance to the database object
 db.mongoose = mongoose;
-
 db.user = require("./user.model");
 db.role = require("./role.model");
 db.ROLES = ["user", "moderator", "admin"];
 db.bath = require("./bath.model");
 
-// Export the aggregated database object
 module.exports = db;

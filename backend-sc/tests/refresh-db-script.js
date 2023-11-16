@@ -4,10 +4,13 @@
  * @requires dotenv
  * @requires ../models
  */
+// Import dependencies
 const dotenv = require("dotenv");
+
+// Import database models
 const db = require("../models");
 
-// Load environment variables from a .env file into process.env
+// Load environment variables
 dotenv.config();
 
 /**

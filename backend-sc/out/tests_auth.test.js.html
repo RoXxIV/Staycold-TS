@@ -3,7 +3,7 @@
 <head>
     
     <meta charset="utf-8">
-    <title>src/api/routes/baths.routes.js - Documentation</title>
+    <title>tests/auth.test.js - Documentation</title>
     
     
     <script src="scripts/prettify/prettify.js"></script>
@@ -37,7 +37,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">src/api/routes/baths.routes.js</h1>
+    <h1 class="page-title">tests/auth.test.js</h1>
     
 
     
@@ -48,259 +48,225 @@
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>/**
- * @fileoverview Defines and configures the routes for bath-related operations.
- * @module BathRoutes
- * @description This module defines and configures the routes for all CRUD operations related to baths.
- * @requires ../controllers/bath.controller - The bath controller that handles the logic.
- * @requires ../middlewares - Middleware for authentication and other functionalities.
+ * @fileoverview Test suite for Auth operations.
+ * @module auth.test
+ * @requires {@link https://www.npmjs.com/package/supertest|supertest}
+ * @requires ../src/app
+ * @see {@link https://jestjs.io/docs/en/getting-started|Jest Getting Started}
+ * @see {@link https://jestjs.io/docs/en/api|Jest API Reference}
+ * @see {@link https://www.npmjs.com/package/supertest|supertest}
  */
 
 // Import dependencies
-const controller = require("../controllers/bath.controller");
-const { authJwt } = require("../middlewares");
+const request = require("supertest");
+const app = require("../src/app");
 
-module.exports = function (app) {
+// Import the User model
+const User = require("../src/models/user.model");
+
+// Test data
+const userSignup = {
+  username: "newerUserTest",
+  email: "newerusertest@example.com",
+  password: "password123",
+  roles: ["user"],
+};
+const userSignin = {
+  username: "userTest",
+  password: "password123",
+};
+const userAdmin = {
+  username: "AdminUserTest",
+  password: "password123",
+};
+let deletedUserId;
+
+/**
+ * @description Test the signup process.
+ * @function describeSignup
+ * @test {POST /api/auth/signup}
+ */
+describe("POST /api/auth/signup", () => {
   /**
-   * @memberof BathRoutes
-   * @description This middleware is used to set headers for CORS and tokens.
-   * @param {Object} req - Express request object.
-   * @param {Object} res - Express response object.
-   * @param {function} next - Express next middleware function.
+   * @description Test the signup process with correct credentials.
    */
-  app.use(function (req, res, next) {
-    res.header(
-      "Access-Control-Allow-Headers",
-      "x-access-token, Origin, Content-Type, Accept"
+  it("should create a new user and send a confirmation email", async () => {
+    const res = await request(app).post("/api/auth/signup").send(userSignup);
+
+    expect(res.statusCode).toEqual(200);
+    expect(res.body.message).toEqual(
+      "L'utilisateur a été enregistré avec succès! merci de vérifier votre email"
     );
-    next();
+
+    // Save the user ID for later use
+    deletedUserId = res.body.id;
+
+    // Check if the user is added to the database
+    const user = await User.findOne({ email: userSignup.email });
+
+    expect(user).not.toBeNull();
+    expect(user.username).toBe(userSignup.username);
+    expect(user.email).toBe(userSignup.email);
   });
 
   /**
-   * @name POST /api/bath
-   * @description POST route to create a new bath record.
-   * @see {@link module:BathController.createBath} - The function that handles this route.
-   * @see {@link module:AuthJwt.verifyToken} - This function uses the verifyToken middleware.
-   * @param {Bath.model} bath.body.required - Bath details
-   * @security JWT
-   * @response {Bath.model} 201 - JSON response with a success message.
-   * @response {Error} 400 - Bad request
-    * @example &lt;caption>Example&lt;/caption>
-    * app.post("/api/bath", [authJwt.verifyToken], controller.createBath);
-   * @example &lt;caption>Example request body:&lt;/caption>
-   * {
-      "author": "653c0489c189acbc95ec5fa7",
-      "waterTemperature": 1,
-      "timeInWater": 1,
-      "temperatureOutside": 1,
-      "weather": "ensoleillé",
-      "wind": "leger",
-      "recoveryTime": 1,
-      "afterdrop": "modéré",
-      "globalFeeling": "facile",
-      "commentary": "It was a refreshing experience."
-      }
-      @example &lt;caption>Example response&lt;/caption>
-      { "message": "Votre baignade a bien été enregistré" }
+   * @description Test the signup process with an invalid email.
    */
-  app.post("/api/bath", [authJwt.verifyToken], controller.createBath);
+  it("should return a validation error for invalid email", async () => {
+    const res = await request(app)
+      .post("/api/auth/signup")
+      .send({
+        username: "newerUserTestEmail",
+        email: "newerusertestemailexample.com",
+        password: "password123",
+        roles: ["user"],
+      });
+
+    expect(res.statusCode).toEqual(422);
+    expect(res.body).toHaveProperty("errors");
+    expect(
+      res.body.errors.some((error) => error.path === "email")
+    ).toBeTruthy();
+  });
 
   /**
-   * @name PUT /api/bath/:id
-   * @description PUT route to modify an existing bath record by ID.
-   * @see {@link module:BathController.modifyBath} - The function that handles this route.
-   * @see {@link module:AuthJwt.verifyToken} - This function uses the verifyToken middleware.
-   * @param {string} id.path.required - Bath ID
-   * @param {Bath.model} bath.body.required - Updated bath details
-   * @security JWT
-   * @response {Bath.model} 200 - JSON response with a success message.
-   * @response {Error} 400 - Bad request
-   * @example &lt;caption>Example&lt;/caption>
-   * app.put("/api/bath/:id", [authJwt.verifyToken], controller.modifyBath);
-   * @example &lt;caption>Example request body:&lt;/caption>
-   * {
-      "author": "653c0489c189acbc95ec5fa7",
-      "waterTemperature": 1,
-      "timeInWater": 1,
-      "temperatureOutside": 1,
-      "weather": "ensoleillé",
-      "wind": "leger",
-      "recoveryTime": 1,
-      "afterdrop": "modéré",
-      "globalFeeling": "facile",
-      "commentary": "It was a refreshing experience."
-      }
-      @example &lt;caption>Example response&lt;/caption>
-      { "message": "Votre baignade a bien été modifié" }
+   * @description Test the signup process with a short password.
    */
-  app.put("/api/bath/:id", [authJwt.verifyToken], controller.modifyBath);
+  it("should return a validation error for short password", async () => {
+    const res = await request(app)
+      .post("/api/auth/signup")
+      .send({
+        username: "newerUserTestPass",
+        email: "newerusertestpass@example.com",
+        password: "pa",
+        roles: ["user"],
+      });
+
+    expect(res.statusCode).toEqual(422);
+    expect(res.body).toHaveProperty("errors");
+    expect(
+      res.body.errors.some((error) => error.path === "password")
+    ).toBeTruthy();
+  });
 
   /**
-   * @name DELETE /api/bath/:id
-   * @description DELETE route to delete an existing bath record by ID.
-   * @see {@link module:BathController.deleteBath} - The function that handles this route.
-   * @see {@link module:AuthJwt.verifyToken} - This function uses the verifyToken middleware.
-   * @param {string} id.path.required - Bath ID
-   * @security JWT
-   * @response {Bath.model} 200 - JSON response with a success message.
-   * @response {Error} 400 - Bad request
-   * @example &lt;caption>Example&lt;/caption>
-   * app.delete("/api/bath/:id", [authJwt.verifyToken], controller.deleteBath);
-   * @example &lt;caption>Example response&lt;/caption>
-   * { "message": "Votre baignade a bien été supprimé" }
+   * @description Test the signup process with an invalid username.
    */
-  app.delete("/api/bath/:id", [authJwt.verifyToken], controller.deleteBath);
+  it("should return a validation error for short password", async () => {
+    const res = await request(app)
+      .post("/api/auth/signup")
+      .send({
+        username: "ne",
+        email: "newerusertestusername@example.com",
+        password: "password123",
+        roles: ["user"],
+      });
+
+    expect(res.statusCode).toEqual(422);
+    expect(res.body).toHaveProperty("errors");
+    expect(
+      res.body.errors.some((error) => error.path === "username")
+    ).toBeTruthy();
+  });
+});
+
+/**
+ * @description Test the signin process with correct credentials.
+ * @function describeSignin
+ * @test {POST /api/auth/signin}
+ */
+describe("POST /api/auth/signin", () => {
+  it("should signin a user with correct credentials", async () => {
+    const res = await request(app).post("/api/auth/signin").send({
+      username: userSignin.username,
+      password: userSignin.password,
+    });
+
+    expect(res.statusCode).toEqual(200);
+    expect(res.body).toHaveProperty("accessToken");
+  });
 
   /**
-   * @name GET /api/bath
-   * @description GET route to retrieve all bath records.
-   * @see {@link module:BathController.getAllBaths} - The function that handles this route.
-   * @response {Bath.model} 200 - JSON response with a success message.
-   * @response {Error} 400 - Bad request
-   * @returns {Array.&lt;Bath>} 200 - An array of bath records
-   * @example &lt;caption>Example&lt;/caption>
-   * app.get("/api/bath", controller.getAllBaths);
-   * @example &lt;caption>Example response&lt;/caption>
-   * [
-	{
-		"_id": "653c04e5c125acbc95ec5fbd",
-		"author": {
-			"_id": "653c0489c189agfc95ec5fa7",
-			"username": "Marion"
-		},
-		"waterTemperature": 1,
-		"timeInWater": 1,
-		"temperatureOutside": 1,
-		"weather": "ensoleillé",
-		"wind": "leger",
-		"recoveryTime": 1,
-		"afterdrop": "modéré",
-		"globalFeeling": "facile",
-		"commentary": "It was a refreshing experience.",
-		"createdAt": "2023-10-27T18:43:49.068Z",
-		"updatedAt": "2023-10-27T18:43:49.068Z",
-		"__v": 0
-	},
-	{
-		"_id": "653c04e4c189acbc95ec5fba",
-		"author": {
-			"_id": "653c0489c189acbc95ec5fa7",
-			"username": "Denis"
-      ...}
-    ]
+   * @description Test the signin process with incorrect username.
    */
-  app.get("/api/bath", controller.getAllBaths);
+  it("should return a 404 error if the user is not found", async () => {
+    const res = await request(app).post("/api/auth/signin").send({
+      username: "unknownUser",
+      password: "testPassword",
+    });
+
+    expect(res.statusCode).toEqual(404);
+    expect(res.body.message).toEqual("Utilisateur non trouvé.");
+  });
 
   /**
-   * @name GET /api/bath/:id
-   * @description GET route to retrieve a single bath record by ID.
-   * @see {@link module:BathController.getOneBath} - The function that handles this route.
-   * @param {string} id.path.required - Bath ID
-   * @response {Bath.model} 200 - JSON response with a success message.
-   * @response {Error} 400 - Bad request
-   * @returns {Bath.model} 200 - A single bath record
-   * @example &lt;caption>Example&lt;/caption>
-   * app.get("/api/bath/:id", controller.getOneBath);
-   * @example &lt;caption>Example response&lt;/caption>
-   * [
-	{
-		"_id": "653c04e5c125acbc95ec5fbd",
-		"author": {
-			"_id": "653c0489c189agfc95ec5fa7",
-			"username": "Marion"
-		},
-		"waterTemperature": 1,
-		"timeInWater": 1,
-		"temperatureOutside": 1,
-		"weather": "ensoleillé",
-		"wind": "leger",
-		"recoveryTime": 1,
-		"afterdrop": "modéré",
-		"globalFeeling": "facile",
-		"commentary": "It was a refreshing experience.",
-		"createdAt": "2023-10-27T18:43:49.068Z",
-		"updatedAt": "2023-10-27T18:43:49.068Z",
-		"__v": 0
-	}
-]
+   * @description Test the signin process with incorrect password.
    */
-  app.get("/api/bath/:id", controller.getOneBath);
+  it("should return 401 if password is incorrect", async () => {
+    const res = await request(app).post("/api/auth/signin").send({
+      username: userSignin.username,
+      password: "wrongPassword",
+    });
+
+    expect(res.statusCode).toEqual(401);
+    expect(res.body.message).toEqual("Mot de passe incorrect!");
+  });
+  /**
+   * @description Test the signin process with an inactive account.
+   */
+  it("should return 403 if account is not active", async () => {
+    const res = await request(app).post("/api/auth/signin").send({
+      username: userSignup.username,
+      password: userSignup.password,
+    });
+
+    expect(res.statusCode).toEqual(403);
+    expect(res.body.message).toEqual(
+      "Veuillez vérifier votre email pour activer votre compte!"
+    );
+  });
 
   /**
-   * @name GET /api/bath/user/:userId
-   * @description GET route to retrieve all bath records by user ID.
-   * @see {@link module:BathController.getAllBathsByUser} - The function that handles this route.
-   * @param {string} id.path.required - User ID
-   * @response {Bath.model} 200 - JSON response with a success message.
-   * @response {Error} 400 - Bad request
-   * @returns {Array.&lt;Bath>} 200 - An array of bath records for the user
-   * @example &lt;caption>Example&lt;/caption>
-   * app.get("/api/bath/user/:userId", controller.getAllBathsByUser);
-   * @example &lt;caption>Example response&lt;/caption>
-   * [
-	{
-		"_id": "653c04e5c125acbc95ec5fbd",
-		"author": {
-			"_id": "653c0489c189agfc95ec5fa7",
-			"username": "Marion"
-		},
-		"waterTemperature": 1,
-		"timeInWater": 1,
-		"temperatureOutside": 1,
-		"weather": "ensoleillé",
-		"wind": "leger",
-		"recoveryTime": 1,
-		"afterdrop": "modéré",
-		"globalFeeling": "facile",
-		"commentary": "It was a refreshing experience.",
-		"createdAt": "2023-10-27T18:43:49.068Z",
-		"updatedAt": "2023-10-27T18:43:49.068Z",
-		"__v": 0
-	}
-]
+   * @description Test the signin process with an invalid request.
    */
-  app.get("/api/bath/user/:userId", controller.getAllBathsByUser);
+  it("should handle internal server errors", async () => {
+    // Simulate a server error, for example by sending an invalid request
+    const res = await request(app).post("/api/auth/signin").send({
+      username: userSignin.username,
+      // ... Omitting password to trigger an error in the controller
+    });
 
-  /**
-   * @name GET /api/bath/recent/:limit
-   * @description GET route to retrieve all recent baths.
-   * @see {@link module:BathController.getRecentBaths} - The function that handles this route.
-   * @param {number} limit.path.required - Number of recent baths to retrieve
-   * @response {Bath.model} 200 - JSON response with a success message.
-   * @response {Error} 400 - Bad request
-   * @returns {Array.&lt;Bath>} 200 - An array of recent bath records
-   * @example &lt;caption>Example&lt;/caption>
-   * app.get("/api/bath/recent/:limit", controller.getRecentBaths);
-   * @example &lt;caption>Example response&lt;/caption>
-   * [
-	{
-		"_id": "653c04e5c125acbc95ec5fbd",
-		"author": {
-			"_id": "653c0489c189agfc95ec5fa7",
-			"username": "Marion"
-		},
-		"waterTemperature": 1,
-		"timeInWater": 1,
-		"temperatureOutside": 1,
-		"weather": "ensoleillé",
-		"wind": "leger",
-		"recoveryTime": 1,
-		"afterdrop": "modéré",
-		"globalFeeling": "facile",
-		"commentary": "It was a refreshing experience.",
-		"createdAt": "2023-10-27T18:43:49.068Z",
-		"updatedAt": "2023-10-27T18:43:49.068Z",
-		"__v": 0
-	},
-	{
-		"_id": "653c04e4c189acbc95ec5fba",
-		"author": {
-			"_id": "653c0489c189acbc95ec5fa7",
-			"username": "Denis"
-      ...}
-    ]
-   */
-  app.get("/api/bath/recent/:limit", controller.getRecentBaths);
-};
+    expect(res.statusCode).toEqual(500);
+    expect(res.body.message).toBeDefined();
+    expect(res.body).toHaveProperty("message", "Erreur interne du serveur.");
+  });
+});
+
+/**
+ * @description Test the user deletion process.
+ * @function describeDeleteUser
+ * @test {DELETE /api/users/:id}
+ */
+describe("DELETE /api/users/:id", () => {
+  it("should delete the created user", async () => {
+    // auth as admin and get the token
+    const logAdmin = await request(app).post("/api/auth/signin").send({
+      username: userAdmin.username,
+      password: userAdmin.password,
+    });
+    const adminToken = logAdmin.body.accessToken;
+
+    // Delete the user
+    const res = await request(app)
+      .delete(`/api/users/${deletedUserId}`)
+      .set("Authorization", `Bearer ${adminToken}`);
+
+    expect(res.statusCode).toEqual(200);
+    expect(res.body.message).toEqual(
+      "L'utilisateur et les baignades associés ont bien été supprimé !"
+    );
+  });
+});
 </code></pre>
         </article>
     </section>

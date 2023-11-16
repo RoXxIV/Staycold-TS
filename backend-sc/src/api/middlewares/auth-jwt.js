@@ -16,7 +16,6 @@ const dotenv = require("dotenv");
 
 // import database models
 const db = require("../../models");
-
 const User = db.user;
 const Role = db.role;
 
@@ -33,28 +32,24 @@ dotenv.config();
  * @throws {Object} JSON response with a 403 status if no token is provided or if the token format is incorrect.
  * @throws {Object} JSON response with a 401 status if the token is invalid.
  * @example <caption>Example usage of verifyToken middleware.</caption>
- * // Route definition in another file
  * app.get("/api/test", [authJwt.verifyToken], controller.test);
  */
 const verifyToken = async (req, res, next) => {
   try {
-    const authHeader = req.headers["authorization"];
-
     // Check if the token is present
+    const authHeader = req.headers["authorization"];
     if (!authHeader) {
       return res.status(403).send({ message: "Aucun token fourni!" });
     }
 
-    const tokenParts = authHeader.split(" ");
-
     // Check if the token has the correct format
+    const tokenParts = authHeader.split(" ");
     if (tokenParts.length !== 2 || tokenParts[0] !== "Bearer") {
       return res.status(403).send({ message: "Format du token invalide!" });
     }
 
+    // Verify the token and extract the user ID
     const token = tokenParts[1];
-
-    // Verify the token
     jwt.verify(token, process.env.JWT_KEY, (err, decoded) => {
       if (err) {
         return res.status(401).send({ message: "Non autorisé!" });
@@ -79,14 +74,12 @@ const verifyToken = async (req, res, next) => {
  * @throws {Object} JSON response with a 500 status if an error occurs.
  * @throws {Object} JSON response with a 403 status if the user is not an admin.
  * @example <caption>Example usage of isAdmin middleware.</caption>
- * // Route definition in another file
  * app.get("/api/test/admin", [authJwt.verifyToken, authJwt.isAdmin], controller.adminBoard);
  */
 const isAdmin = async (req, res, next) => {
   try {
-    // Find the user in the database
+    // Find the user and populate the 'roles' field with the role name
     const user = await User.findById(req.userId).exec();
-    // Find the roles associated with the user
     const roles = await Role.find({ _id: { $in: user.roles } }).exec();
 
     // Check if the user has the admin role
@@ -112,14 +105,12 @@ const isAdmin = async (req, res, next) => {
  * @throws {Object} JSON response with a 500 status if an error occurs.
  * @throws {Object} JSON response with a 403 status if the user is not a moderator.
  * @example <caption>Example usage of isModerator middleware.</caption>
- * // Route definition in another file
  * app.get("/api/test/mod", [authJwt.verifyToken, authJwt.isModerator], controller.moderatorBoard);
  */
 const isModerator = async (req, res, next) => {
   try {
-    // Find the user in the database
+    // Find the user in the database and populate the 'roles' field with the role name
     const user = await User.findById(req.userId).exec();
-    // Find the roles associated with the user
     const roles = await Role.find({ _id: { $in: user.roles } }).exec();
 
     // Check if the user has the moderator role or the admin role
@@ -135,11 +126,10 @@ const isModerator = async (req, res, next) => {
   }
 };
 
-// export the middleware functions
 const authJwt = {
   verifyToken,
   isAdmin,
   isModerator,
 };
-// export the module
+
 module.exports = authJwt;

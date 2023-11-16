@@ -14,9 +14,7 @@
  * @param {Object} req - Express request object.
  * @param {Object} res - Express response object.
  * @returns {Object} JSON response with public content.
- * @example
- * // Route definition in another file
- * app.get("/api/permissions/all", controller.allAccess);
+ * @example app.get("/api/permissions/all", controller.allAccess);
  */
 exports.allAccess = (req, res) => {
   res.status(200).send("Public Content.");
@@ -29,9 +27,7 @@ exports.allAccess = (req, res) => {
  * @param {Object} req - Express request object.
  * @param {Object} res - Express response object.
  * @returns {Object} JSON response with user content.
- * @example
- * // Route definition in another file
- * app.get("/api/permissions/user", [authJwt.verifyToken], controller.userBoard);
+ * @example app.get("/api/permissions/user", [authJwt.verifyToken], controller.userBoard);
  */
 exports.userBoard = (req, res) => {
   res.status(200).send("User Content.");
@@ -44,9 +40,7 @@ exports.userBoard = (req, res) => {
  * @param {Object} req - Express request object.
  * @param {Object} res - Express response object.
  * @returns {Object} JSON response with moderator content.
- * @example
- * // Route definition in another file
- * app.get(
+ * @example app.get(
     "/api/permissions/mod",
     [authJwt.verifyToken, authJwt.isModerator],
     controller.moderatorBoard
@@ -63,9 +57,7 @@ exports.moderatorBoard = (req, res) => {
  * @param {Object} req - Express request object.
  * @param {Object} res - Express response object.
  * @returns {Object} JSON response with admin content.
- * @example
- * // Route definition in another file
- * app.get(
+ * @example app.get(
     "/api/permissions/admin",
     [authJwt.verifyToken, authJwt.isAdmin],
     controller.adminBoard

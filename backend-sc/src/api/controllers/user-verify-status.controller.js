@@ -11,7 +11,9 @@
 
 // import dependencies
 const dotenv = require("dotenv");
+const errorMessages = require("../../utils/errorMessages");
 
+// import database models
 const db = require("../../models");
 const User = db.user;
 
@@ -29,9 +31,7 @@ dotenv.config();
  * @throws {Unauthorized} JSON response with a 401 status if the user is not found.
  * @throws {Forbidden} JSON response with a 403 status if the email has already been verified.
  * @throws {InternalServerError} JSON response with a 500 status if an internal server error occurs.
- * @example
- * // Route definition in another file
- * app.post(
+ * @example app.post(
     "/api/auth/verify/:confirmationCode",
     verifyUserStatus.verifyUserStatus
   );
@@ -55,16 +55,13 @@ exports.verifyUserStatus = async (req, res) => {
       });
     }
 
-    // Updating the user status
+    // Updating the user status and saving the new user state
     user.status = "Active";
-
-    // Saving the new user state
     await user.save();
 
-    // Sending the response
     res.json({ message: "Le compte a bien été activé!" });
   } catch (err) {
     // console.log("Caught an error:", error); // Debug log
-    res.status(500).send({ message: err });
+    res.status(500).send({ message: errorMessages.INTERNAL_SERVER_ERROR });
   }
 };

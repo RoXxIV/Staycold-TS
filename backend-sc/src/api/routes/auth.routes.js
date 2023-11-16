@@ -9,6 +9,7 @@
  * @requires ../controllers/user-reset-password.controller - This module provides functions for user password reset.
  */
 
+// import dependencies
 const { verifySignUp, signupValidatorRules } = require("../middlewares");
 const signupController = require("../controllers/user-signup.controller");
 const verifyUserStatus = require("../controllers/user-verify-status.controller");

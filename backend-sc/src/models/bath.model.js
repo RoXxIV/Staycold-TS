@@ -132,5 +132,4 @@ const Bath = mongoose.model(
   )
 );
 
-// Export Bath model
 module.exports = Bath;
