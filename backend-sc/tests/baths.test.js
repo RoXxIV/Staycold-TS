@@ -14,7 +14,7 @@ const app = require("../src/app");
 
 let token; // auth token to use for tests
 let bathId; // bath id to use for tests
-let userId = "65414ffac4528cf7f45f9fa8"; // testUser id to use for tests
+let userId = "65552369c3fa7c6102aa6b78"; // testUser id to use for tests
 let limit = 6; // number of recent baths to get
 // bath data to use for tests
 const newBathData = {
@@ -42,8 +42,8 @@ beforeAll((done) => {
   request(app)
     .post("/api/auth/signin")
     .send({
-      username: "testUser",
-      password: "testPassword",
+      username: "userTest",
+      password: "password123",
     })
     .end((err, response) => {
       if (err) {
@@ -51,7 +51,7 @@ beforeAll((done) => {
         done(err);
       } else {
         token = response.body.accessToken; // save the token!
-        // console.log("Token obtenu:", token);
+        console.log("Token obtenu:", token);
         done();
       }
     });
@@ -106,7 +106,7 @@ describe("POST /api/bath", () => {
    */
   it("should return 404 if the user ID does not exist", async () => {
     const InvalidNewBathData = {
-      author: "65414ffac4528cf7f45f9fa9",
+      author: invalidBathId,
       waterTemperature: 1,
       timeInWater: 1,
       temperatureOutside: 1,
