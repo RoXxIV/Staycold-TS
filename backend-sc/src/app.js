@@ -61,7 +61,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
  * @returns {Promise} Resolves if successfully connected to MongoDB, otherwise rejects and logs the error.
  */
 db.mongoose
-  .connect(process.env.MONGO_URI_TEST, {
+  .connect(process.env.MONGO_URI, {
     // MONGO_URI_TEST || MONGO_URI
     useNewUrlParser: true,
     useUnifiedTopology: true,

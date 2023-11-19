@@ -1,6 +1,6 @@
 <template>
   <h1>
-    Boost your <span>{{ dynamicText }}</span>
+    Boostez votre <span>{{ dynamicText }}</span>
     <span id="banner-cusor" :class="{ typing: typeStatus }">&nbsp;</span>
   </h1>
 </template>
@@ -12,12 +12,12 @@ import { ref, onMounted } from "vue";
 const dynamicText = ref<string>("");
 let typeStatus = ref<boolean>(false);
 const textArray = ref<string[]>([
-  "cardiovascular system",
-  "metabolism",
-  "mood",
+  "système cardiovasculaire",
+  "métabolisme",
+  "humeur",
   "attention",
-  "immune system",
-  "tolerance to the cold",
+  "système immunitaire",
+  "tolérance au froid",
 ]);
 const typingSpeed = ref<number>(100);
 const erasingSpeed = ref<number>(50);
