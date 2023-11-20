@@ -36,13 +36,16 @@
         </ul>
         <!-- Nav auth ----------->
         <ul id="auth-nav">
-          <li>
+          <li v-if="!loggedIn">
             <router-link to="/login">Connexion</router-link>
           </li>
-          <li>
+          <li v-if="!loggedIn">
             <router-link to="/register">Inscription</router-link>
           </li>
-          <!-- Deconnexion if User <li></li> -->
+          <!-- logout  -->
+          <li v-if="loggedIn" @click.prevent="logout" id="logout">
+            Deconnexion
+          </li>
         </ul>
       </nav>
       <!-- Toggle burger ----------->
@@ -106,11 +109,17 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, onBeforeUnmount } from "vue";
+import { ref, onMounted, onBeforeUnmount, computed } from "vue";
 import IconBurger from "./IconBurger.vue";
 import MobileNav from "./MobileNav.vue";
+import { useAuthStore } from "@/stores/authStore";
 
+// use the authStore for login and logout
+const authStore = useAuthStore();
+// Toggle mobile menu
 const toggleMobileMenu = ref(false);
+// Toggle theme
+const theme = ref<string>("");
 
 /**
  * Toggles the burger menu and updates the mobile menu state.
@@ -130,23 +139,41 @@ const toggleBurgerMenu = () => {
   toggleMobileMenu.value = !toggleMobileMenu.value;
 };
 
-const theme = ref<string>("");
-// Function to toggle the theme (Light/dark) and set it to the local storage
+// Check if user is logged in
+const loggedIn = computed(() => authStore.status.loggedIn);
+
+// loggout and reload page to update the header
+const logout = async () => {
+  try {
+    await authStore.logout();
+    window.location.reload();
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+/**
+ * Toggles the theme (Light/dark) and sets it to the local storage.
+ */
 const toggleTheme = () => {
   theme.value = theme.value === "darkMode" ? "" : "darkMode";
   document.documentElement.setAttribute("data-theme", theme.value);
   localStorage.setItem("theme", theme.value);
 };
-// Load theme from local storage on component mount
+
 onMounted(() => {
+  /**
+   * Get and loads the theme from the local storage.
+   */
   const savedTheme = localStorage.getItem("theme");
   if (savedTheme) {
     theme.value = savedTheme;
     document.documentElement.setAttribute("data-theme", savedTheme);
   }
 });
-// Save theme to local storage on component unmount
+
 onBeforeUnmount(() => {
+  // Save theme to local storage on component unmount
   localStorage.setItem("theme", theme.value);
 });
 </script>
@@ -222,6 +249,9 @@ header {
       display: flex;
       li {
         margin: 0px 10px;
+        &#logout {
+          cursor: pointer;
+        }
       }
     }
   }
@@ -251,8 +281,10 @@ header {
       user-select: none;
       cursor: pointer;
     }
+    /* Tablet __________*/
     @include media-max(991.98px) {
       top: 160px;
+      /* Smartphone __________*/
       @include media-max(667.98px) {
         display: none;
       }

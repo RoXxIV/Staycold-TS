@@ -21,9 +21,9 @@ const fetchAllBaths = async () => {
   try {
     const response = await BathDataService.getRecent();
     baths.value = response.data;
-    console.log(baths.value);
+    // console.log(baths.value);
   } catch (error) {
-    console.error("Erreur lors de la récupération de la baignades:", error);
+    // console.error("Erreur lors de la récupération de la baignades:", error);
   }
 };
 
