@@ -37,6 +37,23 @@ export const useAuthStore = defineStore({
       }
     },
     /**
+     * @description register user
+     * @throws {Error} - error from AuthService.register
+     * @param userData
+     */
+    register: async function (userData: {
+      username: string;
+      email: string;
+      password: string;
+    }) {
+      try {
+        const response = await AuthService.register(userData);
+        return response.data.message;
+      } catch (error) {
+        throw error;
+      }
+    },
+    /**
      * @description logout user and remove user from state and local storage
      */
     logout: function () {

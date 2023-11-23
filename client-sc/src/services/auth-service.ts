@@ -22,7 +22,18 @@ class AuthService {
         return response.data;
       });
   }
-
+  /**
+   * @description register user
+   * @param user
+   * @returns
+   */
+  register(user: { username: string; email: string; password: string }) {
+    return http.post("/auth/signup", {
+      username: user.username,
+      email: user.email,
+      password: user.password,
+    });
+  }
   /**
    * @description logout user
    */
