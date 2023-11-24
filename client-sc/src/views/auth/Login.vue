@@ -1,5 +1,5 @@
 <template>
-  <section id="login-section">
+  <section>
     <!-- Illustration meditation ----------->
     <div>
       <img
@@ -10,7 +10,7 @@
     </div>
 
     <!-- Form container ----------->
-    <div id="login-container-form">
+    <div id="container-form">
       <h1>Formulaire de <span>Connexion</span></h1>
       <!-- Form ----------->
       <form @submit="onSubmit">
@@ -44,7 +44,7 @@
         </div>
       </form>
 
-      <div id="login-form-links">
+      <div id="form-links">
         <!-- forgot password link ----------->
         <p>
           <router-link to="/">Mot de passe oublié ?</router-link>
@@ -121,8 +121,7 @@ const onSubmit = handleSubmit(async (values) => {
 </script>
 
 <style lang="scss" scoped>
-/* section ----------- */
-#login-section {
+section {
   display: flex;
   justify-content: space-around;
   position: relative;
@@ -159,7 +158,7 @@ const onSubmit = handleSubmit(async (values) => {
     }
   }
   /* Form container __________*/
-  #login-container-form {
+  #container-form {
     h1 {
       margin-bottom: 50px;
       text-align: center;
@@ -215,7 +214,7 @@ const onSubmit = handleSubmit(async (values) => {
       }
     }
     /* Links - forgot password link - register __________*/
-    #login-form-links {
+    #form-links {
       margin-top: 30px;
       color: var(--blue);
       text-decoration: underline;

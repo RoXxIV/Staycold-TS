@@ -59,6 +59,9 @@
             <button type="submit">Inscription</button>
           </div>
         </form>
+        <div id="login-link">
+          <router-link to="/login">Déjà inscrit ?</router-link>
+        </div>
       </div>
       <div v-if="!isSubmitted">
         <img
@@ -69,9 +72,15 @@
         />
       </div>
     </div>
-    <div v-if="isSubmitted && serverSuccesMessage">
-      <span>{{ serverSuccesMessage }}</span>
+
+    <div v-show="isSubmitted && serverSuccesMessage" id="if-success">
+      <p><span>❄</span> {{ serverSuccesMessage }} <span>❄</span></p>
       <p>Redirection dans {{ time }}</p>
+      <vue3-lottie
+        :options="lottieOptions"
+        class="LottieLoader"
+        :animationData="lottieOptions.animationData"
+      ></vue3-lottie>
     </div>
   </section>
 </template>
@@ -82,6 +91,14 @@ import * as yup from "yup";
 import { useForm, useField } from "vee-validate";
 import router from "@/router";
 import { ref } from "vue";
+import LottieLoader from "@/assets/lotties/loader.json";
+
+// lottie options for the loader
+const lottieOptions = ref({
+  animationData: LottieLoader,
+  loop: true,
+  autoplay: true,
+});
 
 // use the authStore for the register form
 const authStore = useAuthStore();
@@ -89,6 +106,7 @@ const authStore = useAuthStore();
 const serverErrorMessage = ref("");
 const serverSuccesMessage = ref("");
 const isSubmitted = ref(false);
+// timer for the redirection
 const time = ref(5);
 let redirectionTimerId: number | NodeJS.Timeout | undefined = undefined;
 
@@ -194,13 +212,13 @@ const onBeforeUnmount = () => {
 section {
   position: relative;
   width: 100vw;
-  /* bloc __________*/
+  /* Main bloc that contain form and illustration */
   #bloc {
     display: flex;
     justify-content: space-around;
     width: 75%;
-    margin: 50px auto 0px auto;
-    /* illustration __________*/
+    margin: 20px auto 0px auto;
+    /* Illustration next to the form */
     #illustration {
       max-width: 600px;
       @include media-max(991.98px) {
@@ -212,7 +230,7 @@ section {
         }
       }
     }
-    /* container form __________*/
+    /* Register form container */
     #container-form {
       display: flex;
       flex-direction: column;
@@ -234,11 +252,14 @@ section {
       form {
         label {
           display: block;
-          font-size: 1.2em;
+          /* Smartphone __________*/
+          @include media-max(611.98px) {
+            font-size: 1em;
+          }
         }
         input {
           width: 280px;
-          margin: 10px 0px 35px 30px;
+          margin: 10px 0px 25px 30px;
           border: none;
           border-bottom: 2px solid var(--color-dark-border);
           background: transparent;
@@ -264,18 +285,59 @@ section {
           text-align: left;
         }
       }
-      /* Responsive form __________*/
+      /* Link to login page __________*/
+      #login-link {
+        margin-top: 30px;
+        color: var(--blue);
+        text-decoration: underline;
+        text-align: center;
+        transition: color 0.3s;
+        p:hover {
+          color: #176cf5;
+        }
+      }
+      /* Responsive container form __________*/
       @include media-max(991.98px) {
         margin-top: 0px;
+        /* Smartphone __________*/
+        @include media-max(611.98px) {
+          width: 100%;
+        }
       }
     }
-    /* register bloc __________*/
+    /* Responsive bloc __________*/
     @include media-max(991.98px) {
       flex-direction: column-reverse;
       align-items: center;
       width: 100%;
       margin: 30px 0px 0px 0px;
       margin-top: 20px;
+    }
+  }
+  /* Success message __________*/
+  #if-success {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 50px;
+    font-size: 1.4em;
+    text-align: center;
+    span {
+      color: var(--blue);
+    }
+    /* Lotties ____*/
+    .LottieLoader {
+      width: 300px;
+      margin: auto;
+      @media (max-width: 611.98px) {
+        width: 200px;
+      }
+    }
+    /* media queries if succes __________*/
+    @include media-max(611.98px) {
+      margin-top: 50px;
+      font-size: 1em;
     }
   }
 }
