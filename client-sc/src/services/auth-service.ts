@@ -40,6 +40,15 @@ class AuthService {
   logout() {
     localStorage.removeItem("user");
   }
+
+  /**
+   * @description confirm user email address with code sent to email
+   * @param code
+   * @returns
+   */
+  confirmUser(confirmationCode: string) {
+    return http.post(`/auth/verify/${confirmationCode}`);
+  }
 }
 
 export default new AuthService();

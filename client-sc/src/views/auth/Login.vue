@@ -234,6 +234,4 @@ section {
     margin-top: 50px;
   }
 }
-// testUser
-// testPassword
 </style>

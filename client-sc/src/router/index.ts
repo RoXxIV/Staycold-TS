@@ -4,11 +4,13 @@ import authGuards from "@/helpers/auth.guards";
 
 /** Routes */
 import HomeView from "@/views/HomeView.vue";
+import NotFoundView from "../views/NotFoundView.vue";
 /** Baths */
 import AllBathView from "@/views/AllBathsView.vue";
 /** Auth */
 import Login from "@/views/auth/Login.vue";
 import Register from "@/views/auth/Register.vue";
+import ConfirmMail from "@/views/auth/ConfirmMail.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -38,6 +40,14 @@ const router = createRouter({
       name: "All-baths",
       component: AllBathView,
     },
+    /** Confirmation user account view  */
+    {
+      path: "/confirm-mail-redirection/:confirmationCode",
+      name: "Confirm-mail",
+      component: ConfirmMail,
+    },
+    /** redirect incorrect routes to 404  */
+    { path: "/:pathMatch(.*)*", name: "Not-found", component: NotFoundView },
   ],
 });
 

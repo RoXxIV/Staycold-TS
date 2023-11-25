@@ -88,7 +88,7 @@ module.exports.sendActivationMail = async (name, email, confirmationCode) => {
                     <h1>Bonjour ${name},</h1>
                     <h2>Merci de vous être inscrit sur <span>Staycold</span></h2>
                     <h3>Pour activer votre compte, veuillez cliquer sur le bouton ci-dessous :</h3>
-                    <a href="${process.env.CLIENT_URL}/activate/${confirmationCode}">Activer mon compte</a>
+                    <a href="${process.env.CLIENT_URL}/confirm-mail-redirection/${confirmationCode}">Activer mon compte</a>
                 </body>`,
     });
   } catch (err) {

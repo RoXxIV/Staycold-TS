@@ -78,7 +78,7 @@
       <p>Redirection dans {{ time }}</p>
       <vue3-lottie
         :options="lottieOptions"
-        class="LottieLoader"
+        class="lottie"
         :animationData="lottieOptions.animationData"
       ></vue3-lottie>
     </div>
@@ -187,7 +187,7 @@ const onSubmit = handleSubmit(async (values) => {
 
 /**
  * @description - This function is called when the user is successfully registered.
- * Redirect the user to the login page after 5 seconds.
+ * Redirect the user to the home page after 5 seconds.
  * @param {number} time - The time in seconds.
  * @returns {number} - The timer id.
  */
@@ -327,7 +327,7 @@ section {
       color: var(--blue);
     }
     /* Lotties ____*/
-    .LottieLoader {
+    .lottie {
       width: 300px;
       margin: auto;
       @media (max-width: 611.98px) {
