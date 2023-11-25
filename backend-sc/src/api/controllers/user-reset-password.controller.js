@@ -24,23 +24,23 @@ const User = db.user;
 /**
  * @function sendEmailResetPassword
  * @async
- * @description Sends a password reset email to the user. - This function is called when the user clicks on the "Forgot password" button.
- * @see {@link module:AuthRoutes} - This function is used in the POST /api/auth/email-reset-password/:email route.
- * @see {@link module:Nodemailer.sendResetPasswordMail} - This function uses the sendResetPasswordMail function from the Nodemailer module.
- * @param {Object} req - Express request object containing the user's email.
+ * @description Sends a password reset email to the user. This function is called when the user requests a password reset via the "Forgot password" form.
+ * @see {@link module:AuthRoutes} - This function is used in the POST /api/auth/email-reset-password route.
+ * @see {@link module:Nodemailer.sendResetPasswordMail} - This function uses the sendResetPasswordMail function from the Nodemailer module to send the email.
+ * @param {Object} req - Express request object containing the user's email in the request body.
  * @param {Object} res - Express response object.
- * @returns {Promise<Object>} JSON response with a message indicating the email sending status.
- * @throws {BadRequest} JSON response with a 401 status if the user is not found or the confirmation code is invalid.
- * @throws {InternalServerError} JSON response with a 500 status if an internal server error occurs, such as failure in updating the password.
- * @example app.post(
-    "/api/auth/email-reset-password/:email",
-    resetPasswordController.sendEmailResetPassword
-  );
+ * @returns {Promise<Object>} JSON response with a message indicating the status of the email sending process.
+ * @throws {BadRequest} JSON response with a 401 status if the user is not found.
+ * @throws {InternalServerError} JSON response with a 500 status if an internal server error occurs, such as a failure in sending the email.
+ * @example app.post("/api/auth/email-reset-password", resetPasswordController.sendEmailResetPassword);
  */
 exports.sendEmailResetPassword = async (req, res) => {
   try {
+    // Get email from request body
+    const { email } = req.body;
+
     // Find user by email and check if user exists
-    const user = await User.findOne({ email: req.body.email });
+    const user = await User.findOne({ email });
     if (!user) {
       return res.status(401).send({ message: "Utilisateur non trouvé" });
     }
@@ -65,23 +65,19 @@ exports.sendEmailResetPassword = async (req, res) => {
  * @function resetPassword
  * @async
  * @description Resets the user's password.
- * @see {@link module:AuthRoutes} - This function is used in the POST /api/auth/reset-password/:confirmationCode route.
+ * @see {@link module:AuthRoutes} - This function is used in the POST /api/auth/reset-password.
  * @param {Object} req - Express request object containing the confirmation code and new password.
  * @param {Object} res - Express response object.
  * @returns {Promise<Object>} JSON response with a message indicating the password reset status.
  * @throws {Object} JSON response with a 401 status if the user is not found.
  * @throws {Object} JSON response with a 500 status if an error occurs.
- * @example app.post(
-    "/api/auth/reset-password/:confirmationCode",
-    resetPasswordController.resetPassword
-  );
+ * @example app.post("/api/auth/reset-password",resetPasswordController.resetPassword);
  */
 exports.resetPassword = async (req, res) => {
   try {
+    const confirmationCode = req.body.confirmationCode;
     // Find user by confirmation code
-    const user = await User.findOne({
-      confirmationCode: req.params.confirmationCode,
-    });
+    const user = await User.findOne({ confirmationCode });
 
     // Check if user exists
     if (!user) {

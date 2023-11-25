@@ -3,17 +3,17 @@
     <!-- Illustration meditation ----------->
     <div>
       <img
-        id="illustration-meditation"
         src="@/assets/images/login-illustration.png"
         alt="Illustration d'un personnage qui medite en lévitation"
       />
     </div>
 
     <!-- Form container ----------->
-    <div id="container-form">
-      <h1>Formulaire de <span>Connexion</span></h1>
+    <div id="form-container">
+      <h1>Formulaire de <span class="title-span">Connexion</span></h1>
+
       <!-- Form ----------->
-      <form @submit="onSubmit">
+      <form @submit="onSubmit" class="custom-form">
         <!-- Username ----------->
         <div>
           <label for="username">Nom d'utilisateur:</label>
@@ -39,15 +39,15 @@
         </div>
         <span class="error-feedback">{{ serverErrorMessage }}</span>
         <!-- Submit ----------->
-        <div id="login-form-submit">
+        <div class="submit">
           <button type="submit">Connexion</button>
         </div>
       </form>
 
-      <div id="form-links">
+      <div class="redirection-link">
         <!-- forgot password link ----------->
         <p>
-          <router-link to="/">Mot de passe oublié ?</router-link>
+          <router-link to="/reset-password">Mot de passe oublié ?</router-link>
         </p>
         <!-- Register link ----------->
         <p>
@@ -60,45 +60,33 @@
 
 <script setup lang="ts">
 import { ref } from "vue";
-import { useAuthStore } from "@/stores/authStore";
 import { useForm, useField } from "vee-validate";
 import * as yup from "yup";
-import { RouterLink } from "vue-router";
-import { useRouter } from "vue-router";
+import { useRouter, RouterLink } from "vue-router";
+import { useAuthStore } from "@/stores/authStore";
 
-// use the router to redirect the user after login
 const router = useRouter();
-
-// use the authStore for login and logout
 const authStore = useAuthStore();
 
 const serverErrorMessage = ref("");
 
-/**
- * Define the schema for the login form using Yup.
- * It includes validations for username and password fields.
- */
+// Validation schema with Yup
 const schema = yup.object({
   username: yup.string().required("Nom d'utilisateur requis"),
   password: yup.string().required("Mot de passe requis"),
 });
 
-/**
- * useForm hook from Vee-Validate to handle form submission and validation.
- */
-const { handleSubmit } = useForm({
-  validationSchema: schema,
-});
-
-/**
- * useField hook to manage the state and validation of individual form fields.
- */
+// Configuring the form validation with vee-validate
+const { handleSubmit } = useForm({ validationSchema: schema });
 const { value: username, errorMessage: usernameError } = useField("username");
 const { value: password, errorMessage: passwordError } = useField("password");
 
 /**
- * Handles the form submission.
+ * @description Handles the form submission.
+ * call the login function from the authStore.
  * It validates the form and then attempts to log in the user using the authStore.
+ * If the login is successful, the user is redirected to the home page.
+ * If the login fails, the error message from the server is displayed.
  * @param {Object} values - The form values.
  */
 const onSubmit = handleSubmit(async (values) => {
@@ -109,7 +97,6 @@ const onSubmit = handleSubmit(async (values) => {
     });
     router.push("/");
   } catch (error) {
-    // display the error message from the server if available
     if ((error as any).response && (error as any).response.data) {
       serverErrorMessage.value = (error as any).response.data.message;
       console.log(serverErrorMessage);
@@ -121,6 +108,7 @@ const onSubmit = handleSubmit(async (values) => {
 </script>
 
 <style lang="scss" scoped>
+/* Section __________*/
 section {
   display: flex;
   justify-content: space-around;
@@ -130,7 +118,7 @@ section {
   margin-top: 100px;
   margin-bottom: 50px;
   /* Illustration __________*/
-  #illustration-meditation {
+  img {
     margin-top: 50px;
     animation: float 6s ease-in-out infinite;
     /* Illustration Animation__________*/
@@ -146,11 +134,9 @@ section {
       }
     }
     /* Illustration Media Queries__________*/
-    /* Tablet __________*/
     @include media-max(991.98px) {
       max-width: 200px;
       margin: 0;
-      /* Smartphone __________*/
       @include media-max(611.98px) {
         max-width: 100px;
         margin: 0;
@@ -158,75 +144,17 @@ section {
     }
   }
   /* Form container __________*/
-  #container-form {
+  #form-container {
     h1 {
       margin-bottom: 50px;
       text-align: center;
       font-size: 2em;
-      span {
-        color: var(--blue);
-        display: block;
-        font-family: var(--oswald);
-      }
-      /* Smartphone __________*/
       @include media-max(611.98px) {
         margin-top: 0;
       }
     }
-    /* Form __________*/
-    form {
-      label {
-        display: block;
-        margin-top: 10px;
-        font-size: 1.2em;
-      }
-      input {
-        margin: 35px 0px 15px 20px;
-        width: 280px;
-        border: none;
-        border-bottom: 1px solid var(--color-dark-border);
-        background: transparent;
-        color: var(--color-text);
-        transition: border-color 0.3s;
-        &:focus {
-          outline: none;
-          border-bottom: 1px solid var(--blue);
-        }
-        /* Smartphone __________*/
-        @include media-max(611.98px) {
-          margin: 20px 0px;
-        }
-      }
-      /* Error feedback __________*/
-      .error-feedback {
-        display: block;
-        color: var(--red);
-        margin-top: 10px;
-        text-align: left;
-      }
-      #login-form-submit {
-        margin-top: 15px;
-        text-align: center;
-      }
-      /* media queries form __________*/
-      @include media-max(611.98px) {
-        text-align: center;
-      }
-    }
-    /* Links - forgot password link - register __________*/
-    #form-links {
-      margin-top: 30px;
-      color: var(--blue);
-      text-decoration: underline;
-      text-align: center;
-      transition: color 0.3s;
-      p:hover {
-        color: #176cf5;
-      }
-    }
   }
   /* media queries section __________*/
-  /* Tablet __________*/
   @include media-max(991.98px) {
     flex-direction: column;
     align-items: center;

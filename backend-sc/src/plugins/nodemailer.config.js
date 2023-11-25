@@ -103,12 +103,16 @@ module.exports.sendActivationMail = async (name, email, confirmationCode) => {
  * @description Sends a password reset email to a user - This function is called when a user clicks on the "Forgot password" button.
  * @param {string} name - The name of the user.
  * @param {string} email - The email address of the user.
- * @param {string} resetCode - The password reset code.
+ * @param {string} confirmationCode -  The confirmation code for resetting the user password.
  * @throws Will throw an error if the email fails to send.
  * @example
  * sendResetPasswordMail('John', '...@example.com', '123456');
  */
-module.exports.sendResetPasswordMail = async (name, email, resetCode) => {
+module.exports.sendResetPasswordMail = async (
+  name,
+  email,
+  confirmationCode
+) => {
   try {
     await transporter.sendMail({
       from: process.env.EMAIL_USER,
@@ -118,7 +122,7 @@ module.exports.sendResetPasswordMail = async (name, email, resetCode) => {
         <h1>❄ Bonjour ${name} ❄</h1>
         <p>Il semble que vous ayez besoin d'un nouveau mot de passe. Cliquez sur le lien ci-dessous pour confirmer votre demande.</p>
         <br />
-        <a href=http://127.0.0.1:5173/reset-password/${resetCode}>➡ Confirmer votre demande ⬅</a>
+        <a href=${process.env.CLIENT_URL}/set-new-password/${confirmationCode}>➡ Confirmer votre demande ⬅</a>
         <br />
         <p>Si vous ne l'avez pas demandé, veuillez ignorer cet e-mail et votre mot de passe restera inchangé.</p>
         <p>À bientôt, <br />

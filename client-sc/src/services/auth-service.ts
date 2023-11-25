@@ -6,7 +6,7 @@ import http from "../http-common";
 class AuthService {
   /**
    * @description login user
-   * @param user
+   * @param user { username, password }
    * @returns
    */
   login(user: { username: string; password: string }) {
@@ -24,7 +24,7 @@ class AuthService {
   }
   /**
    * @description register user
-   * @param user
+   * @param user { username, email, password }
    * @returns
    */
   register(user: { username: string; email: string; password: string }) {
@@ -48,6 +48,23 @@ class AuthService {
    */
   confirmUser(confirmationCode: string) {
     return http.post(`/auth/verify/${confirmationCode}`);
+  }
+
+  /**
+   * @description send email to user to reset password
+   * @param email
+   */
+  resetPasswordEmail(email: string) {
+    return http.post("/auth/email-reset-password", { email });
+  }
+
+  /**
+   * @description reset user password
+   * @param password
+   * @param confirmationCode
+   */
+  resetPassword(password: string, confirmationCode: string) {
+    return http.post("/auth/reset-password", { password, confirmationCode });
   }
 }
 

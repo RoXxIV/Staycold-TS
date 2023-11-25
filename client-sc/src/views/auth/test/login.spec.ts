@@ -7,12 +7,18 @@ import type { IAuthState } from "@/types/authStore";
 import Login from "@/views/auth/Login.vue";
 import HomeView from "@/views/HomeView.vue";
 import Register from "@/views/auth/Register.vue";
+import ResetPasswordView from "@/views/auth/ResetPasswordView.vue";
 
 const router = createRouter({
   history: createWebHistory(),
   routes: [
     { path: "/", name: "home", component: HomeView },
     { path: "/register", name: "Register", component: Register },
+    {
+      path: "/reset-password",
+      name: "Reset-password",
+      component: ResetPasswordView,
+    },
   ],
 });
 
@@ -40,7 +46,7 @@ describe("Login", () => {
 
   it("renders the login form", () => {
     expect(wrapper.find("section").exists()).toBe(true);
-    expect(wrapper.find("#container-form").exists()).toBe(true);
+    expect(wrapper.find("#form-container").exists()).toBe(true);
     expect(wrapper.find("form").exists()).toBe(true);
   });
 
@@ -51,7 +57,7 @@ describe("Login", () => {
   });
 
   it("renders the image correctly", () => {
-    const image = wrapper.find("#illustration-meditation");
+    const image = wrapper.find("img");
     expect(image.exists()).toBe(true);
   });
 });

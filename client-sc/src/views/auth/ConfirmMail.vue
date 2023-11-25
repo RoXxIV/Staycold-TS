@@ -4,19 +4,20 @@
     <div>
       <div v-if="isConfirmed">
         <h2><span>❄</span> {{ confirmationMessage }} <span>❄</span></h2>
-        <p>Redirection dans {{ time }}</p>
+        <p>Redirection dans {{ timeToLogin }}</p>
         <!-- Lottie ----------->
         <vue3-lottie
           :options="loaderOptions"
           class="lottie"
           :animationData="loaderOptions.animationData"
         ></vue3-lottie>
+        <!-- Redirection link ----------->
         <router-link to="/login" tag="a"><p>Se connecter</p></router-link>
       </div>
       <!-- Email not comfirmed ----------->
       <div v-else id="userNotConfirmed">
         <span>{{ errorMessage }}</span>
-        <p>Redirection dans {{ time }}</p>
+        <p>Redirection dans {{ timeToHome }}</p>
         <!-- Lottie ----------->
         <vue3-lottie
           :options="somethingWentWrongOptions"
@@ -32,14 +33,15 @@
 import { ref } from "vue";
 import { onMounted } from "vue";
 import { useRoute } from "vue-router";
-import AuthService from "@/services/auth-service";
 import router from "@/router";
-import lottie from "@/assets/lotties/loader.json";
+import AuthService from "@/services/auth-service";
+import { useRedirectionTimer } from "@/helpers/redirectionHelper";
+import lottieLoader from "@/assets/lotties/loader.json";
 import LottiesomethingWentWrong from "@/assets/lotties/something-went-wrong.json";
 
-// lottie options
+// lottie options for the loader and something went wrong
 const loaderOptions = ref({
-  animationData: lottie,
+  animationData: lottieLoader,
   loop: true,
   autoplay: true,
 });
@@ -54,9 +56,12 @@ const isConfirmed = ref(false);
 const confirmationMessage = ref("Le compte a bien été activé!");
 const errorMessage = ref("Une erreur est survenue!");
 const confirmationCode = ref("");
-// timer for the redirection
-const time = ref(5);
-let redirectionTimerId: number | NodeJS.Timeout | undefined = undefined;
+
+// settings for the redirection timer after the user is confirmed or not
+const { time: timeToLogin, startRedirectionTimer: redirectToLogin } =
+  useRedirectionTimer("/login", 5);
+const { time: timeToHome, startRedirectionTimer: redirectToHome } =
+  useRedirectionTimer("/", 5);
 
 /**
  * @description - This function is called when the component is mounted.
@@ -65,7 +70,6 @@ let redirectionTimerId: number | NodeJS.Timeout | undefined = undefined;
  * @param {string} confirmationCode - The confirmation code.
  * @returns {void} - Nothing.
  */
-
 onMounted(() => {
   const confirmationCode = route.params.confirmationCode;
   if (confirmationCode) {
@@ -76,21 +80,20 @@ onMounted(() => {
 });
 
 /**
- * @description - This function is called when the component is mounted.
- * it send the confirmation code to the server to activate the user account.
+ * @description - It send the confirmation code to the server to activate the user account.
  * If the confirmation code is not valid, display an error message.
+ * And redirect the user to the home page after 5 seconds.
  * If the confirmation code is valid, display a success message.
- * Redirect the user to the login page after 5 seconds.
+ * And redirect the user to the login page after 5 seconds.
  * @param {string} confirmationCode - The confirmation code.
- * @returns {void} - Nothing.
- *
+ * @throws {Error} - If the confirmation code is not valid.
  */
 const sendConfirmationCode = async (confirmationCode: string) => {
   try {
     const response = await AuthService.confirmUser(confirmationCode);
     if (response.status === 200) {
       isConfirmed.value = true;
-      redirect();
+      redirectToLogin();
     }
   } catch (error) {
     if ((error as any).response) {
@@ -99,30 +102,8 @@ const sendConfirmationCode = async (confirmationCode: string) => {
       errorMessage.value = (error as any).message;
     }
     isConfirmed.value = false;
-    redirect();
+    redirectToHome();
   }
-};
-
-/**
- * @description - This function is called when the user account is successfully activated.
- * Redirect the user to the login page after 5 seconds.
- * @param {number} time - The time in seconds.
- * @returns {number} - The timer id.
- */
-
-const redirect = () => {
-  redirectionTimerId = setInterval(() => {
-    time.value--;
-    if (time.value === 0) {
-      clearInterval(redirectionTimerId);
-      router.push("/login");
-    }
-  }, 1000);
-};
-
-// Stop the timer when the component is unmounted
-const onBeforeUnmount = () => {
-  if (redirectionTimerId) clearInterval(redirectionTimerId);
 };
 </script>
 
@@ -147,7 +128,7 @@ section {
     p {
       text-decoration: underline;
     }
-    /* Responsive __________*/
+    /* media queries __________*/
     @include media-max(611.98px) {
       padding: 0;
     }

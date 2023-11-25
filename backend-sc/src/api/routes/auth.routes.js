@@ -114,13 +114,13 @@ module.exports = function (app) {
   app.post("/api/auth/signin", signinController.signin);
 
   /**
-   * @name POST /api/auth/email-reset-password/:email
+   * @name POST /api/auth/email-reset-password
    * @description Envoie du mail permettant de générer un nouveau mot de passe.
    * @see {@link module:PasswordReset.sendEmailResetPassword}
    * @param {string} confirmationCode - The confirmation code for email verification.
    * @example <caption>Example</caption>
    * app.post(
-    "/api/auth/email-reset-password/:email",
+    "/api/auth/email-reset-password",
     resetPasswordController.sendEmailResetPassword
   );
   @example <caption>Example response</caption>
@@ -129,21 +129,19 @@ module.exports = function (app) {
   }
    */
   app.post(
-    "/api/auth/email-reset-password/:email",
+    "/api/auth/email-reset-password",
     resetPasswordController.sendEmailResetPassword
   );
 
   /**
-   * @name POST /api/auth/reset-password/:confirmationCode
+   * @name POST /api/auth/reset-password
    * @description envoie du nouveau mot de passe.
    * @see {@link module:PasswordReset.resetPassword}
    * @param {string} confirmationCode - The confirmation code for email verification.
    * @param {string} password - The new password.
    * @example <caption>Example</caption>
    * app.post(
-    "/api/auth/reset-password/:confirmationCode",
-    resetPasswordController.resetPassword
-  );
+    "/api/auth/reset-password",resetPasswordController.resetPassword);
    * @example <caption>Example request body:</caption>
    * {
    * "password": "StrongPassword123!"
@@ -153,8 +151,5 @@ module.exports = function (app) {
    * "message": "Votre mot de passe a bien été modifié"
    * }
    */
-  app.post(
-    "/api/auth/reset-password/:confirmationCode",
-    resetPasswordController.resetPassword
-  );
+  app.post("/api/auth/reset-password", resetPasswordController.resetPassword);
 };

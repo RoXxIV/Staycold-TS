@@ -2,10 +2,10 @@
   <section>
     <div id="bloc">
       <!-- Form container ----------->
-      <div v-if="!isSubmitted" id="container-form">
-        <h1>Formulaire d'<span>Inscription</span></h1>
+      <div v-if="!isSubmitted" id="form-container">
+        <h1>Formulaire d'<span class="title-span">Inscription</span></h1>
         <!-- Form ----------->
-        <form @submit="onSubmit">
+        <form @submit="onSubmit" class="custom-form">
           <!-- Username ----------->
           <div>
             <label for="username">Nom d'utilisateur:</label>
@@ -17,7 +17,6 @@
             />
             <span class="error-feedback">{{ usernameError }}</span>
           </div>
-
           <!-- Email ----------->
           <div>
             <label for="email">Email:</label>
@@ -29,7 +28,6 @@
             />
             <span class="error-feedback">{{ emailError }}</span>
           </div>
-
           <!-- Password ----------->
           <div>
             <label for="password">Mot de passe:</label>
@@ -41,7 +39,6 @@
             />
             <span class="error-feedback">{{ passwordError }}</span>
           </div>
-
           <!-- Confirm password ----------->
           <div>
             <label for="confirm-password">Confirmez votre mot de passe:</label>
@@ -55,27 +52,27 @@
           </div>
           <span class="error-feedback">{{ serverErrorMessage }}</span>
           <!-- Submit ----------->
-          <div id="register-form-submit">
+          <div class="submit">
             <button type="submit">Inscription</button>
           </div>
         </form>
-        <div id="login-link">
+        <!-- Redirection link ----------->
+        <div class="redirection-link">
           <router-link to="/login">Déjà inscrit ?</router-link>
         </div>
       </div>
       <div v-if="!isSubmitted">
         <img
-          id="illustration"
           class="rubberBand"
           src="@/assets/images/inscription.svg"
           alt="Illustration d'une montagne sur fond bleu avec des nuages en arriere plan"
         />
       </div>
     </div>
-
+    <!-- Success message ----------->
     <div v-show="isSubmitted && serverSuccesMessage" id="if-success">
       <p><span>❄</span> {{ serverSuccesMessage }} <span>❄</span></p>
-      <p>Redirection dans {{ time }}</p>
+      <p>Redirection dans {{ timeToHome }}</p>
       <vue3-lottie
         :options="lottieOptions"
         class="lottie"
@@ -86,35 +83,31 @@
 </template>
 
 <script setup lang="ts">
-import { useAuthStore } from "@/stores/authStore";
+import { ref } from "vue";
 import * as yup from "yup";
 import { useForm, useField } from "vee-validate";
-import router from "@/router";
-import { ref } from "vue";
+import { useAuthStore } from "@/stores/authStore";
+import { useRedirectionTimer } from "@/helpers/redirectionHelper";
 import LottieLoader from "@/assets/lotties/loader.json";
 
-// lottie options for the loader
+const authStore = useAuthStore();
+
+// lottie options
 const lottieOptions = ref({
   animationData: LottieLoader,
   loop: true,
   autoplay: true,
 });
 
-// use the authStore for the register form
-const authStore = useAuthStore();
-
 const serverErrorMessage = ref("");
 const serverSuccesMessage = ref("");
 const isSubmitted = ref(false);
-// timer for the redirection
-const time = ref(5);
-let redirectionTimerId: number | NodeJS.Timeout | undefined = undefined;
 
-/**
- * Define the Register form schema using Yup.
- * It includes validations for username, email,
- * password and password confirmation fields.
- */
+// settings for the redirection timer after the user is registered
+const { time: timeToHome, startRedirectionTimer: redirectToHome } =
+  useRedirectionTimer("/", 5);
+
+// Validation schema with Yup
 const schema = yup.object({
   username: yup
     .string()
@@ -137,16 +130,8 @@ const schema = yup.object({
     .oneOf([yup.ref("password")], "Les mots de passe doivent correspondre"),
 });
 
-/**
- * useForm hook from Vee-Validate to handle form submission and validation.
- */
-const { handleSubmit } = useForm({
-  validationSchema: schema,
-});
-
-/**
- * useField hook to manage the state and validation of individual form fields.
- */
+// Configuring the form validation with vee-validate
+const { handleSubmit } = useForm({ validationSchema: schema });
 const { value: username, errorMessage: usernameError } = useField("username");
 const { value: email, errorMessage: emailError } = useField("email");
 const { value: password, errorMessage: passwordError } = useField("password");
@@ -162,7 +147,6 @@ const { value: confirmPassword, errorMessage: confirmPasswordError } =
  * @param {object} values - The form values.
  */
 const onSubmit = handleSubmit(async (values) => {
-  // register the user using the authStore
   try {
     const response = await authStore.register({
       username: values.username,
@@ -173,9 +157,8 @@ const onSubmit = handleSubmit(async (values) => {
       serverSuccesMessage.value = response;
     }
     isSubmitted.value = true;
-    redirect();
+    redirectToHome();
   } catch (error) {
-    // display the error message from the server if available
     if ((error as any).response && (error as any).response.data) {
       serverErrorMessage.value = (error as any).response.data.message;
       console.log(serverErrorMessage);
@@ -184,33 +167,10 @@ const onSubmit = handleSubmit(async (values) => {
     }
   }
 });
-
-/**
- * @description - This function is called when the user is successfully registered.
- * Redirect the user to the home page after 5 seconds.
- * @param {number} time - The time in seconds.
- * @returns {number} - The timer id.
- */
-
-const redirect = () => {
-  redirectionTimerId = setInterval(() => {
-    time.value--;
-    if (time.value === 0) {
-      clearInterval(redirectionTimerId);
-      router.push("/");
-    }
-  }, 1000);
-};
-
-// Stop the timer when the component is unmounted
-const onBeforeUnmount = () => {
-  if (redirectionTimerId) clearInterval(redirectionTimerId);
-};
 </script>
 
 <style lang="scss" scoped>
 section {
-  position: relative;
   width: 100vw;
   /* Main bloc that contain form and illustration */
   #bloc {
@@ -218,8 +178,8 @@ section {
     justify-content: space-around;
     width: 75%;
     margin: 20px auto 0px auto;
-    /* Illustration next to the form */
-    #illustration {
+    /* Illustration */
+    img {
       max-width: 600px;
       @include media-max(991.98px) {
         max-width: 200px;
@@ -231,7 +191,7 @@ section {
       }
     }
     /* Register form container */
-    #container-form {
+    #form-container {
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -241,71 +201,20 @@ section {
         margin-bottom: 50px;
         span {
           display: inline-block;
-          color: var(--blue);
-          font-family: var(--oswald);
         }
         @include media-max(991.98px) {
           margin-top: 0px;
         }
       }
-      /* register form __________*/
-      form {
-        label {
-          display: block;
-          /* Smartphone __________*/
-          @include media-max(611.98px) {
-            font-size: 1em;
-          }
-        }
-        input {
-          width: 280px;
-          margin: 10px 0px 25px 30px;
-          border: none;
-          border-bottom: 2px solid var(--color-dark-border);
-          background: transparent;
-          color: var(--color-text);
-          transition: border-color 0.3s;
-          &:focus {
-            outline: none;
-            border-color: var(--blue);
-          }
-          @include media-max(611.98px) {
-            margin: 20px 0;
-          }
-        }
-        /* register form submit __________*/
-        #register-form-submit {
-          margin-top: 15px;
-          text-align: center;
-        }
-        .error-feedback {
-          display: block;
-          color: var(--red);
-          margin-bottom: 10px;
-          text-align: left;
-        }
-      }
-      /* Link to login page __________*/
-      #login-link {
-        margin-top: 30px;
-        color: var(--blue);
-        text-decoration: underline;
-        text-align: center;
-        transition: color 0.3s;
-        p:hover {
-          color: #176cf5;
-        }
-      }
-      /* Responsive container form __________*/
+      /* media queries form container */
       @include media-max(991.98px) {
         margin-top: 0px;
-        /* Smartphone __________*/
         @include media-max(611.98px) {
           width: 100%;
         }
       }
     }
-    /* Responsive bloc __________*/
+    /* media queries bloc __________*/
     @include media-max(991.98px) {
       flex-direction: column-reverse;
       align-items: center;

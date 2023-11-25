@@ -1,5 +1,6 @@
 @import "./variables.scss";
 @import "./mixins.scss";
+/** Global styles */
 /* All ______*/
 * {
   outline: none;
@@ -48,5 +49,59 @@ html {
     button {
       @include button(var(--white), var(--blue));
     }
+  }
+}
+
+/** Custom styles ___________ */
+/* Custom Span for titles ______*/
+.title-span {
+  display: block;
+  color: var(--blue);
+  font-family: var(--oswald);
+}
+/* Custom form ______*/
+.custom-form {
+  label {
+    display: block;
+    @include media-max(611.98px) {
+      font-size: 1em;
+    }
+  }
+  input {
+    width: 280px;
+    margin: 10px 0px 25px 30px;
+    border: none;
+    border-bottom: 2px solid var(--color-dark-border);
+    background: transparent;
+    color: var(--color-text);
+    transition: border-color 0.3s;
+    &:focus {
+      outline: none;
+      border-color: var(--blue);
+    }
+    @include media-max(611.98px) {
+      margin: 20px 0;
+    }
+  }
+  .submit {
+    margin-top: 15px;
+    text-align: center;
+  }
+  .error-feedback {
+    display: block;
+    color: var(--red);
+    margin-bottom: 10px;
+    text-align: left;
+  }
+}
+/* Custom links ______*/
+.redirection-link {
+  margin-top: 30px;
+  color: var(--blue);
+  text-decoration: underline;
+  text-align: center;
+  transition: color 0.3s;
+  p:hover {
+    color: #176cf5;
   }
 }

@@ -11,6 +11,8 @@ import AllBathView from "@/views/AllBathsView.vue";
 import Login from "@/views/auth/Login.vue";
 import Register from "@/views/auth/Register.vue";
 import ConfirmMail from "@/views/auth/ConfirmMail.vue";
+import ResetPasswordView from "@/views/auth/ResetPasswordView.vue";
+import SetNewPasswordView from "@/views/auth/SetNewPasswordView.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -45,6 +47,16 @@ const router = createRouter({
       path: "/confirm-mail-redirection/:confirmationCode",
       name: "Confirm-mail",
       component: ConfirmMail,
+    },
+    {
+      path: "/reset-password",
+      name: "Reset-password",
+      component: ResetPasswordView,
+    },
+    {
+      path: "/set-new-password/:confirmationCode",
+      name: "Set-new-password",
+      component: SetNewPasswordView,
     },
     /** redirect incorrect routes to 404  */
     { path: "/:pathMatch(.*)*", name: "Not-found", component: NotFoundView },
