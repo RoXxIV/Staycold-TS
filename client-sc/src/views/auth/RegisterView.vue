@@ -1,67 +1,81 @@
 <template>
-  <section>
+  <section class="register-section">
+    <!-- Main bloc that contain form and illustration -->
     <div id="bloc">
-      <!-- Form container ----------->
+      <!-- Form container -->
       <div v-if="!isSubmitted" id="form-container">
         <h1>Formulaire d'<span class="title-span">Inscription</span></h1>
-        <!-- Form ----------->
+
+        <!-- Regiser Form -->
         <form @submit="onSubmit" class="custom-form">
-          <!-- Username ----------->
-          <div>
+          <!-- Username field ----------->
+          <div class="form-field">
             <label for="username">Nom d'utilisateur:</label>
             <input
               id="username"
               v-model="username"
               type="text"
               placeholder="Entrez votre nom d'utilisateur"
+              aria-label="Nom d'utilisateur"
             />
             <span class="error-feedback">{{ usernameError }}</span>
           </div>
-          <!-- Email ----------->
-          <div>
+
+          <!-- Email field -->
+          <div class="form-field">
             <label for="email">Email:</label>
             <input
               id="email"
               v-model="email"
               type="email"
               placeholder="Entrez votre email"
+              aria-label="Email"
             />
             <span class="error-feedback">{{ emailError }}</span>
           </div>
-          <!-- Password ----------->
-          <div>
+
+          <!-- Password field -->
+          <div class="form-field">
             <label for="password">Mot de passe:</label>
             <input
               id="password"
               v-model="password"
               type="password"
               placeholder="Entrez votre mot de passe"
+              aria-label="Mot de passe"
             />
             <span class="error-feedback">{{ passwordError }}</span>
           </div>
-          <!-- Confirm password ----------->
-          <div>
+
+          <!-- Confirm password field -->
+          <div class="form-field">
             <label for="confirm-password">Confirmez votre mot de passe:</label>
             <input
               id="confirm-password"
               v-model="confirmPassword"
               type="password"
               placeholder="Confirmez votre mot de passe"
+              aria-label="Confirmez votre mot de passe"
             />
             <span class="error-feedback">{{ confirmPasswordError }}</span>
           </div>
+
+          <!-- Server error message -->
           <span class="error-feedback">{{ serverErrorMessage }}</span>
-          <!-- Submit ----------->
+
+          <!-- Submit -->
           <div class="submit">
             <button type="submit">Inscription</button>
           </div>
         </form>
-        <!-- Redirection link ----------->
+
+        <!-- Redirection link -->
         <div class="redirection-link">
           <router-link to="/login">Déjà inscrit ?</router-link>
         </div>
       </div>
-      <div v-if="!isSubmitted">
+      <!-- Illustration -->
+      <div v-if="!isSubmitted" class="illustration-container">
         <img
           class="rubberBand"
           src="@/assets/images/inscription.svg"
@@ -69,7 +83,7 @@
         />
       </div>
     </div>
-    <!-- Success message ----------->
+    <!-- Success message -->
     <div v-show="isSubmitted && serverSuccesMessage" id="if-success">
       <p><span>❄</span> {{ serverSuccesMessage }} <span>❄</span></p>
       <p>Redirection dans {{ timeToHome }}</p>
@@ -159,37 +173,44 @@ const onSubmit = handleSubmit(async (values) => {
     isSubmitted.value = true;
     redirectToHome();
   } catch (error) {
-    if ((error as any).response && (error as any).response.data) {
-      serverErrorMessage.value = (error as any).response.data.message;
-      console.log(serverErrorMessage);
-    } else {
-      console.error(error);
-    }
+    serverErrorMessage.value =
+      (error as any)?.response?.data?.message || "Erreur lors de l'inscription";
   }
 });
 </script>
 
 <style lang="scss" scoped>
-section {
+.register-section {
   width: 100vw;
+
   /* Main bloc that contain form and illustration */
   #bloc {
     display: flex;
     justify-content: space-around;
     width: 75%;
     margin: 20px auto 0px auto;
-    /* Illustration */
-    img {
-      max-width: 600px;
-      @include media-max(991.98px) {
-        max-width: 200px;
-        margin: 0;
-        @include media-max(611.98px) {
-          max-width: 100px;
+    @include media-max(991.98px) {
+      flex-direction: column-reverse;
+      align-items: center;
+      width: 100%;
+      margin: 30px 0px 0px 0px;
+      margin-top: 20px;
+    }
+
+    .illustration-container {
+      img {
+        max-width: 600px;
+        @include media-max(991.98px) {
+          max-width: 200px;
           margin: 0;
+          @include media-max(611.98px) {
+            max-width: 100px;
+            margin: 0;
+          }
         }
       }
     }
+
     /* Register form container */
     #form-container {
       display: flex;
@@ -197,6 +218,12 @@ section {
       align-items: center;
       width: 50%;
       margin-top: 50px;
+      @include media-max(991.98px) {
+        margin-top: 0px;
+        @include media-max(611.98px) {
+          width: 100%;
+        }
+      }
       h1 {
         margin-bottom: 50px;
         span {
@@ -206,23 +233,9 @@ section {
           margin-top: 0px;
         }
       }
-      /* media queries form container */
-      @include media-max(991.98px) {
-        margin-top: 0px;
-        @include media-max(611.98px) {
-          width: 100%;
-        }
-      }
-    }
-    /* media queries bloc __________*/
-    @include media-max(991.98px) {
-      flex-direction: column-reverse;
-      align-items: center;
-      width: 100%;
-      margin: 30px 0px 0px 0px;
-      margin-top: 20px;
     }
   }
+
   /* Success message __________*/
   #if-success {
     display: flex;
@@ -232,21 +245,19 @@ section {
     margin-top: 50px;
     font-size: 1.4em;
     text-align: center;
+    @include media-max(611.98px) {
+      margin-top: 50px;
+      font-size: 1em;
+    }
     span {
       color: var(--blue);
     }
-    /* Lotties ____*/
     .lottie {
       width: 300px;
       margin: auto;
       @media (max-width: 611.98px) {
         width: 200px;
       }
-    }
-    /* media queries if succes __________*/
-    @include media-max(611.98px) {
-      margin-top: 50px;
-      font-size: 1em;
     }
   }
 }

@@ -8,9 +8,9 @@ import NotFoundView from "../views/NotFoundView.vue";
 /** Baths */
 import AllBathView from "@/views/AllBathsView.vue";
 /** Auth */
-import Login from "@/views/auth/Login.vue";
-import Register from "@/views/auth/Register.vue";
-import ConfirmMail from "@/views/auth/ConfirmMail.vue";
+import LoginView from "@/views/auth/LoginView.vue";
+import RegisterView from "@/views/auth/RegisterView.vue";
+import ConfirmMailView from "@/views/auth/ConfirmMailView.vue";
 import ResetPasswordView from "@/views/auth/ResetPasswordView.vue";
 import SetNewPasswordView from "@/views/auth/SetNewPasswordView.vue";
 
@@ -27,14 +27,14 @@ const router = createRouter({
       path: "/login",
       name: "Login",
       beforeEnter: authGuards.redirectLoggedInUser, // redirect if user is logged in
-      component: Login,
+      component: LoginView,
     },
     /** Register Form */
     {
       path: "/register",
       name: "Register",
       beforeEnter: authGuards.redirectLoggedInUser, // redirect if user is logged in
-      component: Register,
+      component: RegisterView,
     },
     /** All Baths */
     {
@@ -46,7 +46,7 @@ const router = createRouter({
     {
       path: "/confirm-mail-redirection/:confirmationCode",
       name: "Confirm-mail",
-      component: ConfirmMail,
+      component: ConfirmMailView,
     },
     {
       path: "/reset-password",

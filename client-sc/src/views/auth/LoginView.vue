@@ -1,43 +1,48 @@
 <template>
-  <section>
-    <!-- Illustration meditation ----------->
-    <div>
+  <section class="login-section">
+    <!-- Illustration -->
+    <div class="illustration-container">
       <img
         src="@/assets/images/login-illustration.png"
-        alt="Illustration d'un personnage qui medite en lévitation"
+        alt="Personnage en méditation"
       />
     </div>
 
-    <!-- Form container ----------->
+    <!-- Form container -->
     <div id="form-container">
       <h1>Formulaire de <span class="title-span">Connexion</span></h1>
 
-      <!-- Form ----------->
+      <!-- Login Form -->
       <form @submit="onSubmit" class="custom-form">
-        <!-- Username ----------->
-        <div>
+        <!-- Username field -->
+        <div class="form-field">
           <label for="username">Nom d'utilisateur:</label>
           <input
             id="username"
             v-model="username"
             type="text"
             placeholder="Entrez votre nom d'utilisateur"
+            aria-label="Nom d'utilisateur"
           />
           <span class="error-feedback">{{ usernameError }}</span>
         </div>
 
-        <!-- Password ----------->
-        <div>
+        <!-- Password field -->
+        <div class="form-field">
           <label for="password">Mot de passe:</label>
           <input
             id="password"
             v-model="password"
             type="password"
             placeholder="Entrez votre mot de passe"
+            aria-label="Mot de passe"
           />
           <span class="error-feedback">{{ passwordError }}</span>
         </div>
+
+        <!-- Server error message -->
         <span class="error-feedback">{{ serverErrorMessage }}</span>
+
         <!-- Submit ----------->
         <div class="submit">
           <button type="submit">Connexion</button>
@@ -45,11 +50,11 @@
       </form>
 
       <div class="redirection-link">
-        <!-- forgot password link ----------->
+        <!-- forgot password link -->
         <p>
           <router-link to="/reset-password">Mot de passe oublié ?</router-link>
         </p>
-        <!-- Register link ----------->
+        <!-- Register link -->
         <p>
           <router-link to="/register">Pas encore inscrit ?</router-link>
         </p>
@@ -67,7 +72,6 @@ import { useAuthStore } from "@/stores/authStore";
 
 const router = useRouter();
 const authStore = useAuthStore();
-
 const serverErrorMessage = ref("");
 
 // Validation schema with Yup
@@ -97,19 +101,14 @@ const onSubmit = handleSubmit(async (values) => {
     });
     router.push("/");
   } catch (error) {
-    if ((error as any).response && (error as any).response.data) {
-      serverErrorMessage.value = (error as any).response.data.message;
-      console.log(serverErrorMessage);
-    } else {
-      console.error(error);
-    }
+    serverErrorMessage.value =
+      (error as any)?.response?.data?.message || "Erreur lors de la connexion";
   }
 });
 </script>
 
 <style lang="scss" scoped>
-/* Section __________*/
-section {
+.login-section {
   display: flex;
   justify-content: space-around;
   position: relative;
@@ -117,33 +116,41 @@ section {
   margin: auto;
   margin-top: 100px;
   margin-bottom: 50px;
-  /* Illustration __________*/
-  img {
+  @include media-max(991.98px) {
+    flex-direction: column;
+    align-items: center;
+    width: 100vw;
     margin-top: 50px;
-    animation: float 6s ease-in-out infinite;
-    /* Illustration Animation__________*/
-    @keyframes float {
-      0% {
-        transform: translatey(0px);
+  }
+
+  .illustration-container {
+    img {
+      margin-top: 50px;
+      animation: float 6s ease-in-out infinite;
+      /* Illustration Animation__________*/
+      @keyframes float {
+        0% {
+          transform: translatey(0px);
+        }
+        50% {
+          transform: translatey(-20px);
+        }
+        100% {
+          transform: translatey(0px);
+        }
       }
-      50% {
-        transform: translatey(-20px);
-      }
-      100% {
-        transform: translatey(0px);
-      }
-    }
-    /* Illustration Media Queries__________*/
-    @include media-max(991.98px) {
-      max-width: 200px;
-      margin: 0;
-      @include media-max(611.98px) {
-        max-width: 100px;
+      @include media-max(991.98px) {
+        max-width: 200px;
         margin: 0;
+        text-align: center;
+        @include media-max(611.98px) {
+          max-width: 100px;
+          margin: 0;
+        }
       }
     }
   }
-  /* Form container __________*/
+
   #form-container {
     h1 {
       margin-bottom: 50px;
@@ -153,13 +160,6 @@ section {
         margin-top: 0;
       }
     }
-  }
-  /* media queries section __________*/
-  @include media-max(991.98px) {
-    flex-direction: column;
-    align-items: center;
-    width: 100vw;
-    margin-top: 50px;
   }
 }
 </style>

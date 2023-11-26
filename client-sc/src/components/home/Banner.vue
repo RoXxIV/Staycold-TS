@@ -89,11 +89,15 @@ h1 {
   font-size: 1.8em;
   color: var(--color-text);
   text-align: center;
+  @include media-max(667.98px) {
+    display: none;
+  }
+
   span:first-child {
     color: var(--blue);
     font-family: var(--oswald);
   }
-  /* Cursor __________*/
+
   #banner-cusor {
     display: inline-block;
     width: 3px;
@@ -104,7 +108,7 @@ h1 {
       animation: none;
     }
   }
-  /* Cursor animation __________*/
+
   @keyframes cursorBlink {
     49% {
       background-color: var(--color-dark-border);
@@ -115,10 +119,6 @@ h1 {
     100% {
       background-color: transparent;
     }
-  }
-  /* Smartphone __________*/
-  @include media-max(667.98px) {
-    display: none;
   }
 }
 </style>

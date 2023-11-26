@@ -1,41 +1,48 @@
 <template>
-  <section>
+  <section class="set-new-password-section">
     <div v-if="!successful">
       <h1>Réinitialisation du <span class="title-span">mot de passe</span></h1>
+      <!-- Reset password Form -->
       <form @submit="onSubmit" class="custom-form">
-        <!-- Password ----------->
-        <div>
+        <!-- Password -->
+        <div class="form-field">
           <label for="password">Mot de passe:</label>
           <input
             id="password"
             v-model="password"
             type="password"
             placeholder="Entrez votre mot de passe"
+            aria-label="Mot de passe"
           />
           <span class="error-feedback">{{ passwordError }}</span>
         </div>
-        <!-- Confirm password ----------->
-        <div>
+
+        <!-- Confirm password -->
+        <div class="form-field">
           <label for="confirmPassword">Confirmez votre mot de passe:</label>
           <input
             id="confirmPassword"
             v-model="confirmPassword"
             type="password"
             placeholder="Confirmez votre mot de passe"
+            aria-label="Confirmez votre mot de passe"
           />
           <span class="error-feedback">{{ confirmPasswordError }}</span>
         </div>
-        <!-- Submit ----------->
+
+        <!-- Submit -->
         <div class="submit">
           <button type="submit">Envoyer</button>
         </div>
       </form>
-      <!-- Error message ----------->
-      <div v-if="errorMessage && !successful" id="error">
-        {{ errorMessage }}
+
+      <!-- Error message -->
+      <div v-if="serverErrorMessage && !successful" id="error">
+        {{ serverErrorMessage }}
       </div>
     </div>
 
+    <!-- if succed -->
     <div v-else id="succed">
       <p><span>❄</span> {{ succesMessage }} <span>❄</span></p>
       <p>Redirection dans {{ timeToLogin }}</p>
@@ -68,7 +75,7 @@ const loaderOptions = ref({
 });
 
 const successful = ref(false);
-const errorMessage = ref("");
+const serverErrorMessage = ref("");
 const succesMessage = ref("");
 const confirmationCode = ref("");
 
@@ -119,11 +126,8 @@ const onSubmit = handleSubmit(async () => {
       redirectToLogin();
     }
   } catch (error) {
-    if ((error as any).response) {
-      errorMessage.value = (error as any).response.data.message;
-    } else {
-      errorMessage.value = (error as any).message;
-    }
+    serverErrorMessage.value =
+      (error as any)?.response?.data?.message || "Erreur lors de la connexion";
   }
 });
 
@@ -138,45 +142,53 @@ onMounted(() => {
   confirmationCode.value = route.params.confirmationCode.toString();
   console.log(confirmationCode.value);
   if (!confirmationCode) {
-    // router.push("/not-found");
+    router.push("/not-found");
   }
 });
 </script>
 
 <style lang="scss" scoped>
-section {
+.set-new-password-section {
   width: 75vw;
   margin: 30px auto 0px auto;
+
   & div:first-child {
     display: flex;
     flex-direction: column;
+
     h1 {
       margin-top: 50px;
       text-align: center;
       font-size: 2em;
     }
-    /* Form __________*/
+
     form {
       margin: auto;
     }
+
     #error {
       margin-top: 50px;
       text-align: center;
       color: var(--red);
     }
   }
+
   #succed {
     margin-top: 50px;
     text-align: center;
+
     & p:first-child {
       font-size: 1.2em;
     }
+
     span {
       color: var(--blue);
     }
+
     & p:nth-child(2) {
       text-decoration: underline;
     }
+
     .lottie {
       width: 200px;
       height: 200px;

@@ -1,10 +1,13 @@
 <template>
-  <section>
+  <section class="not-found-section">
+    <h1>Page non trouvée</h1>
+
     <vue3-lottie
       :options="notFoundOptions"
       class="lottie"
       :animationData="notFoundOptions.animationData"
     ></vue3-lottie>
+
     <div>
       <router-link to="/" tag="a">Retrouver son chemin</router-link>
     </div>
@@ -23,9 +26,15 @@ const notFoundOptions = ref({
 </script>
 
 <style lang="scss" scoped>
-section {
+.not-found-section {
   margin-top: 50px;
-  /* lottie -----------*/
+
+  h1 {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 20px;
+  }
+
   .lottie {
     width: 500px;
     margin: auto;
@@ -33,7 +42,7 @@ section {
       width: 200px;
     }
   }
-  /* redirection -----------*/
+
   div {
     text-align: center;
     margin-top: 20px;

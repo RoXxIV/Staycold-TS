@@ -1,7 +1,8 @@
 <template>
-  <section>
-    <!-- Email comfirmed ----------->
+  <section class="confirm-email-section">
     <div>
+      <!-- Email comfirmed -->
+      <!-- display a success message and a redirection link to the login page -->
       <div v-if="isConfirmed">
         <h2><span>❄</span> {{ confirmationMessage }} <span>❄</span></h2>
         <p>Redirection dans {{ timeToLogin }}</p>
@@ -11,12 +12,15 @@
           class="lottie"
           :animationData="loaderOptions.animationData"
         ></vue3-lottie>
+
         <!-- Redirection link ----------->
         <router-link to="/login" tag="a"><p>Se connecter</p></router-link>
       </div>
-      <!-- Email not comfirmed ----------->
+
+      <!-- Email not confirmed -->
+      <!-- display an error message and a redirection link to the home page -->
       <div v-else id="userNotConfirmed">
-        <span>{{ errorMessage }}</span>
+        <span>{{ serverErrorMessage }}</span>
         <p>Redirection dans {{ timeToHome }}</p>
         <!-- Lottie ----------->
         <vue3-lottie
@@ -53,8 +57,8 @@ const somethingWentWrongOptions = ref({
 
 const route = useRoute();
 const isConfirmed = ref(false);
-const confirmationMessage = ref("Le compte a bien été activé!");
-const errorMessage = ref("Une erreur est survenue!");
+const confirmationMessage = ref("");
+const serverErrorMessage = ref("");
 const confirmationCode = ref("");
 
 // settings for the redirection timer after the user is confirmed or not
@@ -92,15 +96,13 @@ const sendConfirmationCode = async (confirmationCode: string) => {
   try {
     const response = await AuthService.confirmUser(confirmationCode);
     if (response.status === 200) {
+      confirmationMessage.value = response.data.message;
       isConfirmed.value = true;
       redirectToLogin();
     }
   } catch (error) {
-    if ((error as any).response) {
-      errorMessage.value = (error as any).response.data.message;
-    } else {
-      errorMessage.value = (error as any).message;
-    }
+    serverErrorMessage.value =
+      (error as any)?.response?.data?.message || "Erreur lors de l'inscription";
     isConfirmed.value = false;
     redirectToHome();
   }
@@ -108,16 +110,21 @@ const sendConfirmationCode = async (confirmationCode: string) => {
 </script>
 
 <style lang="scss" scoped>
-section {
+.confirm-email-section {
   margin-top: 50px;
   text-align: center;
+
   & div:first-child {
     margin: auto;
     padding: 50px 100px;
+    @include media-max(611.98px) {
+      padding: 0;
+    }
+
     span {
       color: var(--blue);
     }
-    /* Lottie __________*/
+
     .lottie {
       width: 300px;
       margin: auto;
@@ -125,14 +132,11 @@ section {
         width: 200px;
       }
     }
+
     p {
       text-decoration: underline;
     }
-    /* media queries __________*/
-    @include media-max(611.98px) {
-      padding: 0;
-    }
-    /* user not comfirmed redirect link __________*/
+
     #userNotConfirmed {
       span {
         color: var(--red);

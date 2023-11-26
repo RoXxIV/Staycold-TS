@@ -1,42 +1,48 @@
 <template>
-  <section>
+  <section class="reset-password-section">
     <div v-if="!successful">
       <h1>Demander un nouveau <span class="title-span">Mot de passe</span></h1>
-      <!-- Form ----------->
+      <!-- Reset password Form -->
       <form @submit="onSubmit" class="custom-form">
-        <!-- Email ----------->
-        <div>
+        <!-- Email field -->
+        <div class="form-field">
           <label for="email">Email:</label>
           <input
             id="email"
             v-model="email"
             type="email"
             placeholder="Entrez votre email"
+            aria-label="Email"
           />
           <span class="error-feedback">{{ emailError }}</span>
         </div>
-        <!-- Email confirmation ----------->
-        <div>
+
+        <!-- Email confirmation fiels -->
+        <div class="form-field">
           <label for="emailConfirmation">Confirmer l'Email:</label>
           <input
             id="emailConfirmation"
             v-model="emailConfirmation"
             type="email"
             placeholder="Entrez votre email"
+            aria-label="Email"
           />
           <span class="error-feedback">{{ emailConfirmationError }}</span>
         </div>
-        <!-- Submit ----------->
+
+        <!-- Submit -->
         <div class="submit">
           <button type="submit">Envoyer</button>
         </div>
       </form>
-      <!-- Error message ----------->
-      <div v-if="errorMessage && !successful" id="error">
-        {{ errorMessage }}
+
+      <!-- Error message -->
+      <div v-if="serverErrorMessage && !successful" id="error">
+        {{ serverErrorMessage }}
       </div>
     </div>
 
+    <!-- Email confirmed -->
     <div v-else id="emailConfirmed">
       <p><span>❄</span> {{ succesMessage }} <span>❄</span></p>
       <p>Redirection dans {{ timeToLogin }}</p>
@@ -66,7 +72,7 @@ const loaderOptions = ref({
 
 const successful = ref(false);
 const succesMessage = ref("");
-const errorMessage = ref("");
+const serverErrorMessage = ref("");
 
 // settings for the redirection timer after the user is confirmed or not
 const { time: timeToLogin, startRedirectionTimer: redirectToLogin } =
@@ -110,52 +116,54 @@ const onSubmit = handleSubmit(async () => {
       redirectToLogin();
     }
   } catch (error) {
-    if ((error as any).response) {
-      errorMessage.value = (error as any).response.data.message;
-    } else {
-      errorMessage.value = (error as any).message;
-    }
+    serverErrorMessage.value =
+      (error as any)?.response?.data?.message || "Une erreur est survenue";
   }
 });
 </script>
 
 <style lang="scss" scoped>
-section {
+.reset-password-section {
   width: 75vw;
   margin: 30px auto 0px auto;
+
   & div:first-child {
     display: flex;
     flex-direction: column;
+
     h1 {
       margin-top: 50px;
       text-align: center;
       font-size: 2em;
     }
-    /* Form __________*/
+
     form {
       margin: auto;
     }
   }
-  /* Error message __________*/
+
   #error {
     margin-top: 50px;
     text-align: center;
     color: var(--red);
   }
-  /* Email confirmed __________*/
+
   #emailConfirmed {
     margin-top: 50px;
     text-align: center;
+
     & p:first-child {
       font-size: 1.2em;
     }
+
     span {
       color: var(--blue);
     }
+
     & p:nth-child(2) {
       text-decoration: underline;
     }
-    /* Lottie __________*/
+
     .lottie {
       width: 300px;
       margin: auto;

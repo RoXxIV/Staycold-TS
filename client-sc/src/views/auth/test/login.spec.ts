@@ -4,16 +4,16 @@ import { createRouter, createWebHistory } from "vue-router";
 import { createTestingPinia } from "@pinia/testing";
 import { useAuthStore } from "@/stores/authStore";
 import type { IAuthState } from "@/types/authStore";
-import Login from "@/views/auth/Login.vue";
+import LoginView from "@/views/auth/LoginView.vue";
 import HomeView from "@/views/HomeView.vue";
-import Register from "@/views/auth/Register.vue";
+import RegisterView from "@/views/auth/RegisterView.vue";
 import ResetPasswordView from "@/views/auth/ResetPasswordView.vue";
 
 const router = createRouter({
   history: createWebHistory(),
   routes: [
     { path: "/", name: "home", component: HomeView },
-    { path: "/register", name: "Register", component: Register },
+    { path: "/register", name: "Register", component: RegisterView },
     {
       path: "/reset-password",
       name: "Reset-password",
@@ -30,7 +30,7 @@ describe("Login", () => {
    * Mount the component, create a mock store and mock router before each test.
    */
   beforeEach(() => {
-    wrapper = mount(Login, {
+    wrapper = mount(LoginView, {
       global: {
         plugins: [
           createTestingPinia({
