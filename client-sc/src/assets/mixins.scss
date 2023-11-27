@@ -1,10 +1,10 @@
 @import "./variables.scss";
 /* Button __________*/
-@mixin button($textColor, $backgroundColor) {
-  padding: 7px 14px;
-  border: 1px solid transparent;
-  border-radius: 0.25rem;
-  background-color: $backgroundColor;
+@mixin button($textColor) {
+  padding: 8px 16px;
+  border: 2px solid var(--blue);
+  border-radius: 6px;
+  background-color: transparent;
   color: $textColor;
   font-family: var(--roboto);
   font-weight: bold;
@@ -18,6 +18,10 @@
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+  &:hover {
+    background-color: var(--blue);
+    color: var(--white);
+  }
 }
 /* Media Queries __________*/
 @mixin media-max($max-width) {

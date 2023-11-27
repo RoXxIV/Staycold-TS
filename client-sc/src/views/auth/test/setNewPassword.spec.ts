@@ -2,8 +2,6 @@ import { describe, vi, it, expect, beforeEach, beforeAll } from "vitest";
 import { mount } from "@vue/test-utils";
 import { createRouter, createWebHistory } from "vue-router";
 import { createTestingPinia } from "@pinia/testing";
-import { useAuthStore } from "@/stores/authStore";
-import type { IAuthState } from "@/types/authStore";
 import SetNewPasswordView from "../SetNewPasswordView.vue";
 import LoginView from "@/views/auth/LoginView.vue";
 import HomeView from "@/views/HomeView.vue";

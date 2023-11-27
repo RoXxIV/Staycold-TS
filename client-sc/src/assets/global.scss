@@ -47,7 +47,7 @@ html {
       list-style: none;
     }
     button {
-      @include button(var(--white), var(--blue));
+      @include button(var(--color-text));
     }
   }
 }

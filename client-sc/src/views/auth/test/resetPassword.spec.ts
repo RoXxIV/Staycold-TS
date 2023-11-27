@@ -21,7 +21,6 @@ const router = createRouter({
 
 describe("ResetPasswordView", () => {
   let wrapper: any;
-  //let authStore: IAuthState;
 
   /**
    * Mount the component, create a mock store and mock router before each test.

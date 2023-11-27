@@ -1,13 +1,7 @@
-/**
- * @fileoverview Banner component unit test
- */
 import { mount } from "@vue/test-utils";
 import { describe, it, expect } from "vitest";
 import Hero from "../Hero.vue";
 
-/**
- * @description check if the Hero section render correctly
- */
 describe("Hero section", () => {
   it("renders correctly", async () => {
     const wrapper = mount(Hero);

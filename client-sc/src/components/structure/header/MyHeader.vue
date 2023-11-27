@@ -1,7 +1,7 @@
 <template>
   <div>
     <header>
-      <!-- Logo Staycold ----------->
+      <!-- Logo -->
       <router-link to="/" id="logo-staycold">
         <svg
           width="57px"
@@ -26,15 +26,17 @@
         </svg>
         <span>StayCold</span>
       </router-link>
-      <!-- Nav default ----------->
+
+      <!-- Nav default -->
       <nav>
         <ul id="default-nav">
           <li><router-link to="/">Accueil </router-link></li>
           <li><router-link to="/all-baths">Baignades</router-link></li>
-          <!-- Nav user ----------->
+          <!-- Nav user -->
           <!-- profile if User <li></li> -->
         </ul>
-        <!-- Nav auth ----------->
+
+        <!-- Nav auth -->
         <ul id="auth-nav">
           <li v-if="!loggedIn">
             <router-link to="/login">Connexion</router-link>
@@ -48,10 +50,12 @@
           </li>
         </ul>
       </nav>
-      <!-- Toggle burger ----------->
+
+      <!-- Toggle burger -->
       <div id="icon-burger">
         <IconBurger @click="toggleBurgerMenu" id="btn-burger" />
       </div>
+
       <!-- Toggle theme light/dark -->
       <span @click="toggleTheme" aria-label="Toggle themes" id="toggle-theme">
         <!-- Sun button -->
@@ -97,6 +101,7 @@
         ></span>
       </span>
     </header>
+
     <!-- Mobile menu ----------->
     <transition name="fade">
       <MobileNav
@@ -114,17 +119,16 @@ import IconBurger from "./IconBurger.vue";
 import MobileNav from "./MobileNav.vue";
 import { useAuthStore } from "@/stores/authStore";
 
-// use the authStore for login and logout
+// use the authStore to get the loggedIn status
 const authStore = useAuthStore();
+const loggedIn = computed(() => authStore.status.loggedIn);
+
 // Toggle mobile menu
 const toggleMobileMenu = ref(false);
-// Toggle theme
+
 const theme = ref<string>("");
 
-/**
- * Toggles the burger menu and updates the mobile menu state.
- *
- */
+// Toggles the burger menu and updates the mobile menu state.
 const toggleBurgerMenu = () => {
   const burger = document.getElementById("btn-burger");
 
@@ -139,9 +143,6 @@ const toggleBurgerMenu = () => {
   toggleMobileMenu.value = !toggleMobileMenu.value;
 };
 
-// Check if user is logged in
-const loggedIn = computed(() => authStore.status.loggedIn);
-
 // loggout and reload page to update the header
 const logout = async () => {
   try {
@@ -152,19 +153,15 @@ const logout = async () => {
   }
 };
 
-/**
- * Toggles the theme (Light/dark) and sets it to the local storage.
- */
+// Toggles the theme (Light/dark) and sets it to the local storage.
 const toggleTheme = () => {
   theme.value = theme.value === "darkMode" ? "" : "darkMode";
   document.documentElement.setAttribute("data-theme", theme.value);
   localStorage.setItem("theme", theme.value);
 };
 
+// Get theme from local storage on component mount
 onMounted(() => {
-  /**
-   * Get and loads the theme from the local storage.
-   */
   const savedTheme = localStorage.getItem("theme");
   if (savedTheme) {
     theme.value = savedTheme;
@@ -172,13 +169,13 @@ onMounted(() => {
   }
 });
 
+// Save theme to local storage on component unmount
 onBeforeUnmount(() => {
-  // Save theme to local storage on component unmount
   localStorage.setItem("theme", theme.value);
 });
 </script>
 
-<style lang="scss">
+<style scoped lang="scss">
 header {
   display: flex;
   align-items: center;
@@ -187,27 +184,13 @@ header {
   border-bottom: 1px solid var(--color-dark-border);
   font-family: var(--roboto);
   font-weight: bold;
-  /* Tablet __________*/
-  @include media-max(991.98px) {
-    flex-direction: column;
-    justify-content: center;
-    text-align: center;
-    /* Smartphone __________*/
-    @include media-max(667.98px) {
-      flex-direction: row;
-      justify-content: space-between;
-    }
-  }
-  /* Logo __________*/
+
   #logo-staycold {
     display: flex;
     align-items: center;
     margin-right: 100px;
     font-size: 1.5em;
-    /* Tablet __________*/
-    @include media-max(991.98px) {
-      margin-right: 0;
-    }
+
     svg {
       margin-right: 10px;
       .first-path,
@@ -219,21 +202,13 @@ header {
       }
     }
   }
-  /* Nav __________*/
+
   nav {
     display: flex;
     align-items: center;
     justify-content: space-between;
     width: 100%;
-    /* Tablet __________*/
-    @include media-max(991.98px) {
-      justify-content: space-around;
-      /* Smartphone __________*/
-      @include media-max(667.98px) {
-        display: none;
-      }
-    }
-    /* Default nav__________*/
+
     #default-nav {
       display: flex;
       li {
@@ -244,7 +219,7 @@ header {
         transition: all 0.2s ease 0s;
       }
     }
-    /* Auth __________*/
+
     #auth-nav {
       display: flex;
       li {
@@ -255,22 +230,18 @@ header {
       }
     }
   }
-  /* Theme button svg __________*/
+  /* Theme button svg __*/
   .feather-sun path {
     stroke: var(--white);
   }
   .feather-moon path {
     stroke: var(--gray);
   }
-  /* Burger __________*/
+
   #icon-burger {
     display: none;
-    /* Smartphone __________*/
-    @include media-max(667.98px) {
-      display: block;
-    }
   }
-  /* Toggle theme __________*/
+
   #toggle-theme {
     position: absolute;
     left: calc(100% - 50px);
@@ -281,11 +252,38 @@ header {
       user-select: none;
       cursor: pointer;
     }
-    /* Tablet __________*/
-    @include media-max(991.98px) {
+  }
+
+  @include media-max(991.98px) {
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+
+    #logo-staycold {
+      margin-right: 0;
+    }
+
+    nav {
+      justify-content: space-around;
+    }
+
+    #toggle-theme {
       top: 160px;
-      /* Smartphone __________*/
-      @include media-max(667.98px) {
+    }
+
+    @include media-max(667.98px) {
+      flex-direction: row;
+      justify-content: space-between;
+
+      nav {
+        display: none;
+      }
+
+      #icon-burger {
+        display: block;
+      }
+
+      #toggle-theme {
         display: none;
       }
     }

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <!-- Toggle Menu Burger Mobile ----------->
+    <!-- Toggle Menu Burger Mobile -->
     <span id="btn-burger" class="menu-burger" aria-label="Main Menu">
       <svg width="50" height="50" viewBox="0 0 100 100">
         <path
