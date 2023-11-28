@@ -18,9 +18,9 @@ const errorMessages = require("../../utils/errorMessages");
  * @see {@link module:NodemailerConfig.sendContactMail} - The function that sends the email.
  * @see {@link module:ContactRoutes} - This function is used in the POST /api/contact route.
  * @param {Object} req - Express request object containing the form data in the body.
- * @param {string} req.body.contact - The contact email.
+ * @param {string} req.body.email - The contact email.
  * @param {string} req.body.subject - The subject of the email.
- * @param {string} req.body.message - The message body.
+ * @param {string} req.body.commentary - The message body.
  * @param {Object} res - Express response object.
  * @param {function} next - Express next middleware function.
  * @returns {Object} JSON response with a success or error message.
@@ -34,9 +34,9 @@ exports.handleFormContact = async (req, res, next) => {
     if (req.body) {
       // Send the email
       await nodemailer.sendContactMail(
-        req.body.contact,
+        req.body.email,
         req.body.subject,
-        req.body.message
+        req.body.commentary
       );
       res.setHeader("Content-Type", "application/json");
       res.status(200).json({

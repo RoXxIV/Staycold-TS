@@ -139,12 +139,12 @@ module.exports.sendResetPasswordMail = async (
  * @function sendContactMail
  * @async
  * @description Sends the content of the contact form to a Staycold email.
- * @param {string} contact - The contact information of the user.
+ * @param {string} email - The email of the user.
  * @param {string} subject - The subject of the email.
- * @param {string} message - The message content.
+ * @param {string} commentary - The message content.
  * @throws {Error} Throws an error if the email sending fails.
  */
-module.exports.sendContactMail = async (contact, subject, message) => {
+module.exports.sendContactMail = async (email, subject, commentary) => {
   try {
     await transporter.sendMail({
       from: process.env.EMAIL_USER,
@@ -161,9 +161,9 @@ module.exports.sendContactMail = async (contact, subject, message) => {
               <h1 style="color: #333366;">Nouveau formulaire de contact</h1>
               <hr>
               <h2>Contact Information</h2>
-              <p>${contact}</p>
+              <p>${email}</p>
               <h2>Message</h2>
-              <p>${message}</p>
+              <p>${commentary}</p>
             </div>
           </body>
         </html>

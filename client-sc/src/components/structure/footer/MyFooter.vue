@@ -34,7 +34,7 @@
     <!-- Contact & Mention -->
     <ul id="contact-footer">
       <li>
-        <router-link to="/"
+        <router-link to="/contact-form"
           ><font-awesome-icon
             class="font-awesome-icon"
             :icon="['far', 'envelope']"

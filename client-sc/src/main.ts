@@ -9,8 +9,13 @@ import { library } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { faEnvelope } from "@fortawesome/free-regular-svg-icons";
 import { faCopyright } from "@fortawesome/free-regular-svg-icons";
+import {
+  faAt,
+  faHandPointRight,
+  faPencilAlt,
+} from "@fortawesome/free-solid-svg-icons";
 
-library.add(faEnvelope, faCopyright);
+library.add(faEnvelope, faCopyright, faAt, faHandPointRight, faPencilAlt);
 const app = createApp(App);
 
 app.use(createPinia());

@@ -5,6 +5,7 @@ import authGuards from "@/helpers/auth.guards";
 /** Routes */
 import HomeView from "@/views/HomeView.vue";
 import NotFoundView from "../views/NotFoundView.vue";
+import ContactFormView from "@/views/ContactFormView.vue";
 /** Baths */
 import AllBathView from "@/views/AllBathsView.vue";
 /** Auth */
@@ -57,6 +58,11 @@ const router = createRouter({
       path: "/set-new-password/:confirmationCode",
       name: "Set-new-password",
       component: SetNewPasswordView,
+    },
+    {
+      path: "/contact-form",
+      name: "Contact-form",
+      component: ContactFormView,
     },
     /** redirect incorrect routes to 404  */
     { path: "/:pathMatch(.*)*", name: "Not-found", component: NotFoundView },
