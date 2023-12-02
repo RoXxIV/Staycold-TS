@@ -282,7 +282,7 @@ exports.getRecentBaths = async (req, res, next) => {
 
     // Get the limit from the request parameters and check if the limit is valid
     const limit = Number(req.params.limit);
-    if (isNaN(limit) || limit !== 6) {
+    if (isNaN(limit) || limit !== 4) {
       return res.status(400).json({ message: errorMessages.GENERIC_ERROR });
     }
 

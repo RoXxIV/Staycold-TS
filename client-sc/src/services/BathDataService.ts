@@ -5,7 +5,7 @@
  */
 import http from "../http-common";
 
-const limit = 6;
+const limit = 4;
 
 class BathDataService {
   /**

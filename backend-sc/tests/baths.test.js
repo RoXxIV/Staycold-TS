@@ -17,7 +17,7 @@ let token; // auth token to use for tests
 let bathId; // bath id to use for tests
 let userId = "65552369c3fa7c6102aa6b78"; // testUser id to use for tests
 let invalidBathId = "60f72dbf4d440a001fbb10de"; // invalid bath id to use for tests
-let limit = 6; // number of recent baths to get
+let limit = 8; // number of recent baths to get
 const newBathData = {
   author: userId,
   waterTemperature: 1,

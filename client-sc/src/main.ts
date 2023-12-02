@@ -13,9 +13,17 @@ import {
   faAt,
   faHandPointRight,
   faPencilAlt,
+  faStopwatch,
 } from "@fortawesome/free-solid-svg-icons";
 
-library.add(faEnvelope, faCopyright, faAt, faHandPointRight, faPencilAlt);
+library.add(
+  faEnvelope,
+  faCopyright,
+  faAt,
+  faHandPointRight,
+  faPencilAlt,
+  faStopwatch
+);
 const app = createApp(App);
 
 app.use(createPinia());
