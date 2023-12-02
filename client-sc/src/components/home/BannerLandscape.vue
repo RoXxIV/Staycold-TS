@@ -1,5 +1,8 @@
 <template>
-  <div id="banner-landscape"></div>
+  <div
+    id="banner-landscape"
+    aria-label="Un paysage d'hiver avec des montagnes enneigées sous un ciel rosé, le soleil se levant à l'horizon et une surface glacée au premier plan."
+  ></div>
 </template>
 
 <script setup lang="ts"></script>

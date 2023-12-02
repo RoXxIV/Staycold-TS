@@ -49,16 +49,19 @@ const router = createRouter({
       name: "Confirm-mail",
       component: ConfirmMailView,
     },
+    /** Reset password view  */
     {
       path: "/reset-password",
       name: "Reset-password",
       component: ResetPasswordView,
     },
+    /** Set new password view  */
     {
       path: "/set-new-password/:confirmationCode",
       name: "Set-new-password",
       component: SetNewPasswordView,
     },
+    /** Contact form view  */
     {
       path: "/contact-form",
       name: "Contact-form",

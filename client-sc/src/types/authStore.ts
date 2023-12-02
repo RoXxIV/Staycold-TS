@@ -11,15 +11,11 @@ export interface IAuthState {
 export interface IAuthStore {
   id: string;
   state: () => IAuthState;
-  actions: {
-    status: any;
-    user: null;
-    login: (userData: { username: string; password: string }) => Promise<void>;
-    register: (userData: {
-      username: string;
-      email: string;
-      password: string;
-    }) => Promise<string>;
-    logout: () => void;
-  };
+  login: (userData: { username: string; password: string }) => Promise<void>;
+  register: (userData: {
+    username: string;
+    email: string;
+    password: string;
+  }) => Promise<string>;
+  logout: () => void;
 }

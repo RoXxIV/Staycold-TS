@@ -65,13 +65,14 @@
 
 <script setup lang="ts">
 import { ref, type Ref } from "vue";
-import { useForm, useField } from "vee-validate";
-import * as yup from "yup";
 import { useRouter, RouterLink } from "vue-router";
 import { useAuthStore } from "@/stores/authStore";
+import type { IAuthStore } from "@/types/authStore";
+import { useForm, useField } from "vee-validate";
+import * as yup from "yup";
 
 const router = useRouter();
-const authStore = useAuthStore();
+const authStore = useAuthStore() as unknown as IAuthStore;
 const serverErrorMessage: Ref<string> = ref("");
 
 // Validation schema with Yup
@@ -123,7 +124,6 @@ const onSubmit = handleSubmit(async (values) => {
     img {
       margin-top: 50px;
       animation: float 6s ease-in-out infinite;
-      /* Illustration Animation__________*/
       @keyframes float {
         0% {
           transform: translatey(0px);

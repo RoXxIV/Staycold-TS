@@ -51,5 +51,11 @@ const notFoundOptions = ref<IlottieOptions>({
       text-decoration: underline;
     }
   }
+
+  @media (max-width: 611.98px) {
+    .lottie {
+      width: 200px;
+    }
+  }
 }
 </style>

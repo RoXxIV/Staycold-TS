@@ -18,7 +18,7 @@
     <div id="hero-img">
       <img
         src="@/assets/images/hero-shark.png"
-        alt="illustration d'un requin"
+        alt="Une illustration de requin souriant, debout et saluant sur fond bleu."
         class="lightSpeedIn"
       />
     </div>
@@ -34,22 +34,14 @@
   align-items: center;
   width: 80%;
   margin: 50px auto;
-  @include media-max(667.98px) {
-    flex-direction: column-reverse;
-  }
 
   #hero-intro {
     width: 50%;
-    @include media-max(667.98px) {
-      width: 100%;
-    }
+
     h2 {
       font-size: 2.3em;
       font-weight: 700;
       line-height: 1.5;
-      @include media-max(991.98px) {
-        font-size: 1.8em;
-      }
 
       span {
         color: var(--blue);
@@ -58,9 +50,6 @@
 
     p {
       font-size: 1.2em;
-      @include media-max(991.98px) {
-        font-size: 1em;
-      }
     }
   }
 
@@ -71,7 +60,25 @@
     img {
       max-width: 250px;
       margin: auto;
-      @include media-max(667.98px) {
+    }
+  }
+
+  @include media-max(991.98px) {
+    #hero-intro {
+      h2 {
+        font-size: 1.8em;
+      }
+      p {
+        font-size: 1em;
+      }
+    }
+    @include media-max(667.98px) {
+      flex-direction: column-reverse;
+
+      #hero-intro {
+        width: 100%;
+      }
+      #hero-img img {
         max-width: 150px;
       }
     }

@@ -9,7 +9,7 @@
 </template>
 
 <script setup lang="ts">
-import { RouterLink, RouterView } from "vue-router";
+import { RouterView } from "vue-router";
 import MyHeader from "./components/structure/header/MyHeader.vue";
 import MyFooter from "./components/structure/footer/MyFooter.vue";
 </script>

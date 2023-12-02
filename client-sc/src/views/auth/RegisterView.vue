@@ -101,11 +101,12 @@ import { ref } from "vue";
 import * as yup from "yup";
 import { useForm, useField } from "vee-validate";
 import { useAuthStore } from "@/stores/authStore";
+import type { IAuthStore } from "@/types/authStore";
 import { useRedirectionTimer } from "@/helpers/redirectionHelper";
 import type { IlottieOptions } from "@/types/lottieOptions";
 import LottieLoader from "@/assets/lotties/loader.json";
 
-const authStore = useAuthStore();
+const authStore = useAuthStore() as unknown as IAuthStore;
 
 // lottie options
 const lottieOptions = ref<IlottieOptions>({
@@ -147,11 +148,13 @@ const schema = yup.object({
 
 // Configuring the form validation with vee-validate
 const { handleSubmit } = useForm({ validationSchema: schema });
-const { value: username, errorMessage: usernameError } = useField("username");
-const { value: email, errorMessage: emailError } = useField("email");
-const { value: password, errorMessage: passwordError } = useField("password");
+const { value: username, errorMessage: usernameError } =
+  useField<string>("username");
+const { value: email, errorMessage: emailError } = useField<string>("email");
+const { value: password, errorMessage: passwordError } =
+  useField<string>("password");
 const { value: confirmPassword, errorMessage: confirmPasswordError } =
-  useField("confirmPassword");
+  useField<string>("confirmPassword");
 
 /**
  * @description Handles the form submission.
@@ -184,60 +187,34 @@ const onSubmit = handleSubmit(async (values) => {
 .register-section {
   width: 100vw;
 
-  /* Main bloc that contain form and illustration */
   #bloc {
     display: flex;
     justify-content: space-around;
     width: 75%;
     margin: 20px auto 0px auto;
-    @include media-max(991.98px) {
-      flex-direction: column-reverse;
-      align-items: center;
-      width: 100%;
-      margin: 30px 0px 0px 0px;
-      margin-top: 20px;
-    }
 
     .illustration-container {
       img {
         max-width: 600px;
-        @include media-max(991.98px) {
-          max-width: 200px;
-          margin: 0;
-          @include media-max(611.98px) {
-            max-width: 100px;
-            margin: 0;
-          }
-        }
       }
     }
 
-    /* Register form container */
     #form-container {
       display: flex;
       flex-direction: column;
       align-items: center;
       width: 50%;
       margin-top: 50px;
-      @include media-max(991.98px) {
-        margin-top: 0px;
-        @include media-max(611.98px) {
-          width: 100%;
-        }
-      }
+
       h1 {
         margin-bottom: 50px;
         span {
           display: inline-block;
         }
-        @include media-max(991.98px) {
-          margin-top: 0px;
-        }
       }
     }
   }
 
-  /* Success message __________*/
   #if-success {
     display: flex;
     flex-direction: column;
@@ -246,18 +223,55 @@ const onSubmit = handleSubmit(async (values) => {
     margin-top: 50px;
     font-size: 1.4em;
     text-align: center;
-    @include media-max(611.98px) {
-      margin-top: 50px;
-      font-size: 1em;
-    }
+
     span {
       color: var(--blue);
     }
     .lottie {
       width: 300px;
       margin: auto;
-      @media (max-width: 611.98px) {
-        width: 200px;
+    }
+  }
+
+  @include media-max(991.98px) {
+    #bloc {
+      flex-direction: column-reverse;
+      align-items: center;
+      width: 100%;
+      margin: 30px 0px 0px 0px;
+      margin-top: 20px;
+
+      .illustration-container img {
+        max-width: 200px;
+        margin: 0;
+      }
+
+      #form-container {
+        margin-top: 0px;
+
+        h1 {
+          margin-top: 0px;
+        }
+      }
+    }
+
+    @include media-max(611.98px) {
+      .illustration-container img {
+        max-width: 100px;
+        margin: 0;
+      }
+
+      #form-container {
+        width: 100%;
+      }
+
+      #if-success {
+        margin-top: 50px;
+        font-size: 1em;
+
+        .lottie {
+          width: 200px;
+        }
       }
     }
   }

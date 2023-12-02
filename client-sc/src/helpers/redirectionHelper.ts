@@ -1,6 +1,15 @@
+/**
+ * @fileoverview Helper for redirection timer
+ */
 import { ref, onBeforeUnmount } from "vue";
 import router from "@/router";
 
+/**
+ * @description redirect the user to the given path after the given time
+ * @param redirectTo - Redirection path
+ * @param timer - Timer in seconds
+ * @returns Redirection timer
+ */
 export function useRedirectionTimer(redirectTo: string, timer: number = 5) {
   const time = ref(timer);
   let redirectionTimerId: number | NodeJS.Timeout;

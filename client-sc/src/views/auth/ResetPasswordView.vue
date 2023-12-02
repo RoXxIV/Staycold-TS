@@ -58,8 +58,8 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import * as yup from "yup";
-import { useForm, useField } from "vee-validate";
 import AuthService from "@/services/auth-service";
+import { useForm, useField } from "vee-validate";
 import { useRedirectionTimer } from "@/helpers/redirectionHelper";
 import type { IlottieOptions } from "@/types/lottieOptions";
 import lottieLoader from "@/assets/lotties/loader.json";
@@ -94,9 +94,9 @@ const schema = yup.object({
 
 // Configuring the form validation with vee-validate
 const { handleSubmit } = useForm({ validationSchema: schema });
-const { value: email, errorMessage: emailError } = useField("email");
+const { value: email, errorMessage: emailError } = useField<string>("email");
 const { value: emailConfirmation, errorMessage: emailConfirmationError } =
-  useField("emailConfirmation");
+  useField<string>("emailConfirmation");
 
 /**
  * @description Submit the form and send the email to the user
@@ -168,10 +168,11 @@ const onSubmit = handleSubmit(async () => {
     .lottie {
       width: 300px;
       margin: auto;
-      @media (max-width: 611.98px) {
-        width: 200px;
-      }
     }
+  }
+
+  @media (max-width: 611.98px) {
+    width: 200px;
   }
 }
 </style>

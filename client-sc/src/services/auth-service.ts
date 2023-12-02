@@ -1,5 +1,5 @@
 /**
- * @fileoverview auth service
+ * @fileoverview auth service for login, register, logout, confirm user, reset password
  */
 import http from "../http-common";
 

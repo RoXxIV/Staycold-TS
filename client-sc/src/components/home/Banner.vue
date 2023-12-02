@@ -89,9 +89,6 @@ h1 {
   font-size: 1.8em;
   color: var(--color-text);
   text-align: center;
-  @include media-max(667.98px) {
-    display: none;
-  }
 
   span:first-child {
     color: var(--blue);
@@ -119,6 +116,10 @@ h1 {
     100% {
       background-color: transparent;
     }
+  }
+
+  @include media-max(667.98px) {
+    display: none;
   }
 }
 </style>
