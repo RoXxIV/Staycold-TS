@@ -1,18 +1,15 @@
 /**
- * @fileoverview Aggregates and exports all models for MongoDB.
- * @module Models
+ * @module ModelsIndex
  * @description Aggregates all models and provides a unified interface for database operations.
  * @requires mongoose - MongoDB object modeling tool.
  * @see {@link https://mongoosejs.com/docs/models.html|mongoose}
- * @requires ./user.model - User model for user-related operations.
- * @requires ./role.model - Role model for role-related operations.
- * @requires ./bath.model - Bath model for bath-related operations.
+ * @requires UserModel - User model for user-related operations.
+ * @requires RoleModel - Role model for role-related operations.
+ * @requires BathModel - Bath model for bath-related operations.
  */
 
-// Import dependencies
 const mongoose = require("mongoose");
 
-// Use native ES6 promises for mongoose.
 mongoose.Promise = global.Promise;
 
 /**

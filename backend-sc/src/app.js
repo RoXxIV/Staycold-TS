@@ -5,15 +5,15 @@
  * @requires dotenv - Loads environment variables from a .env file into process.env
  * @requires cors - Middleware for enabling CORS with various options
  * @requires body-parser - Middleware for parsing incoming request bodies
- * @requires ./models
+ * @requires ModelsIndex
  * @requires express-rate-limit - Basic rate-limiting middleware for Express
  * @requires helmet - Helmet helps you secure your Express apps by setting various HTTP headers
- * @requires ./api/routes/auth.routes - Authentication routes
- * @requires ./api/routes/permissions.routes - Permissions routes
- * @requires ./api/routes/users.routes - Users routes
- * @requires ./api/routes/baths.routes - Baths routes
- * @requires ./api/routes/contact-form.routes - Contact form routes
- * @requires ./plugins/init-roles - Initializes roles in the database
+ * @requires AuthRoutes - Authentication routes
+ * @requires UserPermissionsRoutes - Permissions routes
+ * @requires UserRoutes - Users routes
+ * @requires BathRoutes - Baths routes
+ * @requires ContactRoutes - Contact form routes
+ * @requires RoleInitialization - Initializes roles in the database
  * @see {@link https://expressjs.com/|Express}
  * @see {@link https://www.npmjs.com/package/dotenv|dotenv}
  * @see {@link https://www.npmjs.com/package/cors|cors}
@@ -22,7 +22,7 @@
  * @see {@link https://www.npmjs.com/package/express-rate-limit|express-rate-limit}
  * @see {@link https://www.npmjs.com/package/helmet|helmet}
  */
-// Import dependencies
+
 const express = require("express");
 const bodyParser = require("body-parser");
 const dotenv = require("dotenv");

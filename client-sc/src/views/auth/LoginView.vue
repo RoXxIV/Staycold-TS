@@ -64,7 +64,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, type Ref } from "vue";
 import { useForm, useField } from "vee-validate";
 import * as yup from "yup";
 import { useRouter, RouterLink } from "vue-router";
@@ -72,7 +72,7 @@ import { useAuthStore } from "@/stores/authStore";
 
 const router = useRouter();
 const authStore = useAuthStore();
-const serverErrorMessage = ref("");
+const serverErrorMessage: Ref<string> = ref("");
 
 // Validation schema with Yup
 const schema = yup.object({
@@ -82,8 +82,10 @@ const schema = yup.object({
 
 // Configuring the form validation with vee-validate
 const { handleSubmit } = useForm({ validationSchema: schema });
-const { value: username, errorMessage: usernameError } = useField("username");
-const { value: password, errorMessage: passwordError } = useField("password");
+const { value: username, errorMessage: usernameError } =
+  useField<string>("username");
+const { value: password, errorMessage: passwordError } =
+  useField<string>("password");
 
 /**
  * @description Handles the form submission.
@@ -116,12 +118,6 @@ const onSubmit = handleSubmit(async (values) => {
   margin: auto;
   margin-top: 100px;
   margin-bottom: 50px;
-  @include media-max(991.98px) {
-    flex-direction: column;
-    align-items: center;
-    width: 100vw;
-    margin-top: 50px;
-  }
 
   .illustration-container {
     img {
@@ -139,15 +135,6 @@ const onSubmit = handleSubmit(async (values) => {
           transform: translatey(0px);
         }
       }
-      @include media-max(991.98px) {
-        max-width: 200px;
-        margin: 0;
-        text-align: center;
-        @include media-max(611.98px) {
-          max-width: 100px;
-          margin: 0;
-        }
-      }
     }
   }
 
@@ -156,8 +143,35 @@ const onSubmit = handleSubmit(async (values) => {
       margin-bottom: 50px;
       text-align: center;
       font-size: 2em;
-      @include media-max(611.98px) {
-        margin-top: 0;
+    }
+  }
+
+  @include media-max(991.98px) {
+    flex-direction: column;
+    align-items: center;
+    width: 100vw;
+    margin-top: 50px;
+
+    .illustration-container {
+      img {
+        max-width: 200px;
+        margin: 0;
+        text-align: center;
+      }
+    }
+
+    @include media-max(611.98px) {
+      .illustration-container {
+        img {
+          max-width: 100px;
+          margin: 0;
+        }
+      }
+
+      #form-container {
+        h1 {
+          margin-top: 0;
+        }
       }
     }
   }

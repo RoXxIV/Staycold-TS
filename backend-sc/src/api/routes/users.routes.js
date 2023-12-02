@@ -1,12 +1,10 @@
 /**
- * @fileoverview Defines and configures the routes for user-related operations.
  * @module UserRoutes
  * @description Defines the routes for user-related operations.
- * @requires ../controllers/user.controller - UserController
- * @requires ../middlewares - authJwt
+ * @requires UserController - UserController
+ * @requires Middlewares - authJwt
  */
 
-// Import dependencies
 const controller = require("../controllers/user.controller");
 const { authJwt } = require("../middlewares");
 

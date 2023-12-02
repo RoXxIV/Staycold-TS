@@ -1,8 +1,7 @@
 /**
- * @fileoverview Defines the controller for user permissions.
  * @module UserPermissionsController
- * @description This module handles all operations related to user permissions.
- * @requires ../middlewares/auth-jwt - Middleware for verifying JWT tokens.
+ * @description Defines the controller for user permissions operations
+ * @requires AuthJwt - Middleware for verifying JWT tokens.
  * @exports module:UserPermissionsController
  * @see {@link module:UserPermissionsRoutes} - Router for user permissions routes.
  */
@@ -13,7 +12,7 @@
  * @see {@link module:UserPermissionsRoutes} - This function is used in the GET /api/permissions/all route.
  * @param {Object} req - Express request object.
  * @param {Object} res - Express response object.
- * @returns {Object} JSON response with public content.
+ * @returns {Object} JSON response with a 200 status and the public content.
  * @example app.get("/api/permissions/all", controller.allAccess);
  */
 exports.allAccess = (req, res) => {
@@ -26,7 +25,7 @@ exports.allAccess = (req, res) => {
  * @see {@link module:UserPermissionsRoutes} - This function is used in the GET /api/permissions/user route.
  * @param {Object} req - Express request object.
  * @param {Object} res - Express response object.
- * @returns {Object} JSON response with user content.
+ * @returns {Object} JSON response with a 200 status and the user content.
  * @example app.get("/api/permissions/user", [authJwt.verifyToken], controller.userBoard);
  */
 exports.userBoard = (req, res) => {
@@ -39,7 +38,7 @@ exports.userBoard = (req, res) => {
  * @see {@link module:UserPermissionsRoutes} - This function is used in the GET /api/permissions/mod route.
  * @param {Object} req - Express request object.
  * @param {Object} res - Express response object.
- * @returns {Object} JSON response with moderator content.
+ * @returns {Object} JSON response with a 200 status and the moderator content.
  * @example app.get(
     "/api/permissions/mod",
     [authJwt.verifyToken, authJwt.isModerator],
@@ -56,7 +55,7 @@ exports.moderatorBoard = (req, res) => {
  * @see {@link module:UserPermissionsRoutes} - This function is used in the GET /api/permissions/admin route.
  * @param {Object} req - Express request object.
  * @param {Object} res - Express response object.
- * @returns {Object} JSON response with admin content.
+ * @returns {Object} JSON response with a 200 status and the admin content.
  * @example app.get(
     "/api/permissions/admin",
     [authJwt.verifyToken, authJwt.isAdmin],

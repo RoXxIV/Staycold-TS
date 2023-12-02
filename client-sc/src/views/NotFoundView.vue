@@ -16,9 +16,10 @@
 
 <script setup lang="ts">
 import { ref } from "vue";
+import type { IlottieOptions } from "@/types/lottieOptions";
 import LottieNotFound from "@/assets/lotties/not-found.json";
 // lottie options
-const notFoundOptions = ref({
+const notFoundOptions = ref<IlottieOptions>({
   animationData: LottieNotFound,
   loop: true,
   autoplay: true,

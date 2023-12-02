@@ -1,19 +1,18 @@
 /**
- * @fileoverview Defines the controller for user signin functionality.
  * @module UserSigninController
  * @description This module provides a function for user signin.
  * @requires dotenv - Module for loading environment variables from a .env file.
- * @requires ../../models - User model from the database.
+ * @requires ModelsIndex - User model from the database.
  * @requires jsonwebtoken - Module for generating JWT tokens.
  * @requires bcryptjs - Module for hashing passwords.
+ * @requires ErrorMessages - Error messages used in the application.
+ * @exports module:UserSigninController
  * @see {@link https://www.npmjs.com/package/dotenv|dotenv}
  * @see {@link https://www.npmjs.com/package/jsonwebtoken|jsonwebtoken}
  * @see {@link https://www.npmjs.com/package/bcryptjs|bcryptjs}
- * @see {@link module:User} - User model from the database.
- * @exports module:UserSigninController
+ * @see {@link module:UserModel} - User model from the database.
  */
 
-// import dependencies
 const dotenv = require("dotenv");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
@@ -33,7 +32,7 @@ dotenv.config();
  * @see {@link module:AuthRoutes} - This function is used in the POST /api/auth/signin route.
  * @param {Object} req - Express request object containing the username and password.
  * @param {Object} res - Express response object.
- * @returns {Promise<Object>} JSON response containing user details and access token.
+ * @returns {Promise<Object>} JSON response containing user details and access token and a 200 status if the signin is successful.
  * @throws {UserNotFound} JSON response with a 404 status if the user is not found.
  * @throws {Unauthorized} JSON response with a 401 status if the password is incorrect.
  * @throws {Forbidden} JSON response with a 403 status if the account is not active.

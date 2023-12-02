@@ -1,13 +1,15 @@
 /**
- * @fileoverview Defines the controller for user-related operations.
  * @module UserController
- * @description This module provides functions for various user-related operations.
- * @requires ../../models - Database models needed for users operations.
- * @see {@link module:UserRoutes} - Router for user routes.
- * @see {@link module:User} - User model from the database.
- * @see {@link module:Role} - Role model from the database.
+ * @description This module provides functions for various user-related operations
+ * @requires ModelsIndex - Database models needed for users operations.
+ * @requires ErrorMessages - Error messages used in the application.
  * @exports module:UserController
+ * @see {@link module:UserRoutes} - Router for user routes.
+ * @see {@link module:UserModel} - User model from the database.
+ * @see {@link module:RoleModel} - Role model from the database.
  */
+
+const errorMessages = require("../../utils/errorMessages");
 
 // Import database models
 const db = require("../../models");
@@ -48,7 +50,7 @@ exports.findAllUsers = async (req, res) => {
     res.status(200).json(users);
   } catch (error) {
     // console.log("Caught an error:", error); // Debug log
-    res.status(400).json({ message: error.message });
+    res.status(500).send({ message: errorMessages.INTERNAL_SERVER_ERROR });
   }
 };
 
@@ -87,7 +89,7 @@ exports.getOneUser = async (req, res, next) => {
     res.status(200).json(user);
   } catch (error) {
     // console.log("Caught an error:", error); // Debug log
-    res.status(400).json({ message: error.message });
+    res.status(500).send({ message: errorMessages.INTERNAL_SERVER_ERROR });
   }
 };
 
@@ -129,7 +131,7 @@ exports.deleteOneUser = async (req, res, next) => {
     });
   } catch (error) {
     console.log("Caught an error:", error); // Debug log
-    res.status(400).json({ message: error.message });
+    res.status(500).send({ message: errorMessages.INTERNAL_SERVER_ERROR });
   }
 };
 
@@ -177,6 +179,6 @@ exports.updateUserRole = async (req, res) => {
     res.status(200).send("Le Role a été mis à jour.");
   } catch (error) {
     // console.log("Caught an error:", error); // Debug log
-    res.status(400).json({ error });
+    res.status(500).send({ message: errorMessages.INTERNAL_SERVER_ERROR });
   }
 };

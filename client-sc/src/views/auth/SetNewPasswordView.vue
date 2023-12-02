@@ -63,12 +63,13 @@ import { useRoute } from "vue-router";
 import router from "@/router";
 import AuthService from "@/services/auth-service";
 import { useRedirectionTimer } from "@/helpers/redirectionHelper";
+import type { IlottieOptions } from "@/types/lottieOptions";
 import lottieLoader from "@/assets/lotties/loader.json";
 
 const route = useRoute();
 
 // lottie options
-const loaderOptions = ref({
+const loaderOptions = ref<IlottieOptions>({
   animationData: lottieLoader,
   loop: true,
   autoplay: true,

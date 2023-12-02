@@ -5,21 +5,20 @@
  * @requires dotenv - Module for loading environment variables from a .env file.
  * @requires jsonwebtoken - Module for generating JWT tokens.
  * @requires bcryptjs - Module for hashing passwords.
- * @requires ../../plugins/nodemailer.config - Module for sending emails.
+ * @requires NodemailerConfig - Module for sending emails.
  * @requires express-validator - Module for validating user input.
- * @requires ../../utils/errorMessages - Error messages for various HTTP status codes.
- * @requires ../../models - User and Role models from the database.
+ * @requires ErrorMessages - Error messages for various HTTP status codes.
+ * @requires ModelsIndex - User and Role models from the database.
+ * @exports module:UserSignupController
  * @see {@link https://www.npmjs.com/package/dotenv|dotenv}
  * @see {@link https://www.npmjs.com/package/jsonwebtoken|jsonwebtoken}
  * @see {@link https://www.npmjs.com/package/bcryptjs|bcryptjs}
  * @see {@link module:NodemailerConfig} - Nodemailer configuration for sending emails.
  * @see {@link https://express-validator.github.io/docs/|express-validator}
- * @see {@link module:User} - User model from the database.
- * @see {@link module:Role} - Role model from the database.
- * @exports module:UserSignupController
+ * @see {@link module:UserModel} - User model from the database.
+ * @see {@link module:RoleModel} - Role model from the database.
  */
 
-// import dependencies
 const dotenv = require("dotenv");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");

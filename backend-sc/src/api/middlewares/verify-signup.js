@@ -1,8 +1,7 @@
 /**
- * @fileoverview Middleware for user signup verification.
  * @module VerifySignUp
  * @description This module contains middlewares for verifying user signup.
- * @requires ../../models - Sequelize database models.
+ * @requires ModelsIndex - Sequelize database models.
  * @exports module:VerifySignUp
  * @see {@link module:AuthRoutes} - Routes for user signup and account verification.
  * @see {@link module:UserSignupController} - Controller for user signup.

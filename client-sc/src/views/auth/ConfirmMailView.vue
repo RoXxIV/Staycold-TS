@@ -6,14 +6,14 @@
       <div v-if="isConfirmed">
         <h2><span>❄</span> {{ confirmationMessage }} <span>❄</span></h2>
         <p>Redirection dans {{ timeToLogin }}</p>
-        <!-- Lottie ----------->
+        <!-- Lottie -->
         <vue3-lottie
           :options="loaderOptions"
           class="lottie"
           :animationData="loaderOptions.animationData"
         ></vue3-lottie>
 
-        <!-- Redirection link ----------->
+        <!-- Redirection link -->
         <router-link to="/login" tag="a"><p>Se connecter</p></router-link>
       </div>
 
@@ -22,7 +22,7 @@
       <div v-else id="userNotConfirmed">
         <span>{{ serverErrorMessage }}</span>
         <p>Redirection dans {{ timeToHome }}</p>
-        <!-- Lottie ----------->
+        <!-- Lottie -->
         <vue3-lottie
           :options="somethingWentWrongOptions"
           class="lottie"
@@ -34,32 +34,33 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, type Ref } from "vue";
 import { onMounted } from "vue";
 import { useRoute } from "vue-router";
 import router from "@/router";
 import AuthService from "@/services/auth-service";
 import { useRedirectionTimer } from "@/helpers/redirectionHelper";
+import type { IlottieOptions } from "@/types/lottieOptions";
 import lottieLoader from "@/assets/lotties/loader.json";
 import LottiesomethingWentWrong from "@/assets/lotties/something-went-wrong.json";
 
-// lottie options for the loader and something went wrong
-const loaderOptions = ref({
+// lottie options
+const loaderOptions = ref<IlottieOptions>({
   animationData: lottieLoader,
   loop: true,
   autoplay: true,
 });
-const somethingWentWrongOptions = ref({
+const somethingWentWrongOptions = ref<IlottieOptions>({
   animationData: LottiesomethingWentWrong,
   loop: true,
   autoplay: true,
 });
 
 const route = useRoute();
-const isConfirmed = ref(false);
-const confirmationMessage = ref("");
-const serverErrorMessage = ref("");
-const confirmationCode = ref("");
+const isConfirmed: Ref<boolean> = ref(false);
+const confirmationMessage: Ref<string> = ref("");
+const serverErrorMessage: Ref<string> = ref("");
+const confirmationCode: Ref<string> = ref("");
 
 // settings for the redirection timer after the user is confirmed or not
 const { time: timeToLogin, startRedirectionTimer: redirectToLogin } =
@@ -117,9 +118,6 @@ const sendConfirmationCode = async (confirmationCode: string) => {
   & div:first-child {
     margin: auto;
     padding: 50px 100px;
-    @include media-max(611.98px) {
-      padding: 0;
-    }
 
     span {
       color: var(--blue);
@@ -128,9 +126,6 @@ const sendConfirmationCode = async (confirmationCode: string) => {
     .lottie {
       width: 300px;
       margin: auto;
-      @media (max-width: 611.98px) {
-        width: 200px;
-      }
     }
 
     p {
@@ -144,6 +139,16 @@ const sendConfirmationCode = async (confirmationCode: string) => {
       }
       p {
         color: (--color-text);
+      }
+    }
+  }
+
+  @include media-max(611.98px) {
+    & div:first-child {
+      padding: 0;
+
+      .lottie {
+        width: 200px;
       }
     }
   }

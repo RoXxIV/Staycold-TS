@@ -1,5 +1,4 @@
 /**
- * @fileoverview Error messages for various HTTP status codes.
  * @module ErrorMessages
  * @description This module provides error messages for various HTTP status codes.
  * @exports module:ErrorMessages

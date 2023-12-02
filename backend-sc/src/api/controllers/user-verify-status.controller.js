@@ -1,15 +1,14 @@
 /**
- * @fileoverview Defines the controller for user account verification.
  * @module UserVerificationController
  * @description This module provides a function for verifying user accounts.
  * @requires dotenv
- * @requires ../../models
- * @see {@link https://www.npmjs.com/package/dotenv|dotenv}
- * @see {@link module:User} - User model from the database.
+ * @requires ModelsIndex
+ * @requires ErrorMessages - Error messages used in the application.
  * @exports module:UserVerificationController
+ * @see {@link https://www.npmjs.com/package/dotenv|dotenv}
+ * @see {@link module:UserModel} - User model from the database.
  */
 
-// import dependencies
 const dotenv = require("dotenv");
 const errorMessages = require("../../utils/errorMessages");
 
@@ -24,7 +23,7 @@ dotenv.config();
  * @function verifyUserStatus
  * @async
  * @description Verifies the user's account status. - This function is called when the user clicks on the link in the email.
- * @see {@link module:UserVerificationRoutes} - This function is used in the GET /api/verify/:confirmationCode route.
+ * @see {@link module:AuthRoutes} - This function is used in the GET /api/verify/:confirmationCode route.
  * @param {Object} req - Express request object containing the confirmation code as a parameter.
  * @param {Object} res - Express response object.
  * @returns {Promise<Object>} JSON response with a message indicating the account activation status.

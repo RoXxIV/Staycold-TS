@@ -1,9 +1,8 @@
 /**
- * @fileoverview Bath Controller - Defines the controller for bath-related operations.
  * @module BathController
- * @description This module handles all CRUD operations related to baths.
- * @requires ../../models - Database models needed for bath operations.
- * @requires ../../config.js/errorMessages - Error messages for different HTTP status codes.
+ * @description Defines the controller for bath-related operations.
+ * @requires ModelsIndex - Database models needed for bath operations.
+ * @requires ErrorMessages - Error messages for different HTTP status codes.
  * @exports createBath - Creates a new Bath record in the database.
  * @exports modifyBath - Modifies an existing Bath record in the database.
  * @exports deleteBath - Delete an existing Bath record in the database.
@@ -17,7 +16,6 @@
  * @see {@link module:UserRoutes} - This module provides routes for user-related operations.
  */
 
-// Import dependencies
 const mongoose = require("mongoose");
 const errorMessages = require("../../utils/errorMessages");
 
@@ -46,7 +44,7 @@ const requiredFields = [
  * @param {Object} req - Express request object, containing the Bath details in the body.
  * @param {Object} res - Express response object.
  * @param {function} next - Express next middleware function.
- * @returns {Object} JSON response with a success message and the newly created bath.
+ * @returns {Object} JSON response with a 201 status and a success message and the newly created bath.
  * @throws {BadRequest} JSON response with a 500 status if an error occurs.
  * @throws {BadRequest} JSON response with a 400 status if a required field is missing.
  * @throws {BadRequest} JSON response with a 400 status if the user ID is invalid.
@@ -71,7 +69,6 @@ exports.createBath = async (req, res, next) => {
     if (!mongoose.Types.ObjectId.isValid(userId)) {
       return res.status(400).json({ message: errorMessages.GENERIC_ERROR });
     }
-
     const userExists = await User.findById(userId);
     if (!userExists) {
       return res.status(404).json({ message: errorMessages.GENERIC_ERROR });
@@ -99,7 +96,7 @@ exports.createBath = async (req, res, next) => {
  * @param {Object} req - Express request object, containing the Bath ID in `req.params.id` and updated details in `req.body`.
  * @param {Object} res - Express response object.
  * @param {function} next - Express next middleware function.
- * @returns {Object} JSON response with a success message.
+ * @returns {Object} JSON response with a 200 status and a success message.
  * @throws {BadRequest} JSON response with a 500 status if an error occurs.
  * @throws {BadRequest} JSON response with a 400 status if a required field is missing.
  * @throws {BadRequest} JSON response with a 400 status if the user ID is invalid.
@@ -118,12 +115,10 @@ exports.modifyBath = async (req, res, next) => {
 
     const userId = req.body.author;
 
-    // Check if userId is valid
+    // Check if userId is valid and if it exists
     if (!mongoose.Types.ObjectId.isValid(userId)) {
       return res.status(400).json({ message: errorMessages.GENERIC_ERROR });
     }
-
-    // Verify if the user exists
     const userExists = await User.findById(userId);
     if (!userExists) {
       return res.status(404).json({ message: errorMessages.GENERIC_ERROR });
@@ -160,7 +155,7 @@ exports.modifyBath = async (req, res, next) => {
  * @param {Object} req - Express request object, containing the Bath ID in `req.params.id`.
  * @param {Object} res - Express response object.
  * @param {function} next - Express next middleware function.
- * @returns {Object} JSON response with a success message.
+ * @returns {Object} JSON response with a 200 status and a success message.
  * @throws {BadRequest} JSON response with a 500 status if an error occurs.
  * @throws {BadRequest} JSON response with a 400 status if the bath ID is invalid.
  * @throws {BadRequest} JSON response with a 400 status if the user ID is invalid.
@@ -177,12 +172,10 @@ exports.deleteBath = async (req, res, next) => {
   try {
     const userId = req.body.author;
 
-    // Check if userId is valid
+    // Check if userId is valid and if it exists
     if (!mongoose.Types.ObjectId.isValid(userId)) {
       return res.status(400).json({ message: errorMessages.GENERIC_ERROR });
     }
-
-    // Verify if the user ID exists
     const userExists = await User.findById(userId);
     if (!userExists) {
       return res.status(404).json({ message: errorMessages.GENERIC_ERROR });
@@ -209,7 +202,7 @@ exports.deleteBath = async (req, res, next) => {
  * @param {Object} req - Express request object.
  * @param {Object} res - Express response object.
  * @param {function} next - Express next middleware function.
- * @returns {Object} JSON response with a success message.
+ * @returns {Object} JSON response with a 200 status and the fetched baths.
  * @throws {BadRequest} JSON response with a 500 status if an error occurs.
  * @example app.get("/api/bath", controller.getAllBaths);
  */
@@ -235,7 +228,7 @@ exports.getAllBaths = async (req, res, next) => {
  * @param {Object} req - Express request object, containing the Bath ID in `req.params.id`.
  * @param {Object} res - Express response object.
  * @param {function} next - Express next middleware function.
- * @returns {Object} JSON response with a success message.
+ * @returns {Object} JSON response with a 200 status and the fetched bath.
  * @throws {BadRequest} JSON response with a 500 status if an error occurs.
  * @throws {BadRequest} JSON response with a 400 status if the bath ID is invalid.
  * @throws {NotFound} JSON response with a 404 status if the bath is not found.
@@ -274,7 +267,7 @@ exports.getOneBath = async (req, res, next) => {
  * @param {Object} req - Express request object, containing the limit in `req.params.limit`.
  * @param {Object} res - Express response object.
  * @param {function} next - Express next middleware function.
- * @returns {Object} JSON response with the fetched baths.
+ * @returns {Object} JSON response with a 200 status and the fetched baths.
  * @throws {BadRequest} JSON response with a 500 status if an error occurs.
  * @throws {BadRequest} JSON response with a 400 status if the limit is missing.
  * @throws {NotFound} JSON response with a 400 status if the limit is invalid.
@@ -314,7 +307,7 @@ exports.getRecentBaths = async (req, res, next) => {
  * @param {Object} req - Express request object, containing the User ID in `req.params.userId`.
  * @param {Object} res - Express response object.
  * @param {function} next - Express next middleware function.
- * @returns {Object} JSON response with a success message.
+ * @returns {Object}  JSON response with a 200 status and the fetched baths.
  * @throws {BadRequest} JSON response with a 500 status if an error occurs.
  * @throws {BadRequest} JSON response with a 400 status if the user ID is invalid.
  * @throws {NotFound} JSON response with a 404 status if the user is not found.

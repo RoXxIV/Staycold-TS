@@ -1,13 +1,13 @@
 /**
- * @fileoverview Handles operations related to the contact form.
  * @module ContactFormController
- * @description This module handles all operations related to the contact form.
- * @requires ../../plugins/nodemailer.config - Nodemailer configuration for sending emails.
- * @see {@link module:NodemailerConfig} - The Nodemailer configuration used for sending emails.
+ * @description Handles operations related to the contact form operation such as sending emails.
+ * @requires NodemailerConfig - Nodemailer configuration for sending emails.
+ * @requires ErrorMessages - Error messages used in the application.
  * @exports module:ContactFormController
+ * @see {@link module:ContactRoutes} - Router for contact form routes.
+ * @see {@link module:NodemailerConfig} - The Nodemailer configuration used for sending emails.
  */
 
-// import dependencies
 const nodemailer = require("../../plugins/nodemailer.config");
 const errorMessages = require("../../utils/errorMessages");
 
@@ -23,7 +23,7 @@ const errorMessages = require("../../utils/errorMessages");
  * @param {string} req.body.commentary - The message body.
  * @param {Object} res - Express response object.
  * @param {function} next - Express next middleware function.
- * @returns {Object} JSON response with a success or error message.
+ * @returns {Object} JSON response with a 200 status if the email is sent successfully.
  * @throws {BadRequest} JSON response with a 400 status if the request body is empty.
  * @throws {InternalServerError} JSON response with a 500 status if an internal server error occurs.
  * @example app.post("/api/contact", controller.handleFormContact);
@@ -41,7 +41,7 @@ exports.handleFormContact = async (req, res, next) => {
       res.setHeader("Content-Type", "application/json");
       res.status(200).json({
         message: `Votre message a bien été envoyé,
-        il sera traitée dans les meilleurs délais`,
+        il sera traitée dans les meilleurs délais.`,
       });
     } else {
       res.status(400).json({
@@ -49,8 +49,8 @@ exports.handleFormContact = async (req, res, next) => {
       });
     }
   } catch (error) {
+    // console.log("Caught an error:", error); // Debug log
     res.status(500).json({
-      // console.log("Caught an error:", error); // Debug log
       message: errorMessages.INTERNAL_SERVER_ERROR,
     });
   }

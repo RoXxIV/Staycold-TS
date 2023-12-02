@@ -116,12 +116,13 @@
 import { ref } from "vue";
 import * as yup from "yup";
 import { useForm, useField } from "vee-validate";
-import lottieLoader from "@/assets/lotties/loader.json";
 import { useRedirectionTimer } from "@/helpers/redirectionHelper";
 import ContactService from "@/services/contact-service";
+import type { IlottieOptions } from "@/types/lottieOptions";
+import lottieLoader from "@/assets/lotties/loader.json";
 
 // lottie options
-const loaderOptions = ref({
+const loaderOptions = ref<IlottieOptions>({
   animationData: lottieLoader,
   loop: true,
   autoplay: true,

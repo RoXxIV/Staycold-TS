@@ -1,11 +1,12 @@
 /**
- * @fileoverview Validates the user signup request body.
  * @module signupValidatorRules
+ * @description Validates the user signup request body.
  * @requires express-validator/check
- * @see {@link https://express-validator.github.io/docs/|express-validator}
  * @exports module:signupValidatorRules
+ * @see {@link https://express-validator.github.io/docs/|express-validator}
  */
-// import dependencies
+
+// import express-validator/check to validate the request body
 const { body } = require("express-validator");
 
 /**

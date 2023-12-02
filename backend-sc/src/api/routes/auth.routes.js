@@ -1,15 +1,13 @@
 /**
- * @fileoverview Defines routes for authentication-related operations.
  * @module AuthRoutes
  * @description This module aggregates routes for user signup, signin, and account verification.
- * @requires ../middlewares - Middleware for authentication and other functionalities.
- * @requires ../controllers/user-signup.controller - This module provides functions for user signup.
- * @requires ../controllers/user-verify-status.controller - This module provides functions for user account verification.
- * @requires ../controllers/user-signin.controller - This module provides functions for user signin.
- * @requires ../controllers/user-reset-password.controller - This module provides functions for user password reset.
+ * @requires Middlewares - Middleware for authentication and other functionalities.
+ * @requires UserSignupController - This module provides functions for user signup.
+ * @requires UserVerificationController - This module provides functions for user account verification.
+ * @requires UserSigninController - This module provides functions for user signin.
+ * @requires UserPasswordResetController - This module provides functions for user password reset.
  */
 
-// import dependencies
 const { verifySignUp, signupValidatorRules } = require("../middlewares");
 const signupController = require("../controllers/user-signup.controller");
 const verifyUserStatus = require("../controllers/user-verify-status.controller");
@@ -36,9 +34,10 @@ module.exports = function (app) {
   /**
    * @name POST /api/auth/signup
    * @description This route is used for user signup.
-   * @see {@link module:UserSignup.signup}
-   * @see {@link module:UserSignup.checkDuplicateUsernameOrEmail}
-   * @see {@link module:UserSignup.checkRolesExisted}
+   * @throws {Object} Will send a 422 status if the request body does not pass the validation.
+   * @see {@link module:UserSignupController}
+   * @see {@link module:UserSignupController.checkDuplicateUsernameOrEmail}
+   * @see {@link module:UserSignupController.checkRolesExisted}
    * @see {@link https://express-validator.github.io/docs/|express-validator}
    * @param {User.model} user.body.required - User details
    * @example <caption>Example</caption>
@@ -79,7 +78,7 @@ module.exports = function (app) {
 
   /**
    * @name POST /api/auth/verify/:confirmationCode
-   * @function
+   * @description This route is used for user account verification.
    * @see {@link module:UserVerificationController.verifyUserStatus}
    * @param {string} confirmationCode - The confirmation code for email verification.
    * @example <caption>Example</caption>
@@ -115,7 +114,7 @@ module.exports = function (app) {
 
   /**
    * @name POST /api/auth/email-reset-password
-   * @description Envoie du mail permettant de générer un nouveau mot de passe.
+   * @description send email for reset password.
    * @see {@link module:PasswordReset.sendEmailResetPassword}
    * @param {string} confirmationCode - The confirmation code for email verification.
    * @example <caption>Example</caption>
@@ -135,7 +134,7 @@ module.exports = function (app) {
 
   /**
    * @name POST /api/auth/reset-password
-   * @description envoie du nouveau mot de passe.
+   * @description reset password.
    * @see {@link module:PasswordReset.resetPassword}
    * @param {string} confirmationCode - The confirmation code for email verification.
    * @param {string} password - The new password.

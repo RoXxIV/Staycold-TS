@@ -1,10 +1,9 @@
 /**
- * @fileoverview Defines and exports the User model for MongoDB.
+ * @module UserModel
+ * @description Defines and exports the User model for MongoDB.
  * @requires mongoose - MongoDB object modeling tool.
- *
  */
 
-// Import dependencies
 const mongoose = require("mongoose");
 
 /**

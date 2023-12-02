@@ -1,9 +1,8 @@
 /**
- * @fileoverview Initializes roles in the database.
  * @module RoleInitialization
  * @description This module provides a function to initialize roles in the database.
- *              It is intended to run once when the application starts.
- * @requires ../models - Mongoose database models.
+ * It is intended to run once when the application starts.
+ * @requires ModelsIndex - Mongoose database models.
  */
 
 // import database models

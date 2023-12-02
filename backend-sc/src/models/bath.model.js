@@ -1,9 +1,9 @@
 /**
- * @fileoverview Defines and exports the Bath model for MongoDB.
+ * @module BathModel
+ * @description Defines and exports the Bath model for MongoDB.
  * @requires mongoose - MongoDB object modeling tool.
  */
 
-// Import dependencies
 const mongoose = require("mongoose");
 
 /**

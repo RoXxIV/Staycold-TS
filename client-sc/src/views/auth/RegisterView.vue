@@ -102,12 +102,13 @@ import * as yup from "yup";
 import { useForm, useField } from "vee-validate";
 import { useAuthStore } from "@/stores/authStore";
 import { useRedirectionTimer } from "@/helpers/redirectionHelper";
+import type { IlottieOptions } from "@/types/lottieOptions";
 import LottieLoader from "@/assets/lotties/loader.json";
 
 const authStore = useAuthStore();
 
 // lottie options
-const lottieOptions = ref({
+const lottieOptions = ref<IlottieOptions>({
   animationData: LottieLoader,
   loop: true,
   autoplay: true,

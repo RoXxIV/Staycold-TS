@@ -1,5 +1,4 @@
 /**
- * @fileoverview Defines the service for sending emails.
  * @module NodemailerConfig
  * @description Defines the service for sending emails.
  * @requires nodemailer - Nodemailer module.
@@ -10,7 +9,6 @@
  * @see {@link https://www.npmjs.com/package/nodemailer|nodemailer}
  */
 
-// import dependencies
 const nodeMailer = require("nodemailer");
 const dotenv = require("dotenv");
 

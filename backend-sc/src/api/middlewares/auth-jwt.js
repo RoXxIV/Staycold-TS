@@ -1,18 +1,17 @@
 /**
- * @fileoverview Middleware for JWT verification and permissions.
  * @module AuthJwt
  * @description This module handles JWT verification and role-based permissions.
- * @see {@link https://www.npmjs.com/package/jsonwebtoken|jsonwebtoken}
- * @see {@link https://www.npmjs.com/package/dotenv|dotenv}
  * @requires jsonwebtoken - Used to verify the JWT token.
  * @requires dotenv - Used to load environment variables.
- * @requires ../../models/index.js - Sequelize database models.
+ * @requires ModelsIndex - Sequelize database models.
  * @exports module:AuthJwt
+ * @see {@link https://www.npmjs.com/package/jsonwebtoken|jsonwebtoken}
+ * @see {@link https://www.npmjs.com/package/dotenv|dotenv}
  */
 
-// import dependencies
 const jwt = require("jsonwebtoken");
 const dotenv = require("dotenv");
+const errorMessages = require("../../utils/errorMessages");
 
 // import database models
 const db = require("../../models");
@@ -58,7 +57,8 @@ const verifyToken = async (req, res, next) => {
       next();
     });
   } catch (err) {
-    res.status(500).send({ message: err });
+    // console.log("Caught an error:", error); // Debug log
+    res.status(500).json({ message: errorMessages.INTERNAL_SERVER_ERROR });
   }
 };
 
@@ -89,7 +89,8 @@ const isAdmin = async (req, res, next) => {
       res.status(403).send({ message: "Admin role required!" });
     }
   } catch (err) {
-    res.status(500).send({ message: err });
+    // console.log("Caught an error:", error); // Debug log
+    res.status(500).json({ message: errorMessages.INTERNAL_SERVER_ERROR });
   }
 };
 
@@ -122,7 +123,8 @@ const isModerator = async (req, res, next) => {
       res.status(403).send({ message: "Moderator role required!" });
     }
   } catch (err) {
-    res.status(500).send({ message: err });
+    // console.log("Caught an error:", error); // Debug log
+    res.status(500).json({ message: errorMessages.INTERNAL_SERVER_ERROR });
   }
 };
 

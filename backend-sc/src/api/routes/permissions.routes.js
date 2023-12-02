@@ -1,9 +1,8 @@
 /**
- * @fileoverview Defines routes for permission-related operations.
  * @module UserPermissionsRoutes
  * @description This module handles all routes related to user permissions.
- * @requires ../controllers/user-permissions.controller - UserPermissionsController
- * @requires ../middlewares - authJwt
+ * @requires UserPermissionsController - UserPermissionsController
+ * @requires Middlewares - authJwt
  */
 
 // Import dependencies

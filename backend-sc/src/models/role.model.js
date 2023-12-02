@@ -1,10 +1,9 @@
 /**
- * @fileoverview Defines and exports the Role model for MongoDB.
+ * @module RoleModel
+ * @description Defines and exports the Role model for MongoDB.
  * @requires mongoose - MongoDB object modeling tool.
- *
  */
 
-// Import dependencies
 const mongoose = require("mongoose");
 
 /**

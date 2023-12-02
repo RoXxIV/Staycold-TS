@@ -1,12 +1,10 @@
 /**
- * @fileoverview Defines and configures the routes for bath-related operations.
  * @module BathRoutes
  * @description This module defines and configures the routes for all CRUD operations related to baths.
- * @requires ../controllers/bath.controller - The bath controller that handles the logic.
- * @requires ../middlewares - Middleware for authentication and other functionalities.
+ * @requires BathController - The bath controller that handles the logic.
+ * @requires Middlewares - Middleware for authentication and other functionalities.
  */
 
-// Import dependencies
 const controller = require("../controllers/bath.controller");
 const { authJwt } = require("../middlewares");
 
