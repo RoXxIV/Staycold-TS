@@ -50,6 +50,7 @@ onMounted(async () => {
   display: flex;
   align-items: center;
   padding: 0px 50px 0px 0px;
+  background: var(--lighter-background);
   border: 2px solid var(--color-light-border);
   border-radius: 0.75rem;
   -webkit-box-shadow: 0 30px 33px -60px #000000;
@@ -67,10 +68,10 @@ onMounted(async () => {
   ul {
     li {
       margin: 5px 0px;
-      .bath-username {
+      &.bath-username {
         font-weight: bold;
       }
-      .bath-date {
+      &.bath-date {
         font-size: 0.8em;
       }
     }

@@ -5,7 +5,6 @@
 
 import { defineStore } from "pinia";
 import AuthService from "../services/auth-service";
-import type { IAuthState, IAuthStore } from "../types/authStore";
 
 // get the user from local storage
 const storedUser = localStorage.getItem("user");
@@ -16,7 +15,7 @@ const user = storedUser ? JSON.parse(storedUser) : null;
  */
 export const useAuthStore = defineStore({
   id: "auth",
-  state: (): IAuthState => ({
+  state: () => ({
     user: user,
     status: { loggedIn: !!user },
   }),
@@ -64,4 +63,4 @@ export const useAuthStore = defineStore({
       localStorage.removeItem("user");
     },
   },
-} as IAuthStore);
+});

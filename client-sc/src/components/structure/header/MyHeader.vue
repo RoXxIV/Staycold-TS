@@ -182,6 +182,7 @@ header {
   position: relative;
   padding: 20px 50px 20px 20px;
   border-bottom: 1px solid var(--color-dark-border);
+  background-color: var(--lighter-background);
   font-family: var(--roboto);
   font-weight: bold;
 

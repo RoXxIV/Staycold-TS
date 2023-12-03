@@ -101,12 +101,11 @@ import { ref } from "vue";
 import * as yup from "yup";
 import { useForm, useField } from "vee-validate";
 import { useAuthStore } from "@/stores/authStore";
-import type { IAuthStore } from "@/types/authStore";
 import { useRedirectionTimer } from "@/helpers/redirectionHelper";
 import type { IlottieOptions } from "@/types/lottieOptions";
 import LottieLoader from "@/assets/lotties/loader.json";
 
-const authStore = useAuthStore() as unknown as IAuthStore;
+const authStore = useAuthStore();
 
 // lottie options
 const lottieOptions = ref<IlottieOptions>({

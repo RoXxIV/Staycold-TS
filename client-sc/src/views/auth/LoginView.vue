@@ -67,12 +67,11 @@
 import { ref, type Ref } from "vue";
 import { useRouter, RouterLink } from "vue-router";
 import { useAuthStore } from "@/stores/authStore";
-import type { IAuthStore } from "@/types/authStore";
 import { useForm, useField } from "vee-validate";
 import * as yup from "yup";
 
 const router = useRouter();
-const authStore = useAuthStore() as unknown as IAuthStore;
+const authStore = useAuthStore();
 const serverErrorMessage: Ref<string> = ref("");
 
 // Validation schema with Yup

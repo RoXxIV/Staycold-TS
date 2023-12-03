@@ -4,7 +4,8 @@
 :root {
   --light-gray: #fafafa;
   --blue: #3b82f6;
-  --gray: #404347;
+  --gray: #2f3136;
+  --dark-gray: #202225;
   --gray-card: #c4c4c4;
   --white: #ffffff;
   --black: #000000;
@@ -16,22 +17,24 @@
 
   /* Default theme */
 
-  --color-dark-border: var(--gray);
+  --color-dark-border: var(--dark-gray);
   --color-light-border: var(--light-gray);
   --color-blue: var(--blue);
   --color-body-background: var(--white);
-  --color-text: var(--gray);
-  --logo-svg-color: var(--gray);
-  --icon-burger: var(--gray);
+  --color-text: var(--dark-gray);
+  --logo-svg-color: var(--dark-gray);
+  --icon-burger: var(--dark-gray);
   --nav-mobile-background: var(--white);
+  --lighter-background: var(--white);
 }
 
 [data-theme="darkMode"] {
   --color-dark-border: var(--white);
-  --color-light-border: var(--gray);
-  --color-body-background: var(--gray);
+  --color-light-border: var(--dark-gray);
+  --color-body-background: var(--dark-gray);
   --color-text: var(--white);
   --logo-svg-color: var(--white);
   --icon-burger: var(--white);
-  --nav-mobile-background: var(--gray);
+  --nav-mobile-background: var(--dark-gray);
+  --lighter-background: var(--gray);
 }
