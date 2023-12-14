@@ -62,8 +62,7 @@ exports.createBath = async (req, res, next) => {
         return res.status(400).json({ message: "Champs requis manquants." });
       }
     }
-
-    const userId = req.body.author;
+    const userId = req.userId;
 
     // Check if userId is valid and if it exists
     if (!mongoose.Types.ObjectId.isValid(userId)) {
@@ -197,23 +196,30 @@ exports.deleteBath = async (req, res, next) => {
 /**
  * @function getAllBaths
  * @async
- * @description Fetches all baths from the database.
- * @see {@link module:BathRoutes} - This function is used in the GET /api/bath route.
+ * @description Fetches all baths from the database
+ * @see {@link module:BathRoutes} - This function is used in the GET /api/bath route with pagination.
  * @param {Object} req - Express request object.
  * @param {Object} res - Express response object.
  * @param {function} next - Express next middleware function.
- * @returns {Object} JSON response with a 200 status and the fetched baths.
+ * @returns {Object} JSON response with a 200 status and the fetched baths and the total number of baths.
  * @throws {BadRequest} JSON response with a 500 status if an error occurs.
  * @example app.get("/api/bath", controller.getAllBaths);
  */
 exports.getAllBaths = async (req, res, next) => {
+  const page = parseInt(req.query.page) || 1;
+  const limit = parseInt(req.query.limit) || 15;
+  const skipIndex = (page - 1) * limit;
+
   try {
     // Fetch all baths from the database
     const baths = await Bath.find()
       .sort(sortOptions)
+      .skip(skipIndex)
+      .limit(limit)
       .populate("author", "username");
 
-    res.status(200).json(baths);
+    const total = await Bath.countDocuments();
+    res.status(200).json({ baths, total });
   } catch (error) {
     // console.log("Caught an error:", error); // Debug log
     res.status(500).json({ message: errorMessages.INTERNAL_SERVER_ERROR });

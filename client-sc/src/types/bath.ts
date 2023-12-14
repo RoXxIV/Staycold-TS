@@ -16,7 +16,7 @@ type WeatherType =
   | "meteo non indiqué*";
 
 export interface IBath {
-  id: string;
+  _id: string;
   author: IAuthor;
   waterTemperature: number;
   timeInWater: number;

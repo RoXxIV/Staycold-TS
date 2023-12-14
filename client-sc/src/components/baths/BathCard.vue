@@ -1,8 +1,12 @@
 <template>
-  <router-link :to="`/bath-details/${bath.id}`" tag="div" class="card">
+  <router-link :to="`/bath-details/${bath._id}`" tag="div" class="card">
     <div>
       <!-- weather -->
-      <img :src="weatherIconPath" alt="icone indiquant la météo" />
+      <img
+        class="weather"
+        :src="weatherIconPath"
+        alt="icone indiquant la météo"
+      />
     </div>
     <ul>
       <!-- username -->
@@ -26,7 +30,7 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps, type Ref, ref, onMounted } from "vue";
+import { ref, onMounted } from "vue";
 import type { IBath } from "@/types/bath";
 import { getWeatherIconPath } from "@/helpers/pathHelper";
 

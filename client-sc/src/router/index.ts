@@ -8,6 +8,7 @@ import NotFoundView from "../views/NotFoundView.vue";
 import ContactFormView from "@/views/ContactFormView.vue";
 /** Baths */
 import AllBathView from "@/views/AllBathsView.vue";
+import BathDetailsView from "@/views/BathDetailsView.vue";
 /** Auth */
 import LoginView from "@/views/auth/LoginView.vue";
 import RegisterView from "@/views/auth/RegisterView.vue";
@@ -16,6 +17,9 @@ import ResetPasswordView from "@/views/auth/ResetPasswordView.vue";
 import SetNewPasswordView from "@/views/auth/SetNewPasswordView.vue";
 
 const router = createRouter({
+  scrollBehavior() {
+    return { top: 0 };
+  },
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
@@ -42,6 +46,12 @@ const router = createRouter({
       path: "/all-baths",
       name: "All-baths",
       component: AllBathView,
+    },
+    /** Bath details */
+    {
+      path: "/bath-details/:bathId",
+      name: "Bath-details",
+      component: BathDetailsView,
     },
     /** Confirmation user account view  */
     {

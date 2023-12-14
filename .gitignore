@@ -32,3 +32,5 @@ client-sc/*.sw?
 # Backend
 backend-sc/.env
 backend-sc/node_modules
+
+./start_servers.bat

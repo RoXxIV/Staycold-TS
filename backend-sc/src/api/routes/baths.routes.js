@@ -101,11 +101,17 @@ module.exports = function (app) {
 
   /**
    * @name GET /api/bath
-   * @description GET route to retrieve all bath records.
+   * @description GET route to retrieve paginated bath records.
+   * @query {number} [page=1] - The page number to retrieve.
+   * @query {number} [limit=10] - The number of records per page.
    * @see {@link module:BathController.getAllBaths} - The function that handles this route.
-   * @response {Bath.model} 200 - JSON response with a success message.
+   * @response {Object} 200 - JSON response containing paginated bath records.
+   * @responseProperty {Array.<Bath>} baths - The paginated bath records.
+   * @responseProperty {number} total - Total number of bath records.
    * @response {Error} 400 - Bad request
-   * @returns {Array.<Bath>} 200 - An array of bath records
+   * @returns {Array.<Bath>} 200 - An array of paginated bath records
+   * @example <caption>Example request</caption>
+   * GET /api/bath?page=2&limit=5
    * @example <caption>Example</caption>
    * app.get("/api/bath", controller.getAllBaths);
    * @example <caption>Example response</caption>
@@ -134,8 +140,9 @@ module.exports = function (app) {
 		"author": {
 			"_id": "653c0489c189acbc95ec5fa7",
 			"username": "Denis"
-      ...}
-    ]
+      ...},
+    ],
+    "total": 50
    */
   app.get("/api/bath", controller.getAllBaths);
 

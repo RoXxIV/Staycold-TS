@@ -14,6 +14,8 @@
   --oswald: "Oswald", sans-serif;
   --roboto: "Roboto", sans-serif;
   --space-mono: "Space Mono", monospace;
+  --skeleton-background-light: #edecec;
+  --skeleton-background-dark: #34363c;
 
   /* Default theme */
 
@@ -26,6 +28,7 @@
   --icon-burger: var(--dark-gray);
   --nav-mobile-background: var(--white);
   --lighter-background: var(--white);
+  --skeleton-background: var(--skeleton-background-light);
 }
 
 [data-theme="darkMode"] {
@@ -37,4 +40,5 @@
   --icon-burger: var(--white);
   --nav-mobile-background: var(--dark-gray);
   --lighter-background: var(--gray);
+  --skeleton-background: var(--skeleton-background-dark);
 }

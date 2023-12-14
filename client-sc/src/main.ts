@@ -1,29 +1,11 @@
 import { createApp } from "vue";
 import { createPinia } from "pinia";
-
+import { FontAwesomeIcon } from "./plugins/font-awesome";
 import App from "./App.vue";
 import router from "./router";
 import "mosha-vue-toastify/dist/style.css";
 import vue3lottie from "vue3-lottie";
-import { library } from "@fortawesome/fontawesome-svg-core";
-import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import { faEnvelope } from "@fortawesome/free-regular-svg-icons";
-import { faCopyright } from "@fortawesome/free-regular-svg-icons";
-import {
-  faAt,
-  faHandPointRight,
-  faPencilAlt,
-  faStopwatch,
-} from "@fortawesome/free-solid-svg-icons";
 
-library.add(
-  faEnvelope,
-  faCopyright,
-  faAt,
-  faHandPointRight,
-  faPencilAlt,
-  faStopwatch
-);
 const app = createApp(App);
 
 app.use(createPinia());

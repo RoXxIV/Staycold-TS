@@ -12,7 +12,11 @@
         peut améliorer votre bien-être.
       </p>
 
-      <button>Commencez votre aventure</button>
+      <router-link :to="loggedIn ? '/' : '/register'">
+        <button>
+          {{ loggedIn ? "Ajouter une baignade" : "Commencez votre aventure" }}
+        </button>
+      </router-link>
     </div>
 
     <div id="hero-img">
@@ -25,7 +29,14 @@
   </section>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { computed } from "vue";
+import { useAuthStore } from "@/stores/authStore";
+
+// use the authStore to get the loggedIn status
+const authStore = useAuthStore();
+const loggedIn = computed(() => authStore.status.loggedIn);
+</script>
 
 <style scoped lang="scss">
 .hero-section {

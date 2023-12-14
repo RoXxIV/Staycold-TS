@@ -1,15 +1,15 @@
 <template>
   <section class="section-recent-baths">
-    <h2>Baignades <span>récentes</span></h2>
+    <h2 id="recents-baths-title">Baignades <span>récentes</span></h2>
 
     <!-- Loading -->
     <div v-if="!recentBaths.length" id="loading">
-      <p>Chargement...</p>
+      <div class="skeleton" v-for="n in numberOfSkeletons" :key="n"></div>
     </div>
 
     <!-- Recent baths -->
     <div class="cards-list">
-      <BathCard v-for="bath in recentBaths" :key="bath.id" :bath="bath" />
+      <BathCard v-for="bath in recentBaths" :key="bath._id" :bath="bath" />
     </div>
 
     <!-- Link to all baths -->
@@ -30,9 +30,12 @@ import BathCard from "@/components/baths/BathCard.vue";
 import BathDataService from "@/services/BathDataService";
 import RenderBathData from "@/helpers/renderBathData";
 import type { IBath } from "@/types/bath";
+import gsap from "gsap";
 
 const recentBaths = ref<IBath[]>([]);
 const serverErrorMessage: Ref<string> = ref("");
+const skeletonArray = ref([]);
+const numberOfSkeletons = 4;
 
 /**
  * @description Fetch recent baths from API and format weather and date
@@ -52,9 +55,22 @@ const fetchRecentBaths = async () => {
   }
 };
 
-// Fetch recent baths when component is mounted
 onMounted(() => {
+  // Fetch recent baths when component is mounted
   fetchRecentBaths();
+  // Animate title
+  gsap.fromTo(
+    "#recents-baths-title",
+    {
+      opacity: 0,
+      x: "-300",
+    },
+    {
+      duration: 1.5,
+      opacity: 1,
+      x: 0,
+    }
+  );
 });
 </script>
 
@@ -77,6 +93,25 @@ onMounted(() => {
 
   #loading {
     text-align: center;
+    .skeleton {
+      background: linear-gradient(
+        90deg,
+        var(--lighter-background) 25%,
+        var(--skeleton-background) 50%,
+        var(--lighter-background) 75%
+      );
+      background-size: 200% 100%;
+      border-radius: 0.75rem;
+      animation: toto 1.5s infinite;
+      @keyframes toto {
+        0% {
+          background-position: 200% 0;
+        }
+        100% {
+          background-position: -200% 0;
+        }
+      }
+    }
   }
 
   .cards-list {

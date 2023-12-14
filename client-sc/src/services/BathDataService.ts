@@ -10,10 +10,12 @@ const limit = 4;
 class BathDataService {
   /**
    * @description get all baths
+   * @param {number} page - page number
+   * @param {number} limit - limit per page
    * @returns {Promise} axios promise
    */
-  getAll() {
-    return http.get("/bath");
+  getAll(page: number, limit: number) {
+    return http.get(`/bath?page=${page}&limit=${limit}`);
   }
 
   /**
