@@ -1,33 +1,35 @@
 <template>
   <section class="reset-password-section">
     <div v-if="!successful">
-      <h1>Demander un nouveau <span class="title-span">Mot de passe</span></h1>
+      <h1 class="title-block">Demander un nouveau <span>Mot de passe</span></h1>
       <!-- Reset password Form -->
       <form @submit="onSubmit" class="custom-form">
         <!-- Email field -->
         <div class="form-field">
           <label for="email">Email:</label>
-          <input
+          <Field
             id="email"
+            name="email"
             v-model="email"
             type="email"
             placeholder="Entrez votre email"
             aria-label="Email"
           />
-          <span class="error-feedback">{{ emailError }}</span>
+          <ErrorMessage name="email" class="error-feedback" />
         </div>
 
         <!-- Email confirmation fiels -->
         <div class="form-field">
           <label for="emailConfirmation">Confirmer l'Email:</label>
-          <input
+          <Field
             id="emailConfirmation"
+            name="emailConfirmation"
             v-model="emailConfirmation"
             type="email"
             placeholder="Entrez votre email"
             aria-label="Email"
           />
-          <span class="error-feedback">{{ emailConfirmationError }}</span>
+          <ErrorMessage name="emailConfirmation" class="error-feedback" />
         </div>
 
         <!-- Submit -->
@@ -37,13 +39,16 @@
       </form>
 
       <!-- Error message -->
-      <div v-if="serverErrorMessage && !successful" id="error">
+      <div
+        v-if="serverErrorMessage && !successful"
+        class="error-reset-password"
+      >
         {{ serverErrorMessage }}
       </div>
     </div>
 
     <!-- Email confirmed -->
-    <div v-else id="emailConfirmed">
+    <div v-else class="email-confirmed">
       <p><span>❄</span> {{ succesMessage }} <span>❄</span></p>
       <p>Redirection dans {{ timeToLogin }}</p>
       <vue3-lottie
@@ -59,7 +64,7 @@
 import { ref } from "vue";
 import * as yup from "yup";
 import AuthService from "@/services/auth-service";
-import { useForm, useField } from "vee-validate";
+import { useForm, useField, Field, ErrorMessage } from "vee-validate";
 import { useRedirectionTimer } from "@/helpers/redirectionHelper";
 import type { IlottieOptions } from "@/types/lottieOptions";
 import lottieLoader from "@/assets/lotties/loader.json";
@@ -71,15 +76,15 @@ const loaderOptions = ref<IlottieOptions>({
   autoplay: true,
 });
 
-const successful = ref(false);
-const succesMessage = ref("");
-const serverErrorMessage = ref("");
+const successful = ref<boolean>(false);
+const succesMessage = ref<string>("");
+const serverErrorMessage = ref<string>("");
 
 // settings for the redirection timer after the user is confirmed or not
 const { time: timeToLogin, startRedirectionTimer: redirectToLogin } =
   useRedirectionTimer("/login", 5);
 
-// Validation schema with Yup
+// Validation schema with Yup and vee-validate
 const schema = yup.object({
   email: yup
     .string()
@@ -91,12 +96,9 @@ const schema = yup.object({
     .required("L'email est requis")
     .oneOf([yup.ref("email")], "Les emails doivent correspondre"),
 });
-
-// Configuring the form validation with vee-validate
 const { handleSubmit } = useForm({ validationSchema: schema });
-const { value: email, errorMessage: emailError } = useField<string>("email");
-const { value: emailConfirmation, errorMessage: emailConfirmationError } =
-  useField<string>("emailConfirmation");
+const { value: email } = useField<string>("email");
+const { value: emailConfirmation } = useField<string>("emailConfirmation");
 
 /**
  * @description Submit the form and send the email to the user
@@ -143,13 +145,13 @@ const onSubmit = handleSubmit(async () => {
     }
   }
 
-  #error {
+  .error-reset-password {
     margin-top: 50px;
     text-align: center;
     color: var(--red);
   }
 
-  #emailConfirmed {
+  .email-confirmed {
     margin-top: 50px;
     text-align: center;
 

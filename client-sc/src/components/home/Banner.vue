@@ -99,7 +99,7 @@ h1 {
     display: inline-block;
     width: 3px;
     margin-left: 3px;
-    background-color: var(--color-dark-border);
+    background-color: var(--primary-border);
     animation: cursorBlink 1s infinite;
     &.typing {
       animation: none;
@@ -108,7 +108,7 @@ h1 {
 
   @keyframes cursorBlink {
     49% {
-      background-color: var(--color-dark-border);
+      background-color: var(--primary-border);
     }
     50% {
       background-color: transparent;

@@ -2,7 +2,7 @@
   <div>
     <header>
       <!-- Logo -->
-      <router-link to="/" id="logo-staycold">
+      <router-link to="/" class="logo-staycold">
         <svg
           width="57px"
           height="57px"
@@ -29,7 +29,7 @@
 
       <!-- Nav default -->
       <nav>
-        <ul id="default-nav">
+        <ul class="default-nav">
           <li><router-link to="/">Accueil </router-link></li>
           <li><router-link to="/all-baths">Baignades</router-link></li>
           <!-- Nav user -->
@@ -37,7 +37,7 @@
         </ul>
 
         <!-- Nav auth -->
-        <ul id="auth-nav">
+        <ul class="auth-nav">
           <li v-if="!loggedIn">
             <router-link to="/login">Connexion</router-link>
           </li>
@@ -52,12 +52,16 @@
       </nav>
 
       <!-- Toggle burger -->
-      <div id="icon-burger">
+      <div class="icon-burger">
         <IconBurger @click="toggleBurgerMenu" id="btn-burger" />
       </div>
 
       <!-- Toggle theme light/dark -->
-      <span @click="toggleTheme" aria-label="Toggle themes" id="toggle-theme">
+      <span
+        @click="toggleTheme"
+        aria-label="Toggle themes"
+        class="toggle-theme"
+      >
         <!-- Sun button -->
         <span v-if="theme === 'darkMode'"
           ><svg
@@ -181,12 +185,12 @@ header {
   align-items: center;
   position: relative;
   padding: 20px 50px 20px 20px;
-  border-bottom: 1px solid var(--color-dark-border);
-  background-color: var(--lighter-background);
+  border-bottom: 1px solid var(--primary-border);
+  background-color: var(--secondary-background);
   font-family: var(--roboto);
   font-weight: bold;
 
-  #logo-staycold {
+  .logo-staycold {
     display: flex;
     align-items: center;
     margin-right: 100px;
@@ -199,7 +203,7 @@ header {
         fill: var(--blue);
       }
       .second-path {
-        fill: var(--logo-svg-color);
+        fill: var(--primary-border);
       }
     }
   }
@@ -210,7 +214,7 @@ header {
     justify-content: space-between;
     width: 100%;
 
-    #default-nav {
+    .default-nav {
       display: flex;
       li {
         margin-right: 30px;
@@ -221,7 +225,7 @@ header {
       }
     }
 
-    #auth-nav {
+    .auth-nav {
       display: flex;
       li {
         margin: 0px 10px;
@@ -239,11 +243,11 @@ header {
     stroke: var(--gray);
   }
 
-  #icon-burger {
+  .icon-burger {
     display: none;
   }
 
-  #toggle-theme {
+  .toggle-theme {
     position: absolute;
     left: calc(100% - 50px);
     top: 110px;
@@ -260,7 +264,7 @@ header {
     justify-content: center;
     text-align: center;
 
-    #logo-staycold {
+    .logo-staycold {
       margin-right: 0;
     }
 
@@ -268,7 +272,7 @@ header {
       justify-content: space-around;
     }
 
-    #toggle-theme {
+    .toggle-theme {
       top: 160px;
     }
 
@@ -280,11 +284,11 @@ header {
         display: none;
       }
 
-      #icon-burger {
+      .icon-burger {
         display: block;
       }
 
-      #toggle-theme {
+      .toggle-theme {
         display: none;
       }
     }

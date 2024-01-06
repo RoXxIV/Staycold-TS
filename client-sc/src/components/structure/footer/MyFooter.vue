@@ -1,9 +1,9 @@
 <template>
   <footer>
-    <ul id="copyright-footer">
+    <ul class="footer-copyright">
       <li>
         <!-- Logo -->
-        <router-link to="/" id="logo-footer">
+        <router-link to="/" class="footer-logo">
           <svg
             width="35px"
             height="35px"
@@ -32,7 +32,7 @@
     </ul>
 
     <!-- Contact & Mention -->
-    <ul id="contact-footer">
+    <ul class="footer-contact">
       <li>
         <router-link to="/contact-form"
           ><font-awesome-icon
@@ -47,7 +47,7 @@
     </ul>
 
     <!-- Reseau -->
-    <ul id="social-footer">
+    <ul class="footer-social">
       <li>
         <a
           href="https://www.linkedin.com/in/evan-hermier-799b48121/"
@@ -77,12 +77,12 @@ footer {
   align-items: center;
   margin-top: 50px;
   padding: 20px 30px;
-  border-top: 1px solid var(--color-dark-border);
+  border-top: 1px solid var(--primary-border);
 
   ul {
     width: 30%;
 
-    &#copyright-footer {
+    &.footer-copyright {
       display: flex;
       justify-content: flex-start;
       align-items: center;
@@ -91,7 +91,7 @@ footer {
       li {
         padding: 0px 10px;
 
-        #logo-footer {
+        .footer-logo {
           display: flex;
           align-items: center;
           font-size: 1.1em;
@@ -102,13 +102,13 @@ footer {
               fill: var(--blue);
             }
             .second-path {
-              fill: var(--logo-svg-color);
+              fill: var(--primary-border);
             }
           }
         }
       }
     }
-    &#contact-footer {
+    &.footer-contact {
       text-align: center;
 
       li {
@@ -126,7 +126,7 @@ footer {
       }
     }
 
-    &#social-footer {
+    &.footer-social {
       display: flex;
       align-items: center;
       justify-content: flex-end;
@@ -142,11 +142,11 @@ footer {
       flex-direction: column;
       justify-content: center;
 
-      &#logo-footer {
+      &.footer-logo {
         margin-right: 0;
       }
 
-      &#copiright-footer {
+      &.footer-copyright {
         flex-direction: column;
         justify-content: center;
         text-align: center;
@@ -155,7 +155,7 @@ footer {
         }
       }
 
-      &#social-footer {
+      &.footer-social {
         flex-direction: row;
         justify-content: space-around;
       }
@@ -168,14 +168,14 @@ footer {
         width: 100%;
         margin: 10px auto;
 
-        &#contact-footer {
+        &.footer-contact {
           width: 100%;
         }
-        &#social-footer {
+        &.footer-social {
           flex-direction: row;
           justify-content: space-around;
         }
-        &#copyright-footer {
+        &.footer-copyright {
           flex-direction: row;
           justify-content: space-around;
         }

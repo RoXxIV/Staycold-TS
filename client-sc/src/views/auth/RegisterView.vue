@@ -1,63 +1,67 @@
 <template>
   <section class="register-section">
     <!-- Main bloc that contain form and illustration -->
-    <div id="bloc">
+    <div class="bloc-register">
       <!-- Form container -->
-      <div v-if="!isSubmitted" id="form-container">
-        <h1>Formulaire d'<span class="title-span">Inscription</span></h1>
+      <div v-if="!isSubmitted" class="register-form-container">
+        <h1 class="title">Formulaire d'<span>Inscription</span></h1>
 
         <!-- Regiser Form -->
         <form @submit="onSubmit" class="custom-form">
           <!-- Username field ----------->
           <div class="form-field">
             <label for="username">Nom d'utilisateur:</label>
-            <input
+            <Field
               id="username"
+              name="username"
               v-model="username"
               type="text"
               placeholder="Entrez votre nom d'utilisateur"
               aria-label="Nom d'utilisateur"
             />
-            <span class="error-feedback">{{ usernameError }}</span>
+            <ErrorMessage name="username" class="error-feedback" />
           </div>
 
           <!-- Email field -->
           <div class="form-field">
             <label for="email">Email:</label>
-            <input
+            <Field
               id="email"
+              name="email"
               v-model="email"
               type="email"
               placeholder="Entrez votre email"
               aria-label="Email"
             />
-            <span class="error-feedback">{{ emailError }}</span>
+            <ErrorMessage name="email" class="error-feedback" />
           </div>
 
           <!-- Password field -->
           <div class="form-field">
             <label for="password">Mot de passe:</label>
-            <input
+            <Field
               id="password"
+              name="password"
               v-model="password"
               type="password"
               placeholder="Entrez votre mot de passe"
               aria-label="Mot de passe"
             />
-            <span class="error-feedback">{{ passwordError }}</span>
+            <ErrorMessage name="password" class="error-feedback" />
           </div>
 
           <!-- Confirm password field -->
           <div class="form-field">
             <label for="confirm-password">Confirmez votre mot de passe:</label>
-            <input
+            <Field
               id="confirm-password"
+              name="confirm-password"
               v-model="confirmPassword"
               type="password"
               placeholder="Confirmez votre mot de passe"
               aria-label="Confirmez votre mot de passe"
             />
-            <span class="error-feedback">{{ confirmPasswordError }}</span>
+            <ErrorMessage name="confirmPassword" class="error-feedback" />
           </div>
 
           <!-- Server error message -->
@@ -84,7 +88,10 @@
       </div>
     </div>
     <!-- Success message -->
-    <div v-show="isSubmitted && serverSuccesMessage" id="if-success">
+    <div
+      v-show="isSubmitted && serverSuccesMessage"
+      class="if-register-success"
+    >
       <p><span>❄</span> {{ serverSuccesMessage }} <span>❄</span></p>
       <p>Redirection dans {{ timeToHome }}</p>
       <vue3-lottie
@@ -99,7 +106,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import * as yup from "yup";
-import { useForm, useField } from "vee-validate";
+import { useForm, useField, Field, ErrorMessage } from "vee-validate";
 import { useAuthStore } from "@/stores/authStore";
 import { useRedirectionTimer } from "@/helpers/redirectionHelper";
 import type { IlottieOptions } from "@/types/lottieOptions";
@@ -114,15 +121,15 @@ const lottieOptions = ref<IlottieOptions>({
   autoplay: true,
 });
 
-const serverErrorMessage = ref("");
-const serverSuccesMessage = ref("");
-const isSubmitted = ref(false);
+const serverErrorMessage = ref<string>("");
+const serverSuccesMessage = ref<string>("");
+const isSubmitted = ref<boolean>(false);
 
 // settings for the redirection timer after the user is registered
 const { time: timeToHome, startRedirectionTimer: redirectToHome } =
   useRedirectionTimer("/", 5);
 
-// Validation schema with Yup
+// Validation schema with Yup and vee-validate
 const schema = yup.object({
   username: yup
     .string()
@@ -145,15 +152,11 @@ const schema = yup.object({
     .oneOf([yup.ref("password")], "Les mots de passe doivent correspondre"),
 });
 
-// Configuring the form validation with vee-validate
 const { handleSubmit } = useForm({ validationSchema: schema });
-const { value: username, errorMessage: usernameError } =
-  useField<string>("username");
-const { value: email, errorMessage: emailError } = useField<string>("email");
-const { value: password, errorMessage: passwordError } =
-  useField<string>("password");
-const { value: confirmPassword, errorMessage: confirmPasswordError } =
-  useField<string>("confirmPassword");
+const { value: username } = useField<string>("username");
+const { value: email } = useField<string>("email");
+const { value: password } = useField<string>("password");
+const { value: confirmPassword } = useField<string>("confirmPassword");
 
 /**
  * @description Handles the form submission.
@@ -186,7 +189,7 @@ const onSubmit = handleSubmit(async (values) => {
 .register-section {
   width: 100vw;
 
-  #bloc {
+  .bloc-register {
     display: flex;
     justify-content: space-around;
     width: 75%;
@@ -198,7 +201,7 @@ const onSubmit = handleSubmit(async (values) => {
       }
     }
 
-    #form-container {
+    .register-form-container {
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -214,7 +217,7 @@ const onSubmit = handleSubmit(async (values) => {
     }
   }
 
-  #if-success {
+  .if-success {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -233,7 +236,7 @@ const onSubmit = handleSubmit(async (values) => {
   }
 
   @include media-max(991.98px) {
-    #bloc {
+    .bloc-register {
       flex-direction: column-reverse;
       align-items: center;
       width: 100%;
@@ -245,7 +248,7 @@ const onSubmit = handleSubmit(async (values) => {
         margin: 0;
       }
 
-      #form-container {
+      .register-form-container {
         margin-top: 0px;
 
         h1 {
@@ -260,11 +263,11 @@ const onSubmit = handleSubmit(async (values) => {
         margin: 0;
       }
 
-      #form-container {
+      .register-form-container {
         width: 100%;
       }
 
-      #if-success {
+      .if-success {
         margin-top: 50px;
         font-size: 1em;
 

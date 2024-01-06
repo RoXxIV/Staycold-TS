@@ -1,21 +1,20 @@
 <template>
   <section class="all-baths-section">
     <!-- Landscape banner -->
-    <div id="all-bath-landscape"></div>
+    <div class="all-bath-landscape"></div>
 
     <!-- Title -->
     <div class="all-baths-title">
-      <h1>Toutes les <span>baignades</span></h1>
+      <h1 class="title">Toutes les <span>baignades</span></h1>
       <img
-        id="illustration-iceberg"
-        class="slideInLeft"
+        class="illustration-iceberg slideInLeft"
         src="@/assets/images/iceberg.png"
         alt="illlustration d'un iceberg"
       />
     </div>
 
     <!-- Loading -->
-    <div v-if="!Allbaths.length" id="loading">
+    <div v-if="!Allbaths.length" class="loading">
       <div class="skeleton" v-for="n in numberOfSkeletons" :key="n"></div>
     </div>
 
@@ -88,11 +87,11 @@ watchEffect(() => {
   width: 75%;
   margin: auto;
 
-  #all-bath-landscape {
+  .all-bath-landscape {
     height: 90px;
     margin-top: 50px;
-    border-top: 2px solid var(--color-dark-border);
-    border-bottom: 2px solid var(--color-dark-border);
+    border-top: 2px solid var(--primary-border);
+    border-bottom: 2px solid var(--primary-border);
     background-image: url(../assets/images/all-baths-banner.png);
     background-size: cover;
     background-repeat: no-repeat;
@@ -106,18 +105,14 @@ watchEffect(() => {
 
     h1 {
       margin-bottom: 10px;
-      span {
-        color: var(--blue);
-        font-family: var(--oswald);
-      }
     }
 
-    #illustration-iceberg {
+    .illustration-iceberg {
       max-width: 100px;
     }
   }
 
-  #loading {
+  .loading {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     grid-auto-rows: minmax(200px, auto);
@@ -127,9 +122,9 @@ watchEffect(() => {
     .skeleton {
       background: linear-gradient(
         90deg,
-        var(--lighter-background) 25%,
+        var(--secondary-background) 25%,
         var(--skeleton-background) 50%,
-        var(--lighter-background) 75%
+        var(--secondary-background) 75%
       );
       background-size: 200% 100%;
       border-radius: 0.75rem;

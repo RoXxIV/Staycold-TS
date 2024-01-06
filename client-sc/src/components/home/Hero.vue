@@ -1,6 +1,6 @@
 <template>
   <section class="hero-section">
-    <div id="hero-intro">
+    <div class="hero-intro">
       <h2>
         <span>Staycold</span> c’est qui ?<br />
         c’est quoi ?
@@ -12,14 +12,14 @@
         peut améliorer votre bien-être.
       </p>
 
-      <router-link :to="loggedIn ? '/' : '/register'">
+      <router-link :to="loggedIn ? '/add-bath' : '/register'">
         <button>
           {{ loggedIn ? "Ajouter une baignade" : "Commencez votre aventure" }}
         </button>
       </router-link>
     </div>
 
-    <div id="hero-img">
+    <div class="hero-img">
       <img
         src="@/assets/images/hero-shark.png"
         alt="Une illustration de requin souriant, debout et saluant sur fond bleu."
@@ -46,7 +46,7 @@ const loggedIn = computed(() => authStore.status.loggedIn);
   width: 80%;
   margin: 50px auto;
 
-  #hero-intro {
+  .hero-intro {
     width: 50%;
 
     h2 {
@@ -64,7 +64,7 @@ const loggedIn = computed(() => authStore.status.loggedIn);
     }
   }
 
-  #hero-img {
+  .hero-img {
     width: 50%;
     text-align: center;
 
@@ -75,7 +75,7 @@ const loggedIn = computed(() => authStore.status.loggedIn);
   }
 
   @include media-max(991.98px) {
-    #hero-intro {
+    .hero-intro {
       h2 {
         font-size: 1.8em;
       }
@@ -86,10 +86,10 @@ const loggedIn = computed(() => authStore.status.loggedIn);
     @include media-max(667.98px) {
       flex-direction: column-reverse;
 
-      #hero-intro {
+      .hero-intro {
         width: 100%;
       }
-      #hero-img img {
+      .hero-img img {
         max-width: 150px;
       }
     }

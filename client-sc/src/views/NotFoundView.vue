@@ -1,6 +1,6 @@
 <template>
   <section class="not-found-section">
-    <h1>Page non trouvée</h1>
+    <h1 class="title">Page non trouvée</h1>
 
     <vue3-lottie
       :options="notFoundOptions"

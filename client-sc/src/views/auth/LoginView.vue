@@ -9,35 +9,37 @@
     </div>
 
     <!-- Form container -->
-    <div id="form-container">
-      <h1>Formulaire de <span class="title-span">Connexion</span></h1>
+    <div class="login-form-container">
+      <h1 class="title-block">Formulaire de <span>Connexion</span></h1>
 
       <!-- Login Form -->
       <form @submit="onSubmit" class="custom-form">
         <!-- Username field -->
         <div class="form-field">
           <label for="username">Nom d'utilisateur:</label>
-          <input
+          <Field
             id="username"
+            name="username"
             v-model="username"
             type="text"
             placeholder="Entrez votre nom d'utilisateur"
             aria-label="Nom d'utilisateur"
           />
-          <span class="error-feedback">{{ usernameError }}</span>
+          <ErrorMessage name="username" class="error-feedback" />
         </div>
 
         <!-- Password field -->
         <div class="form-field">
           <label for="password">Mot de passe:</label>
-          <input
+          <Field
             id="password"
+            name="password"
             v-model="password"
             type="password"
             placeholder="Entrez votre mot de passe"
             aria-label="Mot de passe"
           />
-          <span class="error-feedback">{{ passwordError }}</span>
+          <ErrorMessage name="password" class="error-feedback" />
         </div>
 
         <!-- Server error message -->
@@ -67,25 +69,21 @@
 import { ref, type Ref } from "vue";
 import { useRouter, RouterLink } from "vue-router";
 import { useAuthStore } from "@/stores/authStore";
-import { useForm, useField } from "vee-validate";
+import { useForm, useField, Field, ErrorMessage } from "vee-validate";
 import * as yup from "yup";
 
 const router = useRouter();
 const authStore = useAuthStore();
 const serverErrorMessage: Ref<string> = ref("");
 
-// Validation schema with Yup
+// Validation schema with Yup and vee-validate
 const schema = yup.object({
   username: yup.string().required("Nom d'utilisateur requis"),
   password: yup.string().required("Mot de passe requis"),
 });
-
-// Configuring the form validation with vee-validate
 const { handleSubmit } = useForm({ validationSchema: schema });
-const { value: username, errorMessage: usernameError } =
-  useField<string>("username");
-const { value: password, errorMessage: passwordError } =
-  useField<string>("password");
+const { value: username } = useField<string>("username");
+const { value: password } = useField<string>("password");
 
 /**
  * @description Handles the form submission.
@@ -137,11 +135,10 @@ const onSubmit = handleSubmit(async (values) => {
     }
   }
 
-  #form-container {
+  .login-form-container {
     h1 {
       margin-bottom: 50px;
       text-align: center;
-      font-size: 2em;
     }
   }
 
@@ -167,7 +164,7 @@ const onSubmit = handleSubmit(async (values) => {
         }
       }
 
-      #form-container {
+      .login-form-container {
         h1 {
           margin-top: 0;
         }

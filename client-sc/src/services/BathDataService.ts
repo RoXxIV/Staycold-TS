@@ -4,6 +4,7 @@
  * @requires http-common
  */
 import http from "../http-common";
+import authHeader from "./auth.header";
 
 const limit = 4;
 
@@ -47,20 +48,22 @@ class BathDataService {
   /**
    * @description create bath
    * @param {object} data - bath data
+   * @param {object} headers - auth header
    * @returns {Promise} axios promise
    */
   create(data: object) {
-    return http.post("/bath", data);
+    return http.post("/bath", data, { headers: authHeader() });
   }
 
   /**
    * @description update bath
    * @param {string} id - bath id
    * @param {object} data - bath data
+   * @param {object} headers - auth header
    * @returns {Promise} axios promise
    */
   update(id: string, data: object) {
-    return http.put(`/bath/${id}`, data);
+    return http.put(`/bath/${id}`, data, { headers: authHeader() });
   }
 
   /**

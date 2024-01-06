@@ -1,4 +1,3 @@
-import { createPinia, type Pinia } from "pinia";
 import { createRouter, createWebHistory } from "vue-router";
 import authGuards from "@/helpers/auth.guards";
 
@@ -15,6 +14,9 @@ import RegisterView from "@/views/auth/RegisterView.vue";
 import ConfirmMailView from "@/views/auth/ConfirmMailView.vue";
 import ResetPasswordView from "@/views/auth/ResetPasswordView.vue";
 import SetNewPasswordView from "@/views/auth/SetNewPasswordView.vue";
+/** User */
+import AddBath from "@/views/user/AddBath.vue";
+import EditBath from "@/views/user/EditBath.vue";
 
 const router = createRouter({
   scrollBehavior() {
@@ -52,6 +54,18 @@ const router = createRouter({
       path: "/bath-details/:bathId",
       name: "Bath-details",
       component: BathDetailsView,
+    },
+    /** Add bath */
+    {
+      path: "/add-bath",
+      name: "Add-bath",
+      component: AddBath,
+    },
+    /** Edit bath */
+    {
+      path: "/edit-bath/:bathId",
+      name: "Edit-bath",
+      component: EditBath,
     },
     /** Confirmation user account view  */
     {

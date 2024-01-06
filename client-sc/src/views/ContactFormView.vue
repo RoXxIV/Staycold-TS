@@ -38,14 +38,15 @@
               :icon="['fa', 'at']"
             />Email:</label
           >
-          <input
+          <Field
             id="email"
+            name="email"
             v-model="email"
             type="email"
             placeholder="Entrez votre email"
             aria-label="Email"
           />
-          <span class="error-feedback">{{ emailError }}</span>
+          <ErrorMessage name="email" class="error-feedback" />
         </div>
 
         <!-- Subject field -->
@@ -56,18 +57,13 @@
               :icon="['fa', 'hand-point-right']"
             />Sujet:</label
           >
-          <select
-            name="subject"
-            id="subject"
-            :value="subject"
-            @input="updateSubject($event)"
-          >
+          <Field as="select" name="subject" id="subject" v-model="subject">
             <option value="" disabled selected>Choisir une option</option>
             <option v-for="option in subjects" :key="option" :value="option">
               {{ option }}
             </option>
-          </select>
-          <span class="error-feedback">{{ subjectError }}</span>
+          </Field>
+          <ErrorMessage name="subject" class="error-feedback" />
         </div>
 
         <!-- commentary -->
@@ -78,22 +74,24 @@
               :icon="['fa', 'pencil-alt']"
             />Votre Message:</label
           >
-          <textarea
+          <Field
+            as="textarea"
             id="commentary"
+            name="commentary"
             v-model="commentary"
             type="email"
             placeholder="Votre message ici"
           />
-          <span class="error-feedback">{{ commentaryError }}</span>
+          <ErrorMessage name="commentary" class="error-feedback" />
         </div>
         <!----- Submit ----->
-        <div id="submit">
+        <div class="contact-form-submit">
           <button class="btn-blue">Envoyer</button>
         </div>
       </form>
 
       <!-- if succed -->
-      <div v-if="!serverErrorMessage && submited" id="submited">
+      <div v-if="!serverErrorMessage && submited" class="contact-form-submited">
         <p><span>❄</span> {{ succesMessage }} <span>❄</span></p>
         <p>Redirection dans {{ timeToHome }}</p>
         <vue3-lottie
@@ -104,7 +102,7 @@
       </div>
 
       <!-- Error message -->
-      <div v-if="serverErrorMessage && submited" id="error">
+      <div v-if="serverErrorMessage && submited" class="contact-form-error">
         <p>{{ serverErrorMessage }}</p>
         <p>Redirection dans {{ timeToHome }}</p>
       </div>
@@ -115,7 +113,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import * as yup from "yup";
-import { useForm, useField } from "vee-validate";
+import { useForm, useField, Field, ErrorMessage } from "vee-validate";
 import { useRedirectionTimer } from "@/helpers/redirectionHelper";
 import ContactService from "@/services/contact-service";
 import type { IlottieOptions } from "@/types/lottieOptions";
@@ -128,9 +126,9 @@ const loaderOptions = ref<IlottieOptions>({
   autoplay: true,
 });
 
-const submited = ref(false);
-const succesMessage = ref("");
-const serverErrorMessage = ref("");
+const submited = ref<boolean>(false);
+const succesMessage = ref<string>("");
+const serverErrorMessage = ref<string>("");
 // selects options
 const subjects = [
   "Une idée d'amelioration du site",
@@ -150,11 +148,7 @@ const schema = yup.object({
     .required("L'email est requis")
     .email("L'email doit être valide")
     .max(320, "L'email doit contenir au maximum 320 caractères"),
-  subject: yup
-    .string()
-    .nullable()
-    .required("Sujet requis!")
-    .max(120, "Le sujet doit contenir au maximum 120 caractères"),
+  subject: yup.string().nullable().required("Sujet requis!"),
   commentary: yup
     .string()
     .max(500, "Le message ne doit pas dépasser 500 caractères"),
@@ -162,11 +156,9 @@ const schema = yup.object({
 
 // Configuring the form validation with vee-validate
 const { handleSubmit } = useForm({ validationSchema: schema });
-const { value: email, errorMessage: emailError } = useField<string>("email");
-const { value: subject, errorMessage: subjectError } =
-  useField<string>("subject");
-const { value: commentary, errorMessage: commentaryError } =
-  useField<string>("commentary");
+const { value: email } = useField<string>("email");
+const { value: subject } = useField<string>("subject");
+const { value: commentary } = useField<string>("commentary");
 
 /**
  * @description: Send the contact form to the server
@@ -194,14 +186,6 @@ const onSubmit = handleSubmit(async (values) => {
     redirectToHome();
   }
 });
-
-// handles input events on the subject select, ensuring the correct selection of default option.
-const updateSubject = (event: Event) => {
-  const target = event.target as HTMLSelectElement;
-  if (target) {
-    subject.value = target.value;
-  }
-};
 </script>
 
 <style lang="scss" scoped>
@@ -236,7 +220,7 @@ const updateSubject = (event: Event) => {
     width: 700px;
     margin: 30px auto;
     padding: 50px 30px 50px 30px;
-    border: 2px solid var(--color-light-border);
+    border: 2px solid var(--secondary-border);
     border-radius: 0.75rem;
     -webkit-box-shadow: 0 30px 33px -60px #000000;
     box-shadow: 0 30px 33px -60px #000000;
@@ -253,7 +237,7 @@ const updateSubject = (event: Event) => {
       input {
         margin: 20px 0px 10px 20px;
         border: none;
-        border-bottom: 1px solid var(--color-dark-border);
+        border-bottom: 1px solid var(--primary-border);
         background: transparent;
         color: var(--color-text);
         width: 100%;
@@ -268,8 +252,8 @@ const updateSubject = (event: Event) => {
         margin: 20px 0px 10px 20px;
         padding-bottom: 10px;
         border: none;
-        border-bottom: 1px solid var(--color-dark-border);
-        background: var(--color-body-background);
+        border-bottom: 1px solid var(--primary-border);
+        background: var(--primary-background);
         color: var(--color-text);
         font-size: 16px;
         transition: border-color 0.3s;
@@ -281,8 +265,8 @@ const updateSubject = (event: Event) => {
         max-height: 300px;
         resize: vertical;
         margin: 20px 0px 10px 20px;
-        border: 1px solid var(--color-dark-border);
-        background: var(--color-body-background);
+        border: 1px solid var(--primary-border);
+        background: var(--primary-background);
         color: var(--color-text);
         transition: border-color 0.3s;
         &:focus {
@@ -290,13 +274,13 @@ const updateSubject = (event: Event) => {
         }
       }
 
-      #submit {
+      .contact-form-submit {
         margin-top: 15px;
         text-align: right;
       }
     }
 
-    #submited {
+    .contact-form-submited {
       text-align: center;
       span {
         color: var(--blue);
@@ -307,7 +291,7 @@ const updateSubject = (event: Event) => {
       }
     }
 
-    #error {
+    .contact-form-error {
       text-align: center;
       p:first-child {
         color: var(--red);

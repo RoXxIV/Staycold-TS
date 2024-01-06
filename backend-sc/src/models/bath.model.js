@@ -41,7 +41,7 @@ const Bath = mongoose.model(
        */
       waterTemperature: {
         type: Number,
-        min: 0.1,
+        min: -48,
         max: 50,
         required: true,
       },
@@ -52,7 +52,7 @@ const Bath = mongoose.model(
       timeInWater: {
         type: Number,
         min: 1,
-        max: 1440,
+        max: 120,
         required: true,
       },
       /**
@@ -86,7 +86,8 @@ const Bath = mongoose.model(
        */
       wind: {
         type: String,
-        enum: ["aucun", "leger", "modéré", "beaucoup"],
+        enum: ["aucun", "leger", "modéré", "beaucoup", null],
+        default: null,
       },
       /**
        * @type {number}
@@ -94,8 +95,9 @@ const Bath = mongoose.model(
        */
       recoveryTime: {
         type: Number,
-        min: 0.1,
-        max: 1440,
+        min: 0,
+        max: 180,
+        default: null,
       },
       /**
        * @type {string}
@@ -103,7 +105,8 @@ const Bath = mongoose.model(
        */
       afterdrop: {
         type: String,
-        enum: ["très intense", "intense", "modéré", "leger", "aucun", ""],
+        enum: ["très intense", "intense", "modéré", "leger", "aucun", null],
+        default: null,
       },
       /**
        * @type {string}
@@ -111,7 +114,8 @@ const Bath = mongoose.model(
        */
       globalFeeling: {
         type: String,
-        enum: ["très dur", "dur", "modéré", "facile", "très facile", ""],
+        enum: ["très dur", "dur", "modéré", "facile", "très facile", null],
+        default: null,
       },
       /**
        * @type {string}
@@ -120,6 +124,7 @@ const Bath = mongoose.model(
       commentary: {
         type: String,
         maxlength: 500,
+        default: null,
       },
     },
     {

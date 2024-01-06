@@ -1,12 +1,12 @@
 <template>
-  <div id="mobile-nav">
+  <div class="mobile-nav">
     <!-- Nav default -->
     <ul>
       <!-- Toggle theme -->
       <li
         @click="toggleThemeAndEmit"
         aria-label="Toggle themes"
-        id="toggle-theme-mobile"
+        class="toggle-theme-mobile"
       >
         <span>{{ themeSwitchText }}</span>
       </li>
@@ -20,7 +20,7 @@
     </ul>
 
     <!-- Nav auth -->
-    <ul id="mobile-auth-nav">
+    <ul class="mobile-auth-nav">
       <li @click="closeMenuAndEmit" v-if="!loggedIn">
         <router-link to="/login">Connexion</router-link>
       </li>
@@ -29,7 +29,9 @@
       </li>
 
       <!-- logout  -->
-      <li v-if="loggedIn" @click.prevent="logout" id="logout">Deconnexion</li>
+      <li v-if="loggedIn" @click.prevent="logout" class="header-logout">
+        Deconnexion
+      </li>
     </ul>
   </div>
 </template>
@@ -76,7 +78,7 @@ const themeSwitchText = computed(() => {
 </script>
 
 <style lang="scss" scoped>
-#mobile-nav {
+.mobile-nav {
   position: absolute;
   width: 100%;
   font-size: 1.3em;
@@ -87,8 +89,8 @@ const themeSwitchText = computed(() => {
 
     li {
       padding: 15px 0px 15px 15px;
-      background: var(--nav-mobile-background);
-      border-bottom: 1px solid var(--color-dark-border);
+      background: var(--primary-background);
+      border-bottom: 1px solid var(--primary-border);
       cursor: pointer;
     }
   }

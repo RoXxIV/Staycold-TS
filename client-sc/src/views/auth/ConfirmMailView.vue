@@ -19,7 +19,7 @@
 
       <!-- Email not confirmed -->
       <!-- display an error message and a redirection link to the home page -->
-      <div v-else id="userNotConfirmed">
+      <div v-else class="userNotConfirmed">
         <span>{{ serverErrorMessage }}</span>
         <p>Redirection dans {{ timeToHome }}</p>
         <!-- Lottie -->
@@ -57,10 +57,10 @@ const somethingWentWrongOptions = ref<IlottieOptions>({
 });
 
 const route = useRoute();
-const isConfirmed: Ref<boolean> = ref(false);
-const confirmationMessage: Ref<string> = ref("");
-const serverErrorMessage: Ref<string> = ref("");
-const confirmationCode: Ref<string> = ref("");
+const isConfirmed = ref<boolean>(false);
+const confirmationMessage = ref<string>("");
+const serverErrorMessage = ref<string>("");
+const confirmationCode = ref<string>("");
 
 // settings for the redirection timer after the user is confirmed or not
 const { time: timeToLogin, startRedirectionTimer: redirectToLogin } =
@@ -132,7 +132,7 @@ const sendConfirmationCode = async (confirmationCode: string) => {
       text-decoration: underline;
     }
 
-    #userNotConfirmed {
+    .userNotConfirmed {
       span {
         color: var(--red);
         font-size: 1.2em;

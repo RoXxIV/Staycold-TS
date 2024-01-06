@@ -2,43 +2,32 @@
 @import url("https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&family=Roboto:wght@400;700&family=Space+Mono:wght@400;700&display=swap");
 /* Variables __________*/
 :root {
-  --light-gray: #fafafa;
-  --blue: #3b82f6;
-  --gray: #2f3136;
-  --dark-gray: #202225;
-  --gray-card: #c4c4c4;
   --white: #ffffff;
-  --black: #000000;
+  --light-white: #fafafa;
+  --dark-white: #edecec;
+  --dark-gray: #202225;
+  --gray: #2f3136;
   --red: #ec3434;
-  --red-alert: rgb(245, 92, 92);
+  --blue: #3b82f6;
   --oswald: "Oswald", sans-serif;
   --roboto: "Roboto", sans-serif;
   --space-mono: "Space Mono", monospace;
-  --skeleton-background-light: #edecec;
-  --skeleton-background-dark: #34363c;
 
   /* Default theme */
-
-  --color-dark-border: var(--dark-gray);
-  --color-light-border: var(--light-gray);
-  --color-blue: var(--blue);
-  --color-body-background: var(--white);
+  --primary-background: var(--white);
+  --secondary-background: var(--white);
+  --primary-border: var(--dark-gray);
+  --secondary-border: var(--light-white);
   --color-text: var(--dark-gray);
-  --logo-svg-color: var(--dark-gray);
-  --icon-burger: var(--dark-gray);
-  --nav-mobile-background: var(--white);
-  --lighter-background: var(--white);
-  --skeleton-background: var(--skeleton-background-light);
+  --color-blue: var(--blue);
+  --skeleton-background: var(--dark-white);
 }
 
 [data-theme="darkMode"] {
-  --color-dark-border: var(--white);
-  --color-light-border: var(--dark-gray);
-  --color-body-background: var(--dark-gray);
+  --primary-border: var(--white);
+  --secondary-border: var(--dark-gray);
+  --primary-background: var(--dark-gray);
   --color-text: var(--white);
-  --logo-svg-color: var(--white);
-  --icon-burger: var(--white);
-  --nav-mobile-background: var(--dark-gray);
-  --lighter-background: var(--gray);
-  --skeleton-background: var(--skeleton-background-dark);
+  --secondary-background: var(--gray);
+  --skeleton-background: var(--gray);
 }

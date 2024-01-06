@@ -3,16 +3,17 @@
     <div>
       <!-- weather -->
       <img
-        class="weather"
+        class="weather-icon"
         :src="weatherIconPath"
         alt="icone indiquant la météo"
       />
     </div>
-    <ul>
+
+    <ul class="card-details">
       <!-- username -->
-      <li class="bath-username">{{ bath.author.username }}</li>
-      <!-- date -->
-      <li class="bath-date">{{ bath.formattedCreatedAt }}</li>
+      <li class="card-username">{{ bath.author.username }}</li>
+      <!-- timestamp -->
+      <li class="card-timestamp">{{ bath.formattedCreatedAt }}</li>
       <!-- temperature -->
       <li>Air : {{ bath.temperatureOutside }}&#8451;</li>
       <!-- water temperature -->
@@ -41,7 +42,7 @@ const props = defineProps({
   },
 });
 
-const weatherIconPath = ref("");
+const weatherIconPath = ref<string>("");
 
 // Get weather icon path when component is mounted
 onMounted(async () => {
@@ -54,8 +55,8 @@ onMounted(async () => {
   display: flex;
   align-items: center;
   padding: 0px 50px 0px 0px;
-  background: var(--lighter-background);
-  border: 2px solid var(--color-light-border);
+  background: var(--secondary-background);
+  border: 2px solid var(--secondary-border);
   border-radius: 0.75rem;
   -webkit-box-shadow: 0 30px 33px -60px #000000;
   box-shadow: 0 30px 33px -60px #000000;
@@ -63,21 +64,19 @@ onMounted(async () => {
     -webkit-box-shadow: 0 40px 43px -60px var(--blue);
     box-shadow: 0 40px 43px -60px var(--blue);
   }
-  img {
+  .weather-icon {
     min-width: 80px;
     min-height: 80px;
     margin-right: 20px;
     padding: 0px 10px 0px 20px;
   }
-  ul {
-    li {
-      margin: 5px 0px;
-      &.bath-username {
-        font-weight: bold;
-      }
-      &.bath-date {
-        font-size: 0.8em;
-      }
+  .card-details li {
+    margin: 5px 0px;
+    &.card-username {
+      font-weight: bold;
+    }
+    &.card-timestamp {
+      font-size: 0.8em;
     }
   }
 }

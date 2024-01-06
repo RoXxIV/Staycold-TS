@@ -1,33 +1,35 @@
 <template>
   <section class="set-new-password-section">
     <div v-if="!successful">
-      <h1>Réinitialisation du <span class="title-span">mot de passe</span></h1>
+      <h1 class="title-block">Réinitialisation du <span>mot de passe</span></h1>
       <!-- Reset password Form -->
       <form @submit="onSubmit" class="custom-form">
         <!-- Password -->
         <div class="form-field">
           <label for="password">Mot de passe:</label>
-          <input
+          <Field
             id="password"
+            name="password"
             v-model="password"
             type="password"
             placeholder="Entrez votre mot de passe"
             aria-label="Mot de passe"
           />
-          <span class="error-feedback">{{ passwordError }}</span>
+          <ErrorMessage name="password" class="error-feedback" />
         </div>
 
         <!-- Confirm password -->
         <div class="form-field">
           <label for="confirmPassword">Confirmez votre mot de passe:</label>
-          <input
+          <Field
             id="confirmPassword"
+            name="confirmPassword"
             v-model="confirmPassword"
             type="password"
             placeholder="Confirmez votre mot de passe"
             aria-label="Confirmez votre mot de passe"
           />
-          <span class="error-feedback">{{ confirmPasswordError }}</span>
+          <ErrorMessage name="confirmPassword" class="error-feedback" />
         </div>
 
         <!-- Submit -->
@@ -61,7 +63,7 @@ import router from "@/router";
 import { useRoute } from "vue-router";
 import AuthService from "@/services/auth-service";
 import * as yup from "yup";
-import { useForm, useField } from "vee-validate";
+import { useForm, useField, Field, ErrorMessage } from "vee-validate";
 import { useRedirectionTimer } from "@/helpers/redirectionHelper";
 import type { IlottieOptions } from "@/types/lottieOptions";
 import lottieLoader from "@/assets/lotties/loader.json";
@@ -75,16 +77,16 @@ const loaderOptions = ref<IlottieOptions>({
   autoplay: true,
 });
 
-const successful = ref(false);
-const serverErrorMessage = ref("");
-const succesMessage = ref("");
-const confirmationCode = ref("");
+const successful = ref<boolean>(false);
+const serverErrorMessage = ref<string>("");
+const succesMessage = ref<string>("");
+const confirmationCode = ref<string>("");
 
 // settings for the redirection timer
 const { time: timeToLogin, startRedirectionTimer: redirectToLogin } =
   useRedirectionTimer("/login", 5);
 
-// Validation schema with Yup
+// Validation schema with Yup and vee-validate
 const schema = yup.object({
   password: yup
     .string()
@@ -96,12 +98,9 @@ const schema = yup.object({
     .required("La confirmation du mot de passe est requise")
     .oneOf([yup.ref("password")], "Les mots de passe doivent correspondre"),
 });
-
-// Configuring the form validation with vee-validate
 const { handleSubmit } = useForm({ validationSchema: schema });
-const { value: password, errorMessage: passwordError } = useField("password");
-const { value: confirmPassword, errorMessage: confirmPasswordError } =
-  useField("confirmPassword");
+const { value: password } = useField("password");
+const { value: confirmPassword } = useField("confirmPassword");
 
 /**
  * @description - Submit the form and send the new password to the server.

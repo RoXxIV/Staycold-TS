@@ -1,6 +1,6 @@
 <template>
   <section class="bath-details-section">
-    <h1>Details de la <span class="title-span">Baignade</span></h1>
+    <h1 class="title">Details de la <span>Baignade</span></h1>
 
     <!-- bath cards details -->
     <BathCardDetails v-if="bathDetails" :bath="bathDetails" />
@@ -17,7 +17,7 @@
 
     <!-- edit and delete buttons if owner -->
     <div v-if="loggedIn" class="action">
-      <router-link to="/"
+      <router-link :to="`/edit-bath/${bathDetails._id}`"
         ><button>
           Modifier
           <font-awesome-icon :icon="['far', 'pen-to-square']" /></button

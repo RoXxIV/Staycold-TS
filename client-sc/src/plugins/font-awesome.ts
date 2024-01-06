@@ -11,6 +11,17 @@ import {
   faHandPointRight,
   faPencilAlt,
   faStopwatch,
+  faSwimmingPool,
+  faTemperatureHigh,
+  faCloudSunRain,
+  faWind,
+  faHourglassHalf,
+  faWaveSquare,
+  faQuestionCircle,
+  faGrinStars,
+  faComment,
+  faPlus,
+  faMinus,
 } from "@fortawesome/free-solid-svg-icons";
 
 library.add(
@@ -21,6 +32,17 @@ library.add(
   faPencilAlt,
   faStopwatch,
   faPenToSquare,
-  faTrashCan
+  faTrashCan,
+  faSwimmingPool,
+  faTemperatureHigh,
+  faCloudSunRain,
+  faWind,
+  faHourglassHalf,
+  faWaveSquare,
+  faQuestionCircle,
+  faGrinStars,
+  faComment,
+  faPlus,
+  faMinus
 );
 export { FontAwesomeIcon };

@@ -22,7 +22,7 @@ html {
     max-width: 100vw;
     margin: 0;
     padding: 0;
-    background: var(--color-body-background);
+    background: var(--primary-background);
     color: var(--color-text);
     line-height: 1.3;
     overflow-x: hidden;
@@ -55,10 +55,18 @@ html {
 
 /** Custom styles ___________ */
 /* Custom Span for titles ______*/
-.title-span {
-  display: block;
-  color: var(--blue);
-  font-family: var(--oswald);
+.title,
+.title-block {
+  font-size: 2em;
+  span {
+    color: var(--blue);
+    font-family: var(--oswald);
+  }
+}
+.title-block {
+  span {
+    display: block;
+  }
 }
 /* Custom form ______*/
 .custom-form {
@@ -72,7 +80,7 @@ html {
     width: 280px;
     margin: 10px 0px 25px 30px;
     border: none;
-    border-bottom: 2px solid var(--color-dark-border);
+    border-bottom: 2px solid var(--primary-border);
     background: transparent;
     color: var(--color-text);
     transition: border-color 0.3s;

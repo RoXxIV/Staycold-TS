@@ -1,9 +1,9 @@
 <template>
-  <section class="section-recent-baths">
-    <h2 id="recents-baths-title">Baignades <span>récentes</span></h2>
+  <section class="recent-baths">
+    <h2 class="title">Baignades <span>récentes</span></h2>
 
     <!-- Loading -->
-    <div v-if="!recentBaths.length" id="loading">
+    <div v-if="!recentBaths.length" class="loading">
       <div class="skeleton" v-for="n in numberOfSkeletons" :key="n"></div>
     </div>
 
@@ -13,12 +13,12 @@
     </div>
 
     <!-- Link to all baths -->
-    <div v-if="!serverErrorMessage" id="recent-baths-link">
+    <div v-if="!serverErrorMessage" class="all-baths-link">
       <router-link to="/all-baths"><button>Voir tout</button></router-link>
     </div>
 
     <!-- Error -->
-    <div v-if="serverErrorMessage" id="error">
+    <div v-if="serverErrorMessage" class="error-message">
       <p>{{ serverErrorMessage }}</p>
     </div>
   </section>
@@ -33,7 +33,7 @@ import type { IBath } from "@/types/bath";
 import gsap from "gsap";
 
 const recentBaths = ref<IBath[]>([]);
-const serverErrorMessage: Ref<string> = ref("");
+const serverErrorMessage = ref<string>("");
 const skeletonArray = ref([]);
 const numberOfSkeletons = 4;
 
@@ -58,9 +58,10 @@ const fetchRecentBaths = async () => {
 onMounted(() => {
   // Fetch recent baths when component is mounted
   fetchRecentBaths();
+
   // Animate title
   gsap.fromTo(
-    "#recents-baths-title",
+    "h2",
     {
       opacity: 0,
       x: "-300",
@@ -75,7 +76,7 @@ onMounted(() => {
 </script>
 
 <style scoped lang="scss">
-.section-recent-baths {
+.recent-baths {
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -83,22 +84,16 @@ onMounted(() => {
   h2 {
     margin-bottom: 50px;
     text-align: center;
-    font-size: 2rem;
-
-    span {
-      color: var(--blue);
-      font-family: var(--oswald);
-    }
   }
 
-  #loading {
+  .loading {
     text-align: center;
     .skeleton {
       background: linear-gradient(
         90deg,
-        var(--lighter-background) 25%,
+        var(--secondary-background) 25%,
         var(--skeleton-background) 50%,
-        var(--lighter-background) 75%
+        var(--secondary-background) 75%
       );
       background-size: 200% 100%;
       border-radius: 0.75rem;
@@ -121,12 +116,12 @@ onMounted(() => {
     gap: 20px;
   }
 
-  #recent-baths-link {
+  .all-baths-link {
     text-align: center;
     margin-top: 50px;
   }
 
-  #error {
+  .error-message {
     text-align: center;
   }
 }
