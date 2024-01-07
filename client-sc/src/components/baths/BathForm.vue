@@ -196,41 +196,30 @@
     </div>
   </form>
   <div v-else class="server-messages">
-    <vue3-lottie
-      :options="loaderOptions"
-      class="lottie"
-      :animationData="loaderOptions.animationData"
-    ></vue3-lottie>
-    <div v-if="succesMessage">
-      <p>{{ succesMessage }}</p>
-    </div>
-    <div v-if="serverErrorMessage">
-      <p>{{ serverErrorMessage }}</p>
-    </div>
-
-    <p v-if="editMode">Redirection dans {{ timeToBath }}</p>
-    <p v-else>Redirection dans {{ timeToHome }}</p>
+    <ServerResponses
+      :serverMessage="serverMessage"
+      :timeBeforeRedirection="3"
+      :redirectTo="redirectionPath"
+    />
   </div>
 </template>
 
 <script setup lang="ts">
-// Vue and Vee-Validate imports
 import { ref, onMounted } from "vue";
 import * as yup from "yup";
 import { useForm, useField } from "vee-validate";
-// Router and store imports
 import { useRoute } from "vue-router";
 import { useAuthStore } from "@/stores/authStore";
-// Service and component imports
 import BathDataService from "@/services/BathDataService";
 import CustomNumberInput from "@/components/forms/CustomNumberInput.vue";
 import CustomSelectInput from "../forms/CustomSelectInput.vue";
 import CustomTextArea from "../forms/CustomTextArea.vue";
 import { useRedirectionTimer } from "@/helpers/redirectionHelper";
 import sharkDetails from "@/assets/lotties/shark_details.json";
-// Type imports
+import ServerResponses from "../reusable/ServerResponses.vue";
 import type { IBath } from "@/types/bath";
 import type { IlottieOptions } from "@/types/lottieOptions";
+import ServerResponse from "@/components/reusable/ServerResponses.vue";
 
 // Define component props
 const props = defineProps({
@@ -250,14 +239,8 @@ const loaderOptions = ref<IlottieOptions>({
 // Reactive references for route and form states
 const route = useRoute();
 const isSubmited = ref(false);
-const succesMessage = ref("");
-const serverErrorMessage = ref("");
-
-// Redirection timer
-const { time: timeToBath, startRedirectionTimer: redirectToBath } =
-  useRedirectionTimer(`/bath-details/${route.params.bathId}`, 3);
-const { time: timeToHome, startRedirectionTimer: redirectToHome } =
-  useRedirectionTimer("/", 3);
+const serverMessage = ref("");
+const redirectionPath = ref("");
 
 // Options for select inputs
 const weathers = [
@@ -360,15 +343,16 @@ const addOnSubmit = async (values: IBath) => {
       author: userId,
     };
     const response = await BathDataService.create(completeValues);
+    redirectionPath.value = "/";
     if (response.status === 201) {
-      succesMessage.value = response.data.message;
+      serverMessage.value = response.data.message;
       isSubmited.value = true;
-      redirectToHome();
+      //redirectToHome();
       // console.log(response.data);
     }
   } catch (error) {
     isSubmited.value = true;
-    serverErrorMessage.value =
+    serverMessage.value =
       (error as any)?.response?.data?.message || "Une erreur est survenue";
     console.log(error);
   }
@@ -389,14 +373,16 @@ const editOnSubmit = async (bathId: string, values: IBath) => {
     const response = await BathDataService.update(bathId, completeValues);
 
     if (response.status === 200) {
-      succesMessage.value = response.data.message;
+      serverMessage.value = response.data.message;
       isSubmited.value = true;
-      redirectToBath();
+      redirectionPath.value = `/bath-details/${bathId}`;
+      //redirectToBath();
       // console.log(response.data);
     }
   } catch (error) {
     isSubmited.value = true;
-    serverErrorMessage.value =
+    redirectionPath.value = "/";
+    serverMessage.value =
       (error as any)?.response?.data?.message || "Une erreur est survenue";
     console.log(error);
   }

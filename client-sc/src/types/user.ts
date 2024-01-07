@@ -2,7 +2,7 @@
  * @fileoverview Type definitions for User.
  */
 export interface IUserProfile {
-  id: string;
+  _id: string;
   username: string;
   email: string;
   password: string;

@@ -69,10 +69,14 @@ class BathDataService {
   /**
    * @description delete bath
    * @param {string} id - bath id
+   * @param {object} headers - auth header
    * @returns {Promise} axios promise
    */
-  delete(id: string) {
-    return http.delete(`/bath/${id}`);
+  delete(id: string, userId: string) {
+    return http.delete(`/bath/${id}`, {
+      data: { author: userId },
+      headers: authHeader(),
+    });
   }
 }
 

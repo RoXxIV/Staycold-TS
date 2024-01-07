@@ -7,9 +7,11 @@
   <BannerLandscape />
   <!-- Recent baths -->
   <RecentBaths />
+  <!-- Server responses -->
 </template>
 
 <script setup lang="ts">
+// import components
 import Banner from "@/components/home/Banner.vue";
 import Hero from "@/components/home/Hero.vue";
 import BannerLandscape from "@/components/home/BannerLandscape.vue";

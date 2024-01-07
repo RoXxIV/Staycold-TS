@@ -3,6 +3,7 @@
  */
 
 interface IAuthor {
+  _id: string;
   username: string;
 }
 

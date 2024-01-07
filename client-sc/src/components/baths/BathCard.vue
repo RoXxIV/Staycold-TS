@@ -6,6 +6,7 @@
         class="weather-icon"
         :src="weatherIconPath"
         alt="icone indiquant la météo"
+        aria-label="Time in water"
       />
     </div>
 
@@ -31,10 +32,14 @@
 </template>
 
 <script setup lang="ts">
+// Vue imports
 import { ref, onMounted } from "vue";
+// types imports
 import type { IBath } from "@/types/bath";
+// helpers imports
 import { getWeatherIconPath } from "@/helpers/pathHelper";
 
+// define props
 const props = defineProps({
   bath: {
     type: Object as () => IBath,
@@ -42,6 +47,7 @@ const props = defineProps({
   },
 });
 
+// define refs
 const weatherIconPath = ref<string>("");
 
 // Get weather icon path when component is mounted
