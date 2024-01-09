@@ -14,7 +14,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import { ref, watch, defineEmits } from "vue";
+import { ref, watch } from "vue";
 import { Field, ErrorMessage } from "vee-validate";
 
 const props = defineProps({
@@ -29,6 +29,7 @@ const props = defineProps({
 
 const fieldValue = ref(props.value);
 
+// Update field value when props.value changes
 watch(
   () => props.value,
   (newValue) => {
@@ -51,6 +52,10 @@ watch(
     transition: border-color 0.3s;
     &:focus {
       border-color: var(--blue);
+    }
+
+    @include media-max(611.98px) {
+      max-height: 200px;
     }
   }
 }

@@ -29,8 +29,8 @@ import { ref, onMounted, type Ref } from "vue";
 import BathCard from "@/components/baths/BathCard.vue";
 import BathDataService from "@/services/BathDataService";
 import RenderBathData from "@/helpers/renderBathData";
-import type { IBath } from "@/types/bath";
 import gsap from "gsap";
+import type { IBath } from "@/types/bath";
 
 const recentBaths = ref<IBath[]>([]);
 const serverErrorMessage = ref<string>("");
@@ -54,12 +54,10 @@ const fetchRecentBaths = async () => {
     serverErrorMessage.value = "Impossible de récupérer les baignades récentes";
   }
 };
-
+// Fetch recent baths when component is mounted and animate title
 onMounted(() => {
-  // Fetch recent baths when component is mounted
   fetchRecentBaths();
 
-  // Animate title
   gsap.fromTo(
     "h2",
     {

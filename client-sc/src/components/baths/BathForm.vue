@@ -214,12 +214,9 @@ import BathDataService from "@/services/BathDataService";
 import CustomNumberInput from "@/components/forms/CustomNumberInput.vue";
 import CustomSelectInput from "../forms/CustomSelectInput.vue";
 import CustomTextArea from "../forms/CustomTextArea.vue";
-import { useRedirectionTimer } from "@/helpers/redirectionHelper";
-import sharkDetails from "@/assets/lotties/shark_details.json";
 import ServerResponses from "../reusable/ServerResponses.vue";
+
 import type { IBath } from "@/types/bath";
-import type { IlottieOptions } from "@/types/lottieOptions";
-import ServerResponse from "@/components/reusable/ServerResponses.vue";
 
 // Define component props
 const props = defineProps({
@@ -229,14 +226,6 @@ const props = defineProps({
   },
 });
 
-// lottie options
-const loaderOptions = ref<IlottieOptions>({
-  animationData: sharkDetails,
-  loop: true,
-  autoplay: true,
-});
-
-// Reactive references for route and form states
 const route = useRoute();
 const isSubmited = ref(false);
 const serverMessage = ref("");
@@ -317,7 +306,7 @@ onMounted(async () => {
   }
 });
 
-// Handle form submission
+// Handle form submission, if in edit mode, send edited bath to server else send new bath
 const handleSubmit = handleVeeSubmit(async (values: any) => {
   const bathId = route.params.bathId as string;
   if (props.editMode && bathId) {
@@ -343,18 +332,17 @@ const addOnSubmit = async (values: IBath) => {
       author: userId,
     };
     const response = await BathDataService.create(completeValues);
-    redirectionPath.value = "/";
+
     if (response.status === 201) {
+      redirectionPath.value = `/bath-details/${response.data.bath._id}`;
       serverMessage.value = response.data.message;
       isSubmited.value = true;
-      //redirectToHome();
-      // console.log(response.data);
     }
   } catch (error) {
     isSubmited.value = true;
     serverMessage.value =
       (error as any)?.response?.data?.message || "Une erreur est survenue";
-    console.log(error);
+    // console.log(error);
   }
 };
 
@@ -376,15 +364,13 @@ const editOnSubmit = async (bathId: string, values: IBath) => {
       serverMessage.value = response.data.message;
       isSubmited.value = true;
       redirectionPath.value = `/bath-details/${bathId}`;
-      //redirectToBath();
-      // console.log(response.data);
     }
   } catch (error) {
     isSubmited.value = true;
     redirectionPath.value = "/";
     serverMessage.value =
       (error as any)?.response?.data?.message || "Une erreur est survenue";
-    console.log(error);
+    // console.log(error);
   }
 };
 
@@ -401,9 +387,8 @@ const fetchOneBath = async (bathId: string) => {
     afterdrop.value = response.data.afterdrop;
     globalFeeling.value = response.data.globalFeeling;
     commentary.value = response.data.commentary;
-    // console.log(response.data);
   } catch (error) {
-    console.error("Erreur lors de la récupération de la baignades:", error);
+    // console.error("Erreur lors de la récupération de la baignades:", error);
   }
 };
 </script>
@@ -429,6 +414,10 @@ const fetchOneBath = async (bathId: string) => {
     display: flex;
     justify-content: space-between;
     align-items: center;
+
+    @include media-max(991.98px) {
+      flex-direction: column;
+    }
   }
   .form-field {
     width: 45%;
@@ -446,22 +435,37 @@ const fetchOneBath = async (bathId: string) => {
       .font-awesome-icon {
         margin-right: 10px;
       }
+
+      @include media-max(611.98px) {
+        font-size: 1em;
+      }
+    }
+
+    @include media-max(991.98px) {
+      width: 75%;
+      margin: 0 auto;
+
+      @include media-max(611.98px) {
+        width: 100%;
+      }
     }
   }
   .submit {
     text-align: center;
     margin-top: 30px;
   }
+
+  @include media-max(991.98px) {
+    width: 100%;
+    padding: 10px 10px 30px 10px;
+    margin-top: 50px;
+
+    @include media-max(611.98px) {
+      width: 100%;
+    }
+  }
 }
 .server-messages {
   margin-top: 50px;
-
-  .lottie {
-    max-width: 250px;
-  }
-  p {
-    text-align: center;
-    font-size: 1.2em;
-  }
 }
 </style>

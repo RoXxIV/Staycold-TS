@@ -59,30 +59,35 @@ const router = createRouter({
     {
       path: "/add-bath",
       name: "Add-bath",
+      beforeEnter: authGuards.redirectAnonymousUser, // redirect if user isn't logged in
       component: AddBath,
     },
     /** Edit bath */
     {
       path: "/edit-bath/:bathId",
       name: "Edit-bath",
+      beforeEnter: authGuards.redirectAnonymousUser, // redirect if user isn't logged in
       component: EditBath,
     },
     /** Confirmation user account view  */
     {
       path: "/confirm-mail-redirection/:confirmationCode",
       name: "Confirm-mail",
+      beforeEnter: authGuards.redirectLoggedInUser, // redirect if user is logged in
       component: ConfirmMailView,
     },
     /** Reset password view  */
     {
       path: "/reset-password",
       name: "Reset-password",
+      beforeEnter: authGuards.redirectLoggedInUser, // redirect if user is logged in
       component: ResetPasswordView,
     },
     /** Set new password view  */
     {
       path: "/set-new-password/:confirmationCode",
       name: "Set-new-password",
+      beforeEnter: authGuards.redirectLoggedInUser, // redirect if user is logged in
       component: SetNewPasswordView,
     },
     /** Contact form view  */

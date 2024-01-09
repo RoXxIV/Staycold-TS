@@ -35,9 +35,9 @@
       <template v-slot:default="{ close }"
         ><p>Cette action est irréversible</p>
         <vue3-lottie
-          :options="loaderOptions"
+          :options="lottieOptions"
           class="lottie"
-          :animationData="loaderOptions.animationData"
+          :animationData="lottieOptions.animationData"
         ></vue3-lottie>
         <p>êtes vous sur ?</p>
         <div>
@@ -56,6 +56,7 @@
       <button @click="router.go(-1)">Retour</button>
     </div>
   </section>
+
   <div v-else>
     <ServerResponses
       :serverMessage="serverMessage"
@@ -76,10 +77,9 @@ import RenderBathData from "../helpers/renderBathData";
 import ServerResponses from "@/components/reusable/ServerResponses.vue";
 import PopupModal from "@/components/reusable/PopupModal.vue";
 import deleteLottie from "@/assets/lotties/delete.json";
+import { useLottieOptions } from "@/helpers/useLottieOptions";
 import type { IBath } from "@/types/bath";
-import type { IlottieOptions } from "@/types/lottieOptions";
 
-// Define reactive states and computed properties
 const authStore = useAuthStore();
 const loggedIn = computed(() => authStore.status.loggedIn);
 const isOwner = ref(false);
@@ -88,14 +88,10 @@ const bathDetails = ref({} as IBath);
 const showModal = ref(false);
 const serverMessage = ref("");
 const deleteSubmited = ref(false);
-const redirectionPath = "/";
+const redirectionPath = ref<string>("/");
 
 // lottie options
-const loaderOptions = ref<IlottieOptions>({
-  animationData: deleteLottie,
-  loop: true,
-  autoplay: true,
-});
+const lottieOptions = useLottieOptions(deleteLottie);
 
 // get the bath id from the route params and fetch the bath details
 onMounted(() => {
@@ -109,7 +105,7 @@ onMounted(() => {
 
 // watch the bath details to check if the user is the owner
 watch(bathDetails, (newVal) => {
-  if (newVal && newVal.author && newVal.author._id) {
+  if (newVal && newVal.author && newVal.author._id && authStore.user) {
     isOwner.value = newVal.author._id === authStore.user.id;
   }
 });
@@ -123,7 +119,8 @@ const fetchOneBath = async (bathId: string) => {
   try {
     const response = await BathDataService.getOne(bathId);
     bathDetails.value = response.data as IBath;
-    isOwner.value = bathDetails.value.author._id === authStore.user.id;
+    isOwner.value =
+      authStore.user && bathDetails.value.author._id === authStore.user.id;
     bathDetails.value.formattedCreatedAt = RenderBathData.editDateFormat(
       bathDetails.value.createdAt
     );
@@ -131,7 +128,7 @@ const fetchOneBath = async (bathId: string) => {
       bathDetails.value.weather
     );
   } catch (error) {
-    console.error("Erreur lors de la récupération de la baignades:", error);
+    // console.error("Erreur lors de la récupération de la baignades:", error);
   }
 };
 
@@ -151,7 +148,6 @@ const deleteOneBath = async (bathId: string, userID: string) => {
     deleteSubmited.value = true;
     serverMessage.value =
       (error as any)?.response?.data?.message || "Une erreur est survenue";
-    console.log(error);
     // console.error("Erreur lors de la suppression de la baignade:", error);
   }
 };
@@ -210,6 +206,7 @@ const deleteOneBath = async (bathId: string, userID: string) => {
 
     .back-button {
       text-align: center;
+      margin-top: 30px;
     }
 
     @include media-max(550px) {

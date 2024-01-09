@@ -4,14 +4,11 @@
       <!-- Email comfirmed -->
       <!-- display a success message and a redirection link to the login page -->
       <div v-if="isConfirmed">
-        <h2><span>❄</span> {{ confirmationMessage }} <span>❄</span></h2>
-        <p>Redirection dans {{ timeToLogin }}</p>
-        <!-- Lottie -->
-        <vue3-lottie
-          :options="loaderOptions"
-          class="lottie"
-          :animationData="loaderOptions.animationData"
-        ></vue3-lottie>
+        <ServerResponses
+          :serverMessage="serverMessage"
+          :timeBeforeRedirection="3"
+          :redirectTo="redirectionPathToLogin"
+        />
 
         <!-- Redirection link -->
         <router-link to="/login" tag="a"><p>Se connecter</p></router-link>
@@ -20,53 +17,29 @@
       <!-- Email not confirmed -->
       <!-- display an error message and a redirection link to the home page -->
       <div v-else class="userNotConfirmed">
-        <span>{{ serverErrorMessage }}</span>
-        <p>Redirection dans {{ timeToHome }}</p>
-        <!-- Lottie -->
-        <vue3-lottie
-          :options="somethingWentWrongOptions"
-          class="lottie"
-          :animationData="somethingWentWrongOptions.animationData"
-        ></vue3-lottie>
+        <ServerResponses
+          :serverMessage="serverMessage"
+          :timeBeforeRedirection="5"
+          :redirectTo="redirectionPathToHome"
+        />
       </div>
     </div>
   </section>
 </template>
 
 <script setup lang="ts">
-import { ref, type Ref } from "vue";
-import { onMounted } from "vue";
+import { ref, onMounted } from "vue";
 import { useRoute } from "vue-router";
 import router from "@/router";
 import AuthService from "@/services/auth-service";
-import { useRedirectionTimer } from "@/helpers/redirectionHelper";
-import type { IlottieOptions } from "@/types/lottieOptions";
-import lottieLoader from "@/assets/lotties/loader.json";
-import LottiesomethingWentWrong from "@/assets/lotties/something-went-wrong.json";
-
-// lottie options
-const loaderOptions = ref<IlottieOptions>({
-  animationData: lottieLoader,
-  loop: true,
-  autoplay: true,
-});
-const somethingWentWrongOptions = ref<IlottieOptions>({
-  animationData: LottiesomethingWentWrong,
-  loop: true,
-  autoplay: true,
-});
+import ServerResponses from "@/components/reusable/ServerResponses.vue";
 
 const route = useRoute();
 const isConfirmed = ref<boolean>(false);
-const confirmationMessage = ref<string>("");
-const serverErrorMessage = ref<string>("");
 const confirmationCode = ref<string>("");
-
-// settings for the redirection timer after the user is confirmed or not
-const { time: timeToLogin, startRedirectionTimer: redirectToLogin } =
-  useRedirectionTimer("/login", 5);
-const { time: timeToHome, startRedirectionTimer: redirectToHome } =
-  useRedirectionTimer("/", 5);
+const redirectionPathToLogin = ref<string>("/login");
+const redirectionPathToHome = ref<string>("/");
+const serverMessage = ref<string>("");
 
 /**
  * @description - This function is called when the component is mounted.
@@ -97,15 +70,13 @@ const sendConfirmationCode = async (confirmationCode: string) => {
   try {
     const response = await AuthService.confirmUser(confirmationCode);
     if (response.status === 200) {
-      confirmationMessage.value = response.data.message;
+      serverMessage.value = response.data.message;
       isConfirmed.value = true;
-      redirectToLogin();
     }
   } catch (error) {
-    serverErrorMessage.value =
+    serverMessage.value =
       (error as any)?.response?.data?.message || "Erreur lors de l'inscription";
     isConfirmed.value = false;
-    redirectToHome();
   }
 };
 </script>
@@ -114,43 +85,5 @@ const sendConfirmationCode = async (confirmationCode: string) => {
 .confirm-email-section {
   margin-top: 50px;
   text-align: center;
-
-  & div:first-child {
-    margin: auto;
-    padding: 50px 100px;
-
-    span {
-      color: var(--blue);
-    }
-
-    .lottie {
-      width: 300px;
-      margin: auto;
-    }
-
-    p {
-      text-decoration: underline;
-    }
-
-    .userNotConfirmed {
-      span {
-        color: var(--red);
-        font-size: 1.2em;
-      }
-      p {
-        color: (--color-text);
-      }
-    }
-  }
-
-  @include media-max(611.98px) {
-    & div:first-child {
-      padding: 0;
-
-      .lottie {
-        width: 200px;
-      }
-    }
-  }
 }
 </style>

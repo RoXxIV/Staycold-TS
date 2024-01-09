@@ -11,10 +11,10 @@
 </template>
 
 <script setup lang="ts">
-import { useRedirectionTimer } from "@/helpers/redirectionHelper";
-import type { IlottieOptions } from "@/types/lottieOptions";
-import loader from "@/assets/lotties/snow-loader.json";
 import { ref, onMounted } from "vue";
+import { useRedirectionTimer } from "@/helpers/redirectionHelper";
+import loader from "@/assets/lotties/snow-loader.json";
+import type { IlottieOptions } from "@/types/lottieOptions";
 
 const props = defineProps({
   serverMessage: String,

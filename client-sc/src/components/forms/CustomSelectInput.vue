@@ -36,6 +36,7 @@ const props = defineProps({
 
 const selectedValue = ref(props.value);
 
+// Update the selected value when the value prop changes
 watch(
   () => props.value,
   (newValue) => {

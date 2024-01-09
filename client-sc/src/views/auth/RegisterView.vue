@@ -1,9 +1,9 @@
 <template>
   <section class="register-section">
     <!-- Main bloc that contain form and illustration -->
-    <div class="bloc-register">
+    <div class="bloc-register" v-if="!isSubmitted">
       <!-- Form container -->
-      <div v-if="!isSubmitted" class="register-form-container">
+      <div class="register-form-container">
         <h1 class="title">Formulaire d'<span>Inscription</span></h1>
 
         <!-- Regiser Form -->
@@ -79,7 +79,7 @@
         </div>
       </div>
       <!-- Illustration -->
-      <div v-if="!isSubmitted" class="illustration-container">
+      <div class="illustration-container">
         <img
           class="rubberBand"
           src="@/assets/images/inscription.svg"
@@ -88,17 +88,13 @@
       </div>
     </div>
     <!-- Success message -->
-    <div
-      v-show="isSubmitted && serverSuccesMessage"
-      class="if-register-success"
-    >
-      <p><span>❄</span> {{ serverSuccesMessage }} <span>❄</span></p>
-      <p>Redirection dans {{ timeToHome }}</p>
-      <vue3-lottie
-        :options="lottieOptions"
-        class="lottie"
-        :animationData="lottieOptions.animationData"
-      ></vue3-lottie>
+
+    <div v-if="isSubmitted && serverMessage" class="if-register-success">
+      <ServerResponses
+        :serverMessage="serverMessage"
+        :timeBeforeRedirection="5"
+        :redirectTo="redirectionPath"
+      />
     </div>
   </section>
 </template>
@@ -108,26 +104,13 @@ import { ref } from "vue";
 import * as yup from "yup";
 import { useForm, useField, Field, ErrorMessage } from "vee-validate";
 import { useAuthStore } from "@/stores/authStore";
-import { useRedirectionTimer } from "@/helpers/redirectionHelper";
-import type { IlottieOptions } from "@/types/lottieOptions";
-import LottieLoader from "@/assets/lotties/loader.json";
+import ServerResponses from "../../components/reusable/ServerResponses.vue";
 
 const authStore = useAuthStore();
-
-// lottie options
-const lottieOptions = ref<IlottieOptions>({
-  animationData: LottieLoader,
-  loop: true,
-  autoplay: true,
-});
-
 const serverErrorMessage = ref<string>("");
-const serverSuccesMessage = ref<string>("");
 const isSubmitted = ref<boolean>(false);
-
-// settings for the redirection timer after the user is registered
-const { time: timeToHome, startRedirectionTimer: redirectToHome } =
-  useRedirectionTimer("/", 5);
+const serverMessage = ref<string>("");
+const redirectionPath = ref<string>("");
 
 // Validation schema with Yup and vee-validate
 const schema = yup.object({
@@ -174,10 +157,10 @@ const onSubmit = handleSubmit(async (values) => {
       password: values.password,
     });
     if (response) {
-      serverSuccesMessage.value = response;
+      serverMessage.value = response;
+      redirectionPath.value = "/login";
     }
     isSubmitted.value = true;
-    redirectToHome();
   } catch (error) {
     serverErrorMessage.value =
       (error as any)?.response?.data?.message || "Erreur lors de l'inscription";
@@ -217,24 +200,6 @@ const onSubmit = handleSubmit(async (values) => {
     }
   }
 
-  .if-success {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin-top: 50px;
-    font-size: 1.4em;
-    text-align: center;
-
-    span {
-      color: var(--blue);
-    }
-    .lottie {
-      width: 300px;
-      margin: auto;
-    }
-  }
-
   @include media-max(991.98px) {
     .bloc-register {
       flex-direction: column-reverse;
@@ -265,15 +230,6 @@ const onSubmit = handleSubmit(async (values) => {
 
       .register-form-container {
         width: 100%;
-      }
-
-      .if-success {
-        margin-top: 50px;
-        font-size: 1em;
-
-        .lottie {
-          width: 200px;
-        }
       }
     }
   }

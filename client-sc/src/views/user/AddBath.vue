@@ -21,5 +21,10 @@ section {
       display: inline-block;
     }
   }
+
+  @include media-max(611.98px) {
+    width: 90%;
+    margin: auto;
+  }
 }
 </style>

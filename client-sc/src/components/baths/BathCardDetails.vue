@@ -13,16 +13,16 @@
       />
     </li>
 
-    <!-- temperature-outside -->
-    <li class="temperature-outside">
-      <span>Temperature exterieur</span
-      ><span>{{ bath.temperatureOutside }}&#8451;</span>
-    </li>
-
     <!-- water-temperature -->
     <li class="water-temperature">
       <span>Temperature de l'eau</span
       ><span>{{ bath.waterTemperature }}&#8451;</span>
+    </li>
+
+    <!-- temperature-outside -->
+    <li class="temperature-outside">
+      <span>Temperature exterieur</span
+      ><span>{{ bath.temperatureOutside }}&#8451;</span>
     </li>
 
     <!-- time-in-water -->
@@ -91,8 +91,8 @@ const animations = [
   { selector: ".username", xStart: "-300" },
   { selector: ".timestamp", xStart: "300" },
   { selector: ".weather-icon", xStart: "300" },
-  { selector: ".temperature-outside", xStart: "-300" },
-  { selector: ".water-temperature", xStart: "300" },
+  { selector: ".temperature-outside", xStart: "300" },
+  { selector: ".water-temperature", xStart: "-300" },
   { selector: ".time-in-water", xStart: "-300" },
   { selector: ".wind", xStart: "300" },
   { selector: ".recovery-time", xStart: "-300" },

@@ -34,9 +34,9 @@
 <script setup lang="ts">
 import { ref, watchEffect, computed } from "vue";
 import BathDataService from "@/services/BathDataService";
-import type { IBath } from "@/types/bath";
 import BathCard from "@/components/baths/BathCard.vue";
 import RenderBathData from "@/helpers/renderBathData";
+import type { IBath } from "@/types/bath";
 
 const Allbaths = ref<IBath[]>([]);
 const page = ref<number>(1);
@@ -54,7 +54,6 @@ const fetchBaths = async () => {
     const response = await BathDataService.getAll(page.value, limit.value);
 
     Allbaths.value = response.data.baths;
-    console.log("Allbaths.value:", Allbaths.value);
     Allbaths.value.forEach((bath) => {
       bath.formattedCreatedAt = RenderBathData.editDateFormat(bath.createdAt);
       bath.weather = RenderBathData.displayWeatherAsEmoji(bath.weather);

@@ -32,12 +32,9 @@
 </template>
 
 <script setup lang="ts">
-// Vue imports
 import { ref, onMounted } from "vue";
-// types imports
-import type { IBath } from "@/types/bath";
-// helpers imports
 import { getWeatherIconPath } from "@/helpers/pathHelper";
+import type { IBath } from "@/types/bath";
 
 // define props
 const props = defineProps({
@@ -47,7 +44,6 @@ const props = defineProps({
   },
 });
 
-// define refs
 const weatherIconPath = ref<string>("");
 
 // Get weather icon path when component is mounted

@@ -67,10 +67,10 @@
 
 <script setup lang="ts">
 import { ref, type Ref } from "vue";
-import { useRouter, RouterLink } from "vue-router";
-import { useAuthStore } from "@/stores/authStore";
 import { useForm, useField, Field, ErrorMessage } from "vee-validate";
 import * as yup from "yup";
+import { useRouter, RouterLink } from "vue-router";
+import { useAuthStore } from "@/stores/authStore";
 
 const router = useRouter();
 const authStore = useAuthStore();

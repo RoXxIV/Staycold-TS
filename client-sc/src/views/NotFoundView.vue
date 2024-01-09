@@ -3,9 +3,9 @@
     <h1 class="title">Page non trouvée</h1>
 
     <vue3-lottie
-      :options="notFoundOptions"
+      :options="lottieOptions"
       class="lottie"
-      :animationData="notFoundOptions.animationData"
+      :animationData="lottieOptions.animationData"
     ></vue3-lottie>
 
     <div>
@@ -15,15 +15,11 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
-import type { IlottieOptions } from "@/types/lottieOptions";
+import { useLottieOptions } from "@/helpers/useLottieOptions";
 import LottieNotFound from "@/assets/lotties/not-found.json";
+
 // lottie options
-const notFoundOptions = ref<IlottieOptions>({
-  animationData: LottieNotFound,
-  loop: true,
-  autoplay: true,
-});
+const lottieOptions = useLottieOptions(LottieNotFound);
 </script>
 
 <style lang="scss" scoped>

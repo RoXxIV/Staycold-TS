@@ -119,9 +119,9 @@
 
 <script setup lang="ts">
 import { ref, onMounted, onBeforeUnmount, computed } from "vue";
+import { useAuthStore } from "@/stores/authStore";
 import IconBurger from "./IconBurger.vue";
 import MobileNav from "./MobileNav.vue";
-import { useAuthStore } from "@/stores/authStore";
 
 // use the authStore to get the loggedIn status
 const authStore = useAuthStore();

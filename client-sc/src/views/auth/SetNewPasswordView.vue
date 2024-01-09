@@ -39,52 +39,37 @@
       </form>
 
       <!-- Error message -->
-      <div v-if="serverErrorMessage && !successful" id="error">
+      <div v-if="serverErrorMessage && !successful" class="if-error">
         {{ serverErrorMessage }}
       </div>
     </div>
 
     <!-- if succed -->
-    <div v-else id="succed">
-      <p><span>❄</span> {{ succesMessage }} <span>❄</span></p>
-      <p>Redirection dans {{ timeToLogin }}</p>
-      <vue3-lottie
-        :options="loaderOptions"
-        class="lottie"
-        :animationData="loaderOptions.animationData"
-      ></vue3-lottie>
+    <div v-else class="if-succed">
+      <ServerResponses
+        :serverMessage="serverMessage"
+        :timeBeforeRedirection="5"
+        :redirectTo="redirectionPath"
+      />
     </div>
   </section>
 </template>
 
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
+import * as yup from "yup";
+import { useForm, useField, Field, ErrorMessage } from "vee-validate";
 import router from "@/router";
 import { useRoute } from "vue-router";
 import AuthService from "@/services/auth-service";
-import * as yup from "yup";
-import { useForm, useField, Field, ErrorMessage } from "vee-validate";
-import { useRedirectionTimer } from "@/helpers/redirectionHelper";
-import type { IlottieOptions } from "@/types/lottieOptions";
-import lottieLoader from "@/assets/lotties/loader.json";
+import ServerResponses from "@/components/reusable/ServerResponses.vue";
 
 const route = useRoute();
-
-// lottie options
-const loaderOptions = ref<IlottieOptions>({
-  animationData: lottieLoader,
-  loop: true,
-  autoplay: true,
-});
-
 const successful = ref<boolean>(false);
 const serverErrorMessage = ref<string>("");
-const succesMessage = ref<string>("");
+const serverMessage = ref<string>("");
+const redirectionPath = ref<string>("/login");
 const confirmationCode = ref<string>("");
-
-// settings for the redirection timer
-const { time: timeToLogin, startRedirectionTimer: redirectToLogin } =
-  useRedirectionTimer("/login", 5);
 
 // Validation schema with Yup and vee-validate
 const schema = yup.object({
@@ -112,18 +97,15 @@ const { value: confirmPassword } = useField("confirmPassword");
  * @throws {Error} - If the password is not valid.
  */
 const onSubmit = handleSubmit(async () => {
-  console.log("Form submitted");
   try {
     const response = await AuthService.resetPassword(
       password.value as string,
       confirmationCode.value as string
     );
-    console.log(response);
 
     if (response.status === 200) {
-      succesMessage.value = response.data.message;
+      serverMessage.value = response.data.message;
       successful.value = true;
-      redirectToLogin();
     }
   } catch (error) {
     serverErrorMessage.value =
@@ -140,7 +122,6 @@ const onSubmit = handleSubmit(async () => {
  */
 onMounted(() => {
   confirmationCode.value = route.params.confirmationCode.toString();
-  console.log(confirmationCode.value);
   if (!confirmationCode) {
     router.push("/not-found");
   }
@@ -166,33 +147,10 @@ onMounted(() => {
       margin: auto;
     }
 
-    #error {
+    .if-error {
       margin-top: 50px;
       text-align: center;
       color: var(--red);
-    }
-  }
-
-  #succed {
-    margin-top: 50px;
-    text-align: center;
-
-    & p:first-child {
-      font-size: 1.2em;
-    }
-
-    span {
-      color: var(--blue);
-    }
-
-    & p:nth-child(2) {
-      text-decoration: underline;
-    }
-
-    .lottie {
-      width: 200px;
-      height: 200px;
-      margin: auto;
     }
   }
 }

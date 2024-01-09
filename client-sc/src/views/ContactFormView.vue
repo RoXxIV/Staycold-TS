@@ -91,20 +91,12 @@
       </form>
 
       <!-- if succed -->
-      <div v-if="!serverErrorMessage && submited" class="contact-form-submited">
-        <p><span>❄</span> {{ succesMessage }} <span>❄</span></p>
-        <p>Redirection dans {{ timeToHome }}</p>
-        <vue3-lottie
-          :options="loaderOptions"
-          class="lottie"
-          :animationData="loaderOptions.animationData"
-        ></vue3-lottie>
-      </div>
-
-      <!-- Error message -->
-      <div v-if="serverErrorMessage && submited" class="contact-form-error">
-        <p>{{ serverErrorMessage }}</p>
-        <p>Redirection dans {{ timeToHome }}</p>
+      <div v-if="serverMessage && submited" class="contact-form-submited">
+        <ServerResponses
+          :serverMessage="serverMessage"
+          :timeBeforeRedirection="5"
+          :redirectTo="redirectionPath"
+        />
       </div>
     </div>
   </section>
@@ -114,21 +106,13 @@
 import { ref } from "vue";
 import * as yup from "yup";
 import { useForm, useField, Field, ErrorMessage } from "vee-validate";
-import { useRedirectionTimer } from "@/helpers/redirectionHelper";
 import ContactService from "@/services/contact-service";
-import type { IlottieOptions } from "@/types/lottieOptions";
-import lottieLoader from "@/assets/lotties/loader.json";
-
-// lottie options
-const loaderOptions = ref<IlottieOptions>({
-  animationData: lottieLoader,
-  loop: true,
-  autoplay: true,
-});
+import ServerResponses from "@/components/reusable/ServerResponses.vue";
 
 const submited = ref<boolean>(false);
-const succesMessage = ref<string>("");
-const serverErrorMessage = ref<string>("");
+const serverMessage = ref<string>("");
+const redirectionPath = ref<string>("/");
+
 // selects options
 const subjects = [
   "Une idée d'amelioration du site",
@@ -136,10 +120,6 @@ const subjects = [
   "On bosse ensemble ?",
   "Autre",
 ];
-
-// settings for the redirection timer
-const { time: timeToHome, startRedirectionTimer: redirectToHome } =
-  useRedirectionTimer("/", 5);
 
 // Validation schema with Yup
 const schema = yup.object({
@@ -174,16 +154,14 @@ const onSubmit = handleSubmit(async (values) => {
       commentary: values.commentary,
     });
     if (response.status === 200) {
-      succesMessage.value = response.data.message;
+      serverMessage.value = response.data.message;
       submited.value = true;
-      redirectToHome();
     }
   } catch (error) {
     submited.value = true;
-    serverErrorMessage.value =
+    serverMessage.value =
       (error as any)?.response?.data?.message || "Une erreur est survenue";
     console.log(error);
-    redirectToHome();
   }
 });
 </script>
@@ -277,24 +255,6 @@ const onSubmit = handleSubmit(async (values) => {
       .contact-form-submit {
         margin-top: 15px;
         text-align: right;
-      }
-    }
-
-    .contact-form-submited {
-      text-align: center;
-      span {
-        color: var(--blue);
-      }
-      .lottie {
-        width: 300px;
-        margin: auto;
-      }
-    }
-
-    .contact-form-error {
-      text-align: center;
-      p:first-child {
-        color: var(--red);
       }
     }
   }
