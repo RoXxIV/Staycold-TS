@@ -55,6 +55,7 @@ watch(
     }
 
     @include media-max(611.98px) {
+      width: 80%;
       max-height: 200px;
     }
   }

@@ -57,9 +57,9 @@ onMounted(async () => {
   display: flex;
   align-items: center;
   padding: 0px 50px 0px 0px;
-  background: var(--secondary-background);
   border: 2px solid var(--secondary-border);
   border-radius: 0.75rem;
+  background: var(--secondary-background);
   -webkit-box-shadow: 0 30px 33px -60px #000000;
   box-shadow: 0 30px 33px -60px #000000;
   &:hover {
@@ -79,6 +79,7 @@ onMounted(async () => {
     }
     &.card-timestamp {
       font-size: 0.8em;
+      font-style: italic;
     }
   }
 }

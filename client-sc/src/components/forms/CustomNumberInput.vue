@@ -53,14 +53,14 @@ watch(
   display: flex;
   flex-direction: column;
   width: 100%;
-  text-align: center;
   margin: auto;
+  text-align: center;
 
   .number-input {
+    border: none;
+    background: none;
     font-size: 1.3em;
     text-align: center;
-    background: none;
-    border: none;
     color: var(--color-text);
     font-family: var(--roboto);
     font-weight: bold;
@@ -71,38 +71,37 @@ watch(
   }
 
   input[type="range"] {
-    //margin: 10px 0 0 0;
     -webkit-appearance: none;
     appearance: none;
     background: transparent;
     cursor: pointer;
 
     &::-webkit-slider-runnable-track {
-      background: var(--primary-border);
       height: 1px;
       border-radius: 8px;
+      background: var(--primary-border);
     }
     &::-moz-range-track {
-      background: var(--primary-border);
       height: 1px;
       border-radius: 8px;
+      background: var(--primary-border);
     }
 
     &::-webkit-slider-thumb {
+      height: 1.1rem;
+      width: 1.1rem;
       margin-top: -7.5px;
       border: none;
       border-radius: 50%;
       background-color: var(--blue);
-      height: 1.1rem;
-      width: 1.1rem;
     }
 
     &::-moz-range-thumb {
+      height: 1.1rem;
+      width: 1.1rem;
       border: none;
       border-radius: 50%;
       background-color: var(--blue);
-      height: 1.1rem;
-      width: 1.1rem;
     }
 
     &:focus {
@@ -135,6 +134,10 @@ watch(
     color: var(--color-text);
     opacity: 0.5;
     font-size: 1em;
+  }
+
+  @include media-max(611.98px) {
+    width: 80%;
   }
 }
 </style>

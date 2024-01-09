@@ -56,9 +56,9 @@
     <!-- lottie animation -->
     <li class="lottie-animation">
       <vue3-lottie
-        :options="loaderOptions"
+        :options="lottieOptions"
         class="lottie"
-        :animationData="loaderOptions.animationData"
+        :animationData="lottieOptions.animationData"
       ></vue3-lottie>
     </li>
   </ul>
@@ -67,11 +67,11 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
 import { watchEffect } from "vue";
-import type { IBath } from "@/types/bath";
-import { getWeatherIconPath } from "@/helpers/pathHelper";
 import gsap from "gsap";
-import type { IlottieOptions } from "@/types/lottieOptions";
+import { getWeatherIconPath } from "@/helpers/pathHelper";
+import { useLottieOptions } from "@/helpers/useLottieOptions";
 import sharkDetails from "@/assets/lotties/shark_details.json";
+import type { IBath } from "@/types/bath";
 
 const props = defineProps({
   bath: {
@@ -81,12 +81,9 @@ const props = defineProps({
 });
 
 // lottie options
-const loaderOptions = ref<IlottieOptions>({
-  animationData: sharkDetails,
-  loop: true,
-  autoplay: true,
-});
+const lottieOptions = useLottieOptions(sharkDetails);
 
+// animations settings (gsap)
 const animations = [
   { selector: ".username", xStart: "-300" },
   { selector: ".timestamp", xStart: "300" },
@@ -174,8 +171,8 @@ onMounted(() => {
       animation: filling 50s ease-in-out infinite;
 
       .username {
-        font-size: 1.8em;
         margin-top: 20px;
+        font-size: 1.8em;
       }
       .timestamp {
         align-self: flex-end;

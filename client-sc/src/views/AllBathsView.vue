@@ -154,5 +154,9 @@ watchEffect(() => {
       margin: 10px;
     }
   }
+
+  @include media-max(991.98px) {
+    width: 90%;
+  }
 }
 </style>

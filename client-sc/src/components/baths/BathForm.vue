@@ -195,6 +195,8 @@
       <button type="submit">Envoyer</button>
     </div>
   </form>
+
+  <!-- Server responses -->
   <div v-else class="server-messages">
     <ServerResponses
       :serverMessage="serverMessage"
@@ -215,10 +217,8 @@ import CustomNumberInput from "@/components/forms/CustomNumberInput.vue";
 import CustomSelectInput from "../forms/CustomSelectInput.vue";
 import CustomTextArea from "../forms/CustomTextArea.vue";
 import ServerResponses from "../reusable/ServerResponses.vue";
-
 import type { IBath } from "@/types/bath";
 
-// Define component props
 const props = defineProps({
   editMode: {
     type: Boolean,
@@ -227,6 +227,7 @@ const props = defineProps({
 });
 
 const route = useRoute();
+
 const isSubmited = ref(false);
 const serverMessage = ref("");
 const redirectionPath = ref("");
@@ -320,6 +321,7 @@ const handleSubmit = handleVeeSubmit(async (values: any) => {
  * @description: Send the new bath to the server
  * if the response is 201, the bath is created
  * else an error message is displayed
+ * @param {IBath} values
  */
 const addOnSubmit = async (values: IBath) => {
   try {
@@ -350,6 +352,8 @@ const addOnSubmit = async (values: IBath) => {
  * @description: Send the edited bath to the server
  * if the response is 200, the bath is updated
  * else an error message is displayed
+ * @param {string} bathId
+ * @param {IBath} values
  */
 
 const editOnSubmit = async (bathId: string, values: IBath) => {
@@ -374,7 +378,10 @@ const editOnSubmit = async (bathId: string, values: IBath) => {
   }
 };
 
-// Fetch details of a single bath
+/**
+ * @description: Fetch details of a single bath
+ * @param {string} bathId
+ */
 const fetchOneBath = async (bathId: string) => {
   try {
     const response = await BathDataService.getOne(bathId);
@@ -404,8 +411,8 @@ const fetchOneBath = async (bathId: string) => {
   box-shadow: 1px 1px 17px -5px #3b82f6;
 
   p {
-    text-align: center;
     margin-bottom: 2rem;
+    text-align: center;
     sup {
       color: var(--blue);
     }
@@ -420,9 +427,9 @@ const fetchOneBath = async (bathId: string) => {
     }
   }
   .form-field {
+    min-height: 150px;
     width: 45%;
     margin: 20px auto;
-    min-height: 150px;
 
     label {
       display: block;
@@ -451,17 +458,21 @@ const fetchOneBath = async (bathId: string) => {
     }
   }
   .submit {
-    text-align: center;
     margin-top: 30px;
+    text-align: center;
   }
 
   @include media-max(991.98px) {
     width: 100%;
-    padding: 10px 10px 30px 10px;
     margin-top: 50px;
+    padding: 10px 10px 30px 10px;
 
     @include media-max(611.98px) {
-      width: 100%;
+      width: 90%;
+      margin: auto;
+      padding: 10px;
+      border: none;
+      -webkit-box-shadow: none;
     }
   }
 }

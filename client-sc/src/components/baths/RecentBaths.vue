@@ -54,7 +54,7 @@ const fetchRecentBaths = async () => {
     serverErrorMessage.value = "Impossible de récupérer les baignades récentes";
   }
 };
-// Fetch recent baths when component is mounted and animate title
+// Fetch recent baths when component is mounted and animate title (gsap)
 onMounted(() => {
   fetchRecentBaths();
 

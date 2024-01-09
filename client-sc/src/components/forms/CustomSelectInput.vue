@@ -59,6 +59,11 @@ watch(
     &:focus {
       border-color: var(--blue);
     }
+    @include media-max(611.98px) {
+      display: flex;
+      justify-content: center;
+      width: 80%;
+    }
   }
 }
 </style>
