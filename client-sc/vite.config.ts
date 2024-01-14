@@ -18,7 +18,6 @@ export default defineConfig({
         @import "./src/assets/global.scss";
         @import "./src/assets/variables.scss";
         @import "./src/assets/mixins.scss";
-        @import "./src/assets/animations.scss";
         `,
       },
     },

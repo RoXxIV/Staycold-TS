@@ -1,6 +1,6 @@
 <template>
   <section class="contact-section">
-    <h1><span>CONTACTEZ</span>-MOI</h1>
+    <h1 class="title"><span>CONTACTEZ</span>-MOI</h1>
 
     <!-- Social networks -->
     <ul class="social-networks">
@@ -31,62 +31,66 @@
     <div class="contact-form-bloc">
       <form @submit="onSubmit" v-if="!submited">
         <!-- Email field -->
-        <div class="contact-form-field">
-          <label for="email"
-            ><font-awesome-icon
-              class="font-awesome-icon"
-              :icon="['fa', 'at']"
-            />Email:</label
+        <CustomTextInput
+          fieldId="email"
+          fieldName="email"
+          placeholder="Entrez votre email"
+          v-model="email"
+          type="email"
+          ><template v-slot:label
+            ><label for="email"
+              ><font-awesome-icon
+                class="font-awesome-icon"
+                :icon="['fa', 'at']"
+                aria-hidden="true"
+              />Email:</label
+            ></template
           >
-          <Field
-            id="email"
-            name="email"
-            v-model="email"
-            type="email"
-            placeholder="Entrez votre email"
-            aria-label="Email"
-          />
-          <ErrorMessage name="email" class="error-feedback" />
-        </div>
+        </CustomTextInput>
 
         <!-- Subject field -->
-        <div class="contact-form-field">
-          <label for="subject"
-            ><font-awesome-icon
-              class="font-awesome-icon"
-              :icon="['fa', 'hand-point-right']"
-            />Sujet:</label
+        <CustomSelectInput
+          class="form-field"
+          field-id="subject"
+          field-name="subject"
+          v-model="subject"
+          :options="subjects"
+        >
+          <template v-slot:label
+            ><label for="subject"
+              ><font-awesome-icon
+                class="font-awesome-icon"
+                :icon="['fa', 'hand-point-right']"
+                aria-hidden="true"
+              />Sujet:</label
+            ></template
           >
-          <Field as="select" name="subject" id="subject" v-model="subject">
-            <option value="" disabled selected>Choisir une option</option>
-            <option v-for="option in subjects" :key="option" :value="option">
-              {{ option }}
-            </option>
-          </Field>
-          <ErrorMessage name="subject" class="error-feedback" />
-        </div>
+        </CustomSelectInput>
 
         <!-- commentary -->
-        <div class="contact-form-field">
-          <label for="commentary"
-            ><font-awesome-icon
-              class="font-awesome-icon"
-              :icon="['fa', 'pencil-alt']"
-            />Votre Message:</label
+        <CustomTextArea
+          class="form-field custom-textarea"
+          field-id="commentary"
+          field-name="commentary"
+          v-model="commentary"
+          placeholder="Votre message ici"
+        >
+          <template v-slot:label
+            ><label for="commentary"
+              ><font-awesome-icon
+                class="font-awesome-icon"
+                :icon="['fa', 'pencil-alt']"
+                aria-hidden="true"
+              />Votre Message:</label
+            ></template
           >
-          <Field
-            as="textarea"
-            id="commentary"
-            name="commentary"
-            v-model="commentary"
-            type="email"
-            placeholder="Votre message ici"
-          />
-          <ErrorMessage name="commentary" class="error-feedback" />
-        </div>
+        </CustomTextArea>
+
         <!----- Submit ----->
         <div class="contact-form-submit">
-          <button class="btn-blue">Envoyer</button>
+          <button class="btn-blue" aria-label="Soumettre le formulaire">
+            Envoyer
+          </button>
         </div>
       </form>
 
@@ -105,9 +109,12 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import * as yup from "yup";
-import { useForm, useField, Field, ErrorMessage } from "vee-validate";
+import { useForm, useField } from "vee-validate";
 import ContactService from "@/services/contact-service";
 import ServerResponses from "@/components/reusable/ServerResponses.vue";
+import CustomTextInput from "@/components/forms/CustomTextInput.vue";
+import CustomSelectInput from "@/components/forms/CustomSelectInput.vue";
+import CustomTextArea from "@/components/forms/CustomTextArea.vue";
 
 const submited = ref<boolean>(false);
 const serverMessage = ref<string>("");
@@ -131,7 +138,8 @@ const schema = yup.object({
   subject: yup.string().nullable().required("Sujet requis!"),
   commentary: yup
     .string()
-    .max(500, "Le message ne doit pas dépasser 500 caractères"),
+    .required("Un message est requis")
+    .max(500, "Votre message ne doit pas dépasser 500 caractères"),
 });
 
 // Configuring the form validation with vee-validate
@@ -141,7 +149,7 @@ const { value: subject } = useField<string>("subject");
 const { value: commentary } = useField<string>("commentary");
 
 /**
- * @description: Send the contact form to the server
+ * Send the contact form to the server
  * if the response is 200, the user is redirected to the home page
  * else an error message is displayed
  * @param: values: {email: string, subject: string, commentary: string}
@@ -167,15 +175,13 @@ const onSubmit = handleSubmit(async (values) => {
 </script>
 
 <style lang="scss" scoped>
+/* Contact form */
 .contact-section {
   h1 {
     text-align: center;
     margin: 50px auto;
-    span {
-      color: var(--blue);
-      font-family: var(--oswald);
-    }
   }
+  /* Social networks */
   .social-networks {
     display: flex;
     justify-content: center;
@@ -197,91 +203,43 @@ const onSubmit = handleSubmit(async (values) => {
     justify-content: center;
     width: 700px;
     margin: 30px auto;
-    padding: 50px 30px 50px 30px;
-    border: 2px solid var(--secondary-border);
+    padding: 50px 0px 50px 0px;
+    border: 1px solid var(--primary-border);
     border-radius: 0.75rem;
     -webkit-box-shadow: 0 30px 33px -60px #000000;
     box-shadow: 0 30px 33px -60px #000000;
 
+    /* Form */
     form {
       label {
         display: block;
-        margin-top: 10px;
-        font-size: 1.3em;
         .font-awesome-icon {
           margin-right: 10px;
         }
       }
-      input {
-        margin: 20px 0px 10px 20px;
-        border: none;
-        border-bottom: 1px solid var(--primary-border);
-        background: transparent;
-        color: var(--color-text);
-        width: 100%;
-        transition: border-color 0.3s;
-        &:focus {
-          border-color: var(--blue);
-        }
-      }
-
-      select {
-        width: 100%;
-        margin: 20px 0px 10px 20px;
-        padding-bottom: 10px;
-        border: none;
-        border-bottom: 1px solid var(--primary-border);
-        background: var(--primary-background);
-        color: var(--color-text);
-        font-size: 16px;
-        transition: border-color 0.3s;
-      }
-
-      textarea {
-        width: 100%;
-        height: 150px;
-        max-height: 300px;
-        resize: vertical;
-        margin: 20px 0px 10px 20px;
-        border: 1px solid var(--primary-border);
-        background: var(--primary-background);
-        color: var(--color-text);
-        transition: border-color 0.3s;
-        &:focus {
-          border-color: var(--blue);
-        }
-      }
-
       .contact-form-submit {
-        margin-top: 15px;
+        margin-top: 30px;
         text-align: right;
+
+        @include media-max(611.98px) {
+          text-align: center;
+        }
+      }
+    }
+
+    /* media queries for the contact-form-bloc */
+    @include media-max(991.98px) {
+      width: 80%;
+
+      @include media-max(611.98px) {
+        width: 100%;
+        border: none;
       }
     }
   }
-
+  /* media queries for the contact-section */
   @include media-max(991.98px) {
     width: 100%;
-
-    .contact-form-bloc {
-      width: 80%;
-    }
-
-    @include media-max(611.98px) {
-      .contact-form-bloc {
-        text-align: center;
-
-        form {
-          label {
-            text-align: left;
-          }
-          input,
-          select,
-          textarea {
-            margin: 10px auto;
-          }
-        }
-      }
-    }
   }
 }
 </style>

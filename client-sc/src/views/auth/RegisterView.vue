@@ -9,67 +9,68 @@
         <!-- Regiser Form -->
         <form @submit="onSubmit" class="custom-form">
           <!-- Username field ----------->
-          <div class="form-field">
-            <label for="username">Nom d'utilisateur:</label>
-            <Field
-              id="username"
-              name="username"
-              v-model="username"
-              type="text"
-              placeholder="Entrez votre nom d'utilisateur"
-              aria-label="Nom d'utilisateur"
-            />
-            <ErrorMessage name="username" class="error-feedback" />
-          </div>
+          <CustomTextInput
+            fieldId="username"
+            fieldName="username"
+            placeholder="Entrez votre nom d'utilisateur"
+            v-model="username"
+            type="text"
+          >
+            <template v-slot:label
+              ><label for="username">Nom d'utilisateur:</label></template
+            >
+          </CustomTextInput>
 
           <!-- Email field -->
-          <div class="form-field">
-            <label for="email">Email:</label>
-            <Field
-              id="email"
-              name="email"
-              v-model="email"
-              type="email"
-              placeholder="Entrez votre email"
-              aria-label="Email"
-            />
-            <ErrorMessage name="email" class="error-feedback" />
-          </div>
+          <CustomTextInput
+            fieldId="email"
+            fieldName="email"
+            placeholder="Entrez votre email"
+            v-model="email"
+            type="email"
+          >
+            <template v-slot:label><label for="email">Email:</label></template>
+          </CustomTextInput>
 
           <!-- Password field -->
-          <div class="form-field">
-            <label for="password">Mot de passe:</label>
-            <Field
-              id="password"
-              name="password"
-              v-model="password"
-              type="password"
-              placeholder="Entrez votre mot de passe"
-              aria-label="Mot de passe"
-            />
-            <ErrorMessage name="password" class="error-feedback" />
-          </div>
+          <CustomTextInput
+            fieldId="password"
+            fieldName="password"
+            placeholder="Entrez votre mot de passe"
+            v-model="password"
+            type="password"
+          >
+            <template v-slot:label
+              ><label for="password">Mot de passe:</label></template
+            >
+          </CustomTextInput>
 
           <!-- Confirm password field -->
-          <div class="form-field">
-            <label for="confirm-password">Confirmez votre mot de passe:</label>
-            <Field
-              id="confirm-password"
-              name="confirm-password"
-              v-model="confirmPassword"
-              type="password"
-              placeholder="Confirmez votre mot de passe"
-              aria-label="Confirmez votre mot de passe"
-            />
-            <ErrorMessage name="confirmPassword" class="error-feedback" />
-          </div>
+          <CustomTextInput
+            fieldId="confirm-password"
+            fieldName="confirmPassword"
+            placeholder="Confirmez votre mot de passe"
+            v-model="confirmPassword"
+            type="password"
+          >
+            <template v-slot:label
+              ><label for="confirm-password"
+                >Confirmez votre mot de passe:</label
+              ></template
+            >
+          </CustomTextInput>
 
           <!-- Server error message -->
           <span class="error-feedback">{{ serverErrorMessage }}</span>
 
           <!-- Submit -->
           <div class="submit">
-            <button type="submit">Inscription</button>
+            <button
+              type="submit"
+              aria-label="Envoyer le formulaire d'inscription"
+            >
+              Inscription
+            </button>
           </div>
         </form>
 
@@ -81,7 +82,7 @@
       <!-- Illustration -->
       <div class="illustration-container">
         <img
-          class="rubberBand"
+          id="mountainAnimation"
           src="@/assets/images/inscription.svg"
           alt="Illustration d'une montagne sur fond bleu avec des nuages en arriere plan"
         />
@@ -100,11 +101,13 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import * as yup from "yup";
-import { useForm, useField, Field, ErrorMessage } from "vee-validate";
+import { useForm, useField } from "vee-validate";
+import { gsap } from "gsap";
 import { useAuthStore } from "@/stores/authStore";
 import ServerResponses from "../../components/reusable/ServerResponses.vue";
+import CustomTextInput from "@/components/forms/CustomTextInput.vue";
 
 const authStore = useAuthStore();
 const serverErrorMessage = ref<string>("");
@@ -142,7 +145,7 @@ const { value: password } = useField<string>("password");
 const { value: confirmPassword } = useField<string>("confirmPassword");
 
 /**
- * @description Handles the form submission.
+ * Handles the form submission.
  * Calls the register method from the authStore.
  * Redirects the user to the login page after 5 seconds.
  * Displays the error message from the server if available.
@@ -166,12 +169,23 @@ const onSubmit = handleSubmit(async (values) => {
       (error as any)?.response?.data?.message || "Erreur lors de l'inscription";
   }
 });
+
+// Animations
+onMounted(() => {
+  gsap
+    .timeline({ defaults: { duration: 0.1, ease: "linear" } })
+    .to("#mountainAnimation", { scaleX: 1.25, scaleY: 0.75 })
+    .to("#mountainAnimation", { scaleX: 0.75, scaleY: 1.25 })
+    .to("#mountainAnimation", { scaleX: 1.15, scaleY: 0.85 })
+    .to("#mountainAnimation", { scaleX: 0.95, scaleY: 1.05 })
+    .to("#mountainAnimation", { scaleX: 1.05, scaleY: 0.95 })
+    .to("#mountainAnimation", { scaleX: 1, scaleY: 1 });
+});
 </script>
 
 <style lang="scss" scoped>
+/* Register section */
 .register-section {
-  width: 100vw;
-
   .bloc-register {
     display: flex;
     justify-content: space-around;
@@ -184,6 +198,7 @@ const onSubmit = handleSubmit(async (values) => {
       }
     }
 
+    /* Register form container */
     .register-form-container {
       display: flex;
       flex-direction: column;
@@ -200,6 +215,7 @@ const onSubmit = handleSubmit(async (values) => {
     }
   }
 
+  /* media queries for register-section */
   @include media-max(991.98px) {
     .bloc-register {
       flex-direction: column-reverse;

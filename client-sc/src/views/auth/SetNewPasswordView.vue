@@ -5,36 +5,38 @@
       <!-- Reset password Form -->
       <form @submit="onSubmit" class="custom-form">
         <!-- Password -->
-        <div class="form-field">
-          <label for="password">Mot de passe:</label>
-          <Field
-            id="password"
-            name="password"
-            v-model="password"
-            type="password"
-            placeholder="Entrez votre mot de passe"
-            aria-label="Mot de passe"
-          />
-          <ErrorMessage name="password" class="error-feedback" />
-        </div>
+        <CustomTextInput
+          fieldId="password"
+          fieldName="password"
+          placeholder="Entrez votre mot de passe"
+          v-model="password"
+          type="password"
+        >
+          <template v-slot:label
+            ><label for="password">Mot de passe:</label></template
+          >
+        </CustomTextInput>
 
         <!-- Confirm password -->
-        <div class="form-field">
-          <label for="confirmPassword">Confirmez votre mot de passe:</label>
-          <Field
-            id="confirmPassword"
-            name="confirmPassword"
-            v-model="confirmPassword"
-            type="password"
-            placeholder="Confirmez votre mot de passe"
-            aria-label="Confirmez votre mot de passe"
-          />
-          <ErrorMessage name="confirmPassword" class="error-feedback" />
-        </div>
+        <CustomTextInput
+          fieldId="confirmPassword"
+          fieldName="confirmPassword"
+          placeholder="Confirmez votre mot de passe"
+          v-model="confirmPassword"
+          type="password"
+        >
+          <template v-slot:label
+            ><label for="confirmPassword"
+              >Confirmez votre mot de passe:</label
+            ></template
+          >
+        </CustomTextInput>
 
         <!-- Submit -->
         <div class="submit">
-          <button type="submit">Envoyer</button>
+          <button type="submit" aria-label="Soumettre le formulaire">
+            Envoyer
+          </button>
         </div>
       </form>
 
@@ -58,11 +60,12 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
 import * as yup from "yup";
-import { useForm, useField, Field, ErrorMessage } from "vee-validate";
+import { useForm, useField } from "vee-validate";
 import router from "@/router";
 import { useRoute } from "vue-router";
 import AuthService from "@/services/auth-service";
 import ServerResponses from "@/components/reusable/ServerResponses.vue";
+import CustomTextInput from "@/components/forms/CustomTextInput.vue";
 
 const route = useRoute();
 const successful = ref<boolean>(false);
@@ -88,7 +91,7 @@ const { value: password } = useField("password");
 const { value: confirmPassword } = useField("confirmPassword");
 
 /**
- * @description - Submit the form and send the new password to the server.
+ * Submit the form and send the new password to the server.
  * If the password is valid and the confirmation code is valid, redirect to the login page.
  * Else display an error message.
  * @param {Event} event
@@ -114,7 +117,7 @@ const onSubmit = handleSubmit(async () => {
 });
 
 /**
- * @description - This function is called when the component is mounted.
+ * This function is called when the component is mounted.
  * it checks if the confirmation code is present in the url and call the sendConfirmationCode function.
  * If the confirmation code is not present, redirect the user to the not found page.
  * @param {string} confirmationCode - The confirmation code.
@@ -129,8 +132,8 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
+/* Set new password section */
 .set-new-password-section {
-  width: 75vw;
   margin: 30px auto 0px auto;
 
   & div:first-child {

@@ -1,5 +1,5 @@
 <template>
-  <div class="custom-select-input">
+  <div>
     <slot name="label"></slot>
     <Field
       as="select"
@@ -45,25 +45,21 @@ watch(
 );
 </script>
 <style scoped lang="scss">
-.custom-select-input {
-  select {
-    width: 100%;
-    margin: auto;
-    padding-bottom: 10px;
-    border: none;
-    border-bottom: 1px solid var(--primary-border);
-    background: var(--primary-background);
-    color: var(--color-text);
-    font-size: 16px;
-    transition: border-color 0.3s;
-    &:focus {
-      border-color: var(--blue);
-    }
-    @include media-max(611.98px) {
-      display: flex;
-      justify-content: center;
-      width: 80%;
-    }
+select {
+  width: 280px;
+  margin: 10px 0px 25px 30px;
+  padding-bottom: 10px;
+  border: none;
+  border-bottom: 1px solid var(--primary-border);
+  background: var(--primary-background);
+  color: var(--color-text);
+  font-size: 16px;
+  transition: border-color 0.3s;
+  &:focus {
+    border-color: var(--blue);
+  }
+  @include media-max(611.98px) {
+    margin: 20px 0;
   }
 }
 </style>

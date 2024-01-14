@@ -26,7 +26,7 @@ const typeArrayIndex = ref<number>(0);
 const charIndex = ref<number>(0);
 
 /**
- * @description Function to type text
+ * Function to type text
  * Check if there are characters left to type in the current text
  * If not currently typing, set typeStatus to true
  * Then append the next character to dynamicText
@@ -50,7 +50,7 @@ const typeText = () => {
 };
 
 /**
- * @description Function to erase text
+ * Function to erase text
  * Check if there are characters left to erase
  * If not currently typing, set typeStatus to true
  * Remove the last character from dynamicText
@@ -106,6 +106,7 @@ h1 {
     }
   }
 
+  /* Cursor blink animation */
   @keyframes cursorBlink {
     49% {
       background-color: var(--primary-border);

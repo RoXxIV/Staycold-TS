@@ -23,27 +23,41 @@
       <img
         src="@/assets/images/hero-shark.png"
         alt="Une illustration de requin souriant, debout et saluant sur fond bleu."
-        class="lightSpeedIn"
+        id="sharkAnimation"
       />
     </div>
   </section>
 </template>
 
 <script setup lang="ts">
-import { computed } from "vue";
+import { computed, onMounted } from "vue";
 import { useAuthStore } from "@/stores/authStore";
+import { gsap } from "gsap";
 
 // use the authStore to get the loggedIn status
 const authStore = useAuthStore();
 const loggedIn = computed(() => authStore.status.loggedIn);
+
+onMounted(() => {
+  // animate the shark image
+  gsap
+    .timeline({ defaults: { duration: 1, ease: "ease-out" } })
+    .fromTo(
+      "#sharkAnimation",
+      { xPercent: 100, skewX: -30, opacity: 0 },
+      { xPercent: 0, skewX: 20, opacity: 1, duration: 0.6 }
+    )
+    .to("#sharkAnimation", { skewX: -5, duration: 0.2 })
+    .to("#sharkAnimation", { skewX: 0, duration: 0.2 });
+});
 </script>
 
 <style scoped lang="scss">
+/* Hero section */
 .hero-section {
   display: flex;
   justify-content: space-around;
   align-items: center;
-  width: 80%;
   margin: 50px auto;
 
   .hero-intro {
@@ -53,7 +67,6 @@ const loggedIn = computed(() => authStore.status.loggedIn);
       font-size: 2.3em;
       font-weight: 700;
       line-height: 1.5;
-
       span {
         color: var(--blue);
       }
@@ -74,6 +87,7 @@ const loggedIn = computed(() => authStore.status.loggedIn);
     }
   }
 
+  /* media queries */
   @include media-max(991.98px) {
     .hero-intro {
       h2 {

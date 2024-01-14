@@ -2,19 +2,19 @@
   <div class="server-messages">
     <p>{{ serverMessage }}</p>
     <vue3-lottie
-      :options="loaderOptions"
+      :options="lottieOptions"
       class="lottie"
-      :animationData="loaderOptions.animationData"
+      :animationData="lottieOptions.animationData"
     ></vue3-lottie>
     <p>Redirection dans {{ counter }}</p>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from "vue";
+import { onMounted } from "vue";
 import { useRedirectionTimer } from "@/helpers/redirectionHelper";
+import { useLottieOptions } from "@/helpers/useLottieOptions";
 import loader from "@/assets/lotties/snow-loader.json";
-import type { IlottieOptions } from "@/types/lottieOptions";
 
 const props = defineProps({
   serverMessage: String,
@@ -23,11 +23,7 @@ const props = defineProps({
 });
 
 // lottie options
-const loaderOptions = ref<IlottieOptions>({
-  animationData: loader,
-  loop: true,
-  autoplay: true,
-});
+const lottieOptions = useLottieOptions(loader);
 
 // redirection timer settings
 const { time: counter, startRedirectionTimer: startRedirection } =

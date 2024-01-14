@@ -42,7 +42,7 @@ const redirectionPathToHome = ref<string>("/");
 const serverMessage = ref<string>("");
 
 /**
- * @description - This function is called when the component is mounted.
+ * This function is called when the component is mounted.
  * it checks if the confirmation code is present in the url and call the sendConfirmationCode function.
  * If the confirmation code is not present, redirect the user to the not found page.
  * @param {string} confirmationCode - The confirmation code.
@@ -58,7 +58,7 @@ onMounted(() => {
 });
 
 /**
- * @description - It send the confirmation code to the server to activate the user account.
+ * It send the confirmation code to the server to activate the user account.
  * If the confirmation code is not valid, display an error message.
  * And redirect the user to the home page after 5 seconds.
  * If the confirmation code is valid, display a success message.

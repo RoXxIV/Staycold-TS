@@ -18,5 +18,16 @@
   background-size: cover;
   background-repeat: no-repeat;
   background-position-y: 50%;
+
+  @include media-max(991.98px) {
+    min-height: 200px;
+    background-size: cover;
+    background-position-y: 0;
+    background-position: 50% 50%;
+
+    @include media-max(667.98px) {
+      display: none;
+    }
+  }
 }
 </style>

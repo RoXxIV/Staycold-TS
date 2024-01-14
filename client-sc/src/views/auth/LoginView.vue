@@ -15,39 +15,37 @@
       <!-- Login Form -->
       <form @submit="onSubmit" class="custom-form">
         <!-- Username field -->
-        <div class="form-field">
-          <label for="username">Nom d'utilisateur:</label>
-          <Field
-            id="username"
-            name="username"
-            v-model="username"
-            type="text"
-            placeholder="Entrez votre nom d'utilisateur"
-            aria-label="Nom d'utilisateur"
-          />
-          <ErrorMessage name="username" class="error-feedback" />
-        </div>
+        <CustomTextInput
+          fieldId="username"
+          fieldName="username"
+          placeholder="Entrez votre nom d'utilisateur"
+          v-model="username"
+          type="text"
+        >
+          <template v-slot:label
+            ><label for="username">Nom d'utilisateur:</label></template
+          >
+        </CustomTextInput>
 
         <!-- Password field -->
-        <div class="form-field">
-          <label for="password">Mot de passe:</label>
-          <Field
-            id="password"
-            name="password"
-            v-model="password"
-            type="password"
-            placeholder="Entrez votre mot de passe"
-            aria-label="Mot de passe"
-          />
-          <ErrorMessage name="password" class="error-feedback" />
-        </div>
+        <CustomTextInput
+          fieldId="password"
+          fieldName="password"
+          placeholder="Entrez votre mot de passe"
+          v-model="password"
+          type="password"
+        >
+          <template v-slot:label
+            ><label for="password">Mot de passe:</label></template
+          >
+        </CustomTextInput>
 
         <!-- Server error message -->
         <span class="error-feedback">{{ serverErrorMessage }}</span>
 
         <!-- Submit ----------->
         <div class="submit">
-          <button type="submit">Connexion</button>
+          <button type="submit" aria-label="Se connecter">Connexion</button>
         </div>
       </form>
 
@@ -67,10 +65,11 @@
 
 <script setup lang="ts">
 import { ref, type Ref } from "vue";
-import { useForm, useField, Field, ErrorMessage } from "vee-validate";
+import { useForm, useField } from "vee-validate";
 import * as yup from "yup";
 import { useRouter, RouterLink } from "vue-router";
 import { useAuthStore } from "@/stores/authStore";
+import CustomTextInput from "@/components/forms/CustomTextInput.vue";
 
 const router = useRouter();
 const authStore = useAuthStore();
@@ -86,7 +85,7 @@ const { value: username } = useField<string>("username");
 const { value: password } = useField<string>("password");
 
 /**
- * @description Handles the form submission.
+ * Handles the form submission.
  * call the login function from the authStore.
  * It validates the form and then attempts to log in the user using the authStore.
  * If the login is successful, the user is redirected to the home page.
@@ -108,12 +107,11 @@ const onSubmit = handleSubmit(async (values) => {
 </script>
 
 <style lang="scss" scoped>
+/* Login page */
 .login-section {
   display: flex;
   justify-content: space-around;
   position: relative;
-  width: 80vw;
-  margin: auto;
   margin-top: 100px;
   margin-bottom: 50px;
 
@@ -142,10 +140,10 @@ const onSubmit = handleSubmit(async (values) => {
     }
   }
 
+  /* media queries for login-section */
   @include media-max(991.98px) {
     flex-direction: column;
     align-items: center;
-    width: 100vw;
     margin-top: 50px;
 
     .illustration-container {

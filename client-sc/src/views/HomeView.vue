@@ -7,7 +7,6 @@
   <BannerLandscape />
   <!-- Recent baths -->
   <RecentBaths />
-  <!-- Server responses -->
 </template>
 
 <script setup lang="ts">

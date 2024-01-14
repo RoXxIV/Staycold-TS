@@ -1,5 +1,6 @@
 /**
- * @fileoverview authStore - pinia store for authentication
+ * @fileoverview authStore - pinia store for authentication, login, logout,
+ * register user and store user in local storage
  * @see https://pinia.esm.dev/
  */
 

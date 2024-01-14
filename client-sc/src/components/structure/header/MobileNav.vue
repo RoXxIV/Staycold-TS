@@ -11,9 +11,11 @@
         <span>{{ themeSwitchText }}</span>
       </li>
 
+      <!-- Home link -->
       <li @click="closeMenuAndEmit">
         <router-link to="/">Accueil</router-link>
       </li>
+      <!-- All baths link -->
       <li @click="closeMenuAndEmit">
         <router-link to="/all-baths">Baignades</router-link>
       </li>
@@ -21,9 +23,11 @@
 
     <!-- Nav auth -->
     <ul class="mobile-auth-nav">
+      <!-- login  -->
       <li @click="closeMenuAndEmit" v-if="!loggedIn">
         <router-link to="/login">Connexion</router-link>
       </li>
+      <!-- register  -->
       <li @click="closeMenuAndEmit" v-if="!loggedIn">
         <router-link to="/register">Inscription</router-link>
       </li>

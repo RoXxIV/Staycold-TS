@@ -1,6 +1,6 @@
 <template>
   <!-- Form -->
-  <form @submit="handleSubmit" v-if="!isSubmited" class="add-bath-form">
+  <form @submit="handleSubmit" v-if="!isSubmited" class="bath-form custom-form">
     <p>Champs obligatoires <sup>*</sup></p>
     <div class="fields-bloc">
       <!-- WaterTemperature field -->
@@ -19,6 +19,7 @@
             <font-awesome-icon
               class="font-awesome-icon"
               :icon="['fa', 'swimming-pool']"
+              aria-hidden="true"
             />
             Température de l'eau <sup>*</sup>
           </label></template
@@ -40,6 +41,7 @@
             ><font-awesome-icon
               class="font-awesome-icon"
               :icon="['fa', 'temperature-high']"
+              aria-hidden="true"
             />
             Température de l'air <sup>*</sup></label
           ></template
@@ -61,6 +63,7 @@
             ><font-awesome-icon
               class="font-awesome-icon"
               :icon="['fa', 'cloud-sun-rain']"
+              aria-hidden="true"
             />
             Météo <sup>*</sup></label
           ></template
@@ -82,6 +85,7 @@
             ><font-awesome-icon
               class="font-awesome-icon"
               :icon="['fa', 'stopwatch']"
+              aria-hidden="true"
             />
             Temps passé dans l'eau <sup>*</sup></label
           ></template
@@ -105,6 +109,7 @@
             ><font-awesome-icon
               class="font-awesome-icon"
               :icon="['fa', 'hourglass-half']"
+              aria-hidden="true"
             />
             Temps de récupération</label
           ></template
@@ -124,6 +129,7 @@
             ><font-awesome-icon
               class="font-awesome-icon"
               :icon="['fa', 'wind']"
+              aria-hidden="true"
             />
             Vent</label
           ></template
@@ -145,6 +151,7 @@
             ><font-awesome-icon
               class="font-awesome-icon"
               :icon="['fa', 'wave-square']"
+              aria-hidden="true"
             />
             Afterdrop
           </label></template
@@ -164,6 +171,7 @@
             ><font-awesome-icon
               class="font-awesome-icon"
               :icon="['fa', 'grin-stars']"
+              aria-hidden="true"
             />
             Ressenti globale</label
           ></template
@@ -173,7 +181,7 @@
 
     <!-- Commentary field -->
     <CustomTextArea
-      class="form-field"
+      class="form-field custom-textarea"
       field-id="commentary"
       field-name="commentary"
       v-model="commentary"
@@ -184,6 +192,7 @@
           ><font-awesome-icon
             class="font-awesome-icon"
             :icon="['fa', 'comment']"
+            aria-hidden="true"
           />
           Commentaire</label
         ></template
@@ -192,7 +201,9 @@
 
     <!-- Submit -->
     <div class="submit">
-      <button type="submit">Envoyer</button>
+      <button type="submit" aria-label="Soumettre le formulaire">
+        Envoyer
+      </button>
     </div>
   </form>
 
@@ -318,7 +329,7 @@ const handleSubmit = handleVeeSubmit(async (values: any) => {
 });
 
 /**
- * @description: Send the new bath to the server
+ * Send the new bath to the server
  * if the response is 201, the bath is created
  * else an error message is displayed
  * @param {IBath} values
@@ -349,7 +360,7 @@ const addOnSubmit = async (values: IBath) => {
 };
 
 /**
- * @description: Send the edited bath to the server
+ * Send the edited bath to the server
  * if the response is 200, the bath is updated
  * else an error message is displayed
  * @param {string} bathId
@@ -379,7 +390,7 @@ const editOnSubmit = async (bathId: string, values: IBath) => {
 };
 
 /**
- * @description: Fetch details of a single bath
+ * Fetch details of a single bath
  * @param {string} bathId
  */
 const fetchOneBath = async (bathId: string) => {
@@ -401,14 +412,13 @@ const fetchOneBath = async (bathId: string) => {
 </script>
 
 <style scoped lang="scss">
-.add-bath-form {
-  width: 1000px;
-  margin: auto;
+/* bath-form */
+.bath-form {
+  width: 75%;
+  margin: 50px auto 0 auto;
   padding: 20px 30px;
+  border: 1px solid var(--primary-border);
   border-radius: 0.75rem;
-  -webkit-box-shadow: 1px 1px 17px -5px #3b82f6;
-  -moz-box-shadow: 1px 1px 17px -5px #3b82f6;
-  box-shadow: 1px 1px 17px -5px #3b82f6;
 
   p {
     margin-bottom: 2rem;
@@ -417,62 +427,47 @@ const fetchOneBath = async (bathId: string) => {
       color: var(--blue);
     }
   }
+  /* fields-bloc */
   .fields-bloc {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
 
     @include media-max(991.98px) {
       flex-direction: column;
     }
   }
+  /* form-field */
   .form-field {
-    min-height: 150px;
-    width: 45%;
     margin: 20px auto;
 
-    label {
-      display: block;
-      margin-bottom: 20px;
-      font-size: 1.2em;
-
-      sup {
-        color: var(--blue);
-      }
-      .font-awesome-icon {
-        margin-right: 10px;
-      }
-
-      @include media-max(611.98px) {
-        font-size: 1em;
-      }
+    sup {
+      color: var(--blue);
     }
+  }
+
+  .custom-textarea {
+    width: 50%;
 
     @include media-max(991.98px) {
       width: 75%;
-      margin: 0 auto;
 
       @include media-max(611.98px) {
-        width: 100%;
+        width: 90%;
       }
     }
   }
-  .submit {
-    margin-top: 30px;
-    text-align: center;
-  }
 
+  /* media queries for bath-form */
   @include media-max(991.98px) {
-    width: 100%;
-    margin-top: 50px;
-    padding: 10px 10px 30px 10px;
+    width: 90%;
+    margin: auto;
 
     @include media-max(611.98px) {
       width: 90%;
       margin: auto;
       padding: 10px;
       border: none;
-      -webkit-box-shadow: none;
     }
   }
 }

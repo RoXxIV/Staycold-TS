@@ -17,11 +17,8 @@ import {
   faWind,
   faHourglassHalf,
   faWaveSquare,
-  faQuestionCircle,
   faGrinStars,
   faComment,
-  faPlus,
-  faMinus,
 } from "@fortawesome/free-solid-svg-icons";
 
 library.add(
@@ -39,10 +36,7 @@ library.add(
   faWind,
   faHourglassHalf,
   faWaveSquare,
-  faQuestionCircle,
   faGrinStars,
-  faComment,
-  faPlus,
-  faMinus
+  faComment
 );
 export { FontAwesomeIcon };

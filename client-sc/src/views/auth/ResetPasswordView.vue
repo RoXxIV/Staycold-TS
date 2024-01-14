@@ -5,36 +5,34 @@
       <!-- Reset password Form -->
       <form @submit="onSubmit" class="custom-form">
         <!-- Email field -->
-        <div class="form-field">
-          <label for="email">Email:</label>
-          <Field
-            id="email"
-            name="email"
-            v-model="email"
-            type="email"
-            placeholder="Entrez votre email"
-            aria-label="Email"
-          />
-          <ErrorMessage name="email" class="error-feedback" />
-        </div>
+        <CustomTextInput
+          fieldId="email"
+          fieldName="email"
+          placeholder="Entrez votre email"
+          v-model="email"
+          type="email"
+        >
+          <template v-slot:label><label for="email">Email:</label></template>
+        </CustomTextInput>
 
         <!-- Email confirmation fiels -->
-        <div class="form-field">
-          <label for="emailConfirmation">Confirmer l'Email:</label>
-          <Field
-            id="emailConfirmation"
-            name="emailConfirmation"
-            v-model="emailConfirmation"
-            type="email"
-            placeholder="Entrez votre email"
-            aria-label="Email"
-          />
-          <ErrorMessage name="emailConfirmation" class="error-feedback" />
-        </div>
+        <CustomTextInput
+          fieldId="emailConfirmation"
+          fieldName="emailConfirmation"
+          placeholder="Entrez votre email"
+          v-model="emailConfirmation"
+          type="emailConfirmation"
+        >
+          <template v-slot:label
+            ><label for="emailConfirmation">Confirmer l'Email:</label></template
+          >
+        </CustomTextInput>
 
         <!-- Submit -->
         <div class="submit">
-          <button type="submit">Envoyer</button>
+          <button type="submit" aria-label="Soumettre le formulaire">
+            Envoyer
+          </button>
         </div>
       </form>
 
@@ -61,9 +59,10 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import * as yup from "yup";
-import { useForm, useField, Field, ErrorMessage } from "vee-validate";
+import { useForm, useField } from "vee-validate";
 import AuthService from "@/services/auth-service";
 import ServerResponses from "@/components/reusable/ServerResponses.vue";
+import CustomTextInput from "@/components/forms/CustomTextInput.vue";
 
 const successful = ref<boolean>(false);
 const serverMessage = ref<string>("");
@@ -87,7 +86,7 @@ const { value: email } = useField<string>("email");
 const { value: emailConfirmation } = useField<string>("emailConfirmation");
 
 /**
- * @description Submit the form and send the email to the user
+ * Submit the form and send the email to the user
  * if the email is valid and the user exists redirect to the login page
  * else display an error message
  * @param {Event} event
@@ -110,8 +109,8 @@ const onSubmit = handleSubmit(async () => {
 </script>
 
 <style lang="scss" scoped>
+/* Reset password section */
 .reset-password-section {
-  width: 75vw;
   margin: 30px auto 0px auto;
 
   & div:first-child {
@@ -132,10 +131,6 @@ const onSubmit = handleSubmit(async () => {
     margin-top: 50px;
     text-align: center;
     color: var(--red);
-  }
-
-  @media (max-width: 611.98px) {
-    width: 100vw;
   }
 }
 </style>

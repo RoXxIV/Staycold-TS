@@ -38,6 +38,7 @@
           ><font-awesome-icon
             class="font-awesome-icon"
             :icon="['far', 'envelope']"
+            aria-hidden="true"
           />Contact</router-link
         >
       </li>
@@ -46,31 +47,36 @@
       </li>
     </ul>
 
-    <!-- Reseau -->
-    <ul class="footer-social">
-      <li>
-        <a
-          href="https://www.linkedin.com/in/evan-hermier-799b48121/"
-          target="_blank"
-          rel="noopener noreferrer"
-          ><img src="@/assets/images/reseaux/linkedin.png" alt="logo linkedin"
-        /></a>
-      </li>
-      <li>
-        <a
-          href="https://github.com/RoXxIV"
-          target="_blank"
-          rel="noopener noreferrer"
-          ><img src="@/assets/images/reseaux/github.png" alt="logo github"
-        /></a>
-      </li>
-    </ul>
+    <!-- social -->
+    <nav>
+      <ul class="footer-social">
+        <li>
+          <a
+            href="https://www.linkedin.com/in/evan-hermier-799b48121/"
+            target="_blank"
+            rel="noopener noreferrer"
+            ><img
+              src="@/assets/images/reseaux/linkedin.png"
+              alt="logo linkedin"
+          /></a>
+        </li>
+        <li>
+          <a
+            href="https://github.com/RoXxIV"
+            target="_blank"
+            rel="noopener noreferrer"
+            ><img src="@/assets/images/reseaux/github.png" alt="logo github"
+          /></a>
+        </li>
+      </ul>
+    </nav>
   </footer>
 </template>
 
 <script setup lang="ts"></script>
 
 <style lang="scss" scoped>
+/* Footer */
 footer {
   display: flex;
   justify-content: space-between;
@@ -82,6 +88,7 @@ footer {
   ul {
     width: 30%;
 
+    /* copyright */
     &.footer-copyright {
       display: flex;
       justify-content: flex-start;
@@ -91,6 +98,7 @@ footer {
       li {
         padding: 0px 10px;
 
+        /* logo */
         .footer-logo {
           display: flex;
           align-items: center;
@@ -108,6 +116,7 @@ footer {
         }
       }
     }
+    /* contact */
     &.footer-contact {
       text-align: center;
 
@@ -126,6 +135,7 @@ footer {
       }
     }
 
+    /* social */
     &.footer-social {
       display: flex;
       align-items: center;
@@ -137,6 +147,7 @@ footer {
     }
   }
 
+  /* media queries */
   @include media-max(991.98px) {
     ul {
       flex-direction: column;

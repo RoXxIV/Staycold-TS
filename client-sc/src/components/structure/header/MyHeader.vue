@@ -30,7 +30,9 @@
       <!-- Nav default -->
       <nav>
         <ul class="default-nav">
+          <!-- Home link -->
           <li><router-link to="/">Accueil </router-link></li>
+          <!-- All baths link -->
           <li><router-link to="/all-baths">Baignades</router-link></li>
           <!-- Nav user -->
           <!-- profile if User <li></li> -->
@@ -38,10 +40,12 @@
 
         <!-- Nav auth -->
         <ul class="auth-nav">
+          <!-- login  -->
           <li v-if="!loggedIn">
             <router-link to="/login">Connexion</router-link>
           </li>
           <li v-if="!loggedIn">
+            <!-- register  -->
             <router-link to="/register">Inscription</router-link>
           </li>
           <!-- logout  -->
@@ -52,8 +56,8 @@
       </nav>
 
       <!-- Toggle burger -->
-      <div class="icon-burger">
-        <IconBurger @click="toggleBurgerMenu" id="btn-burger" />
+      <div class="icon-burger" @click="toggleBurgerMenu">
+        <IconBurger :class="{ opened: isMenuOpen }" id="btn-burger" />
       </div>
 
       <!-- Toggle theme light/dark -->
@@ -109,7 +113,7 @@
     <!-- Mobile menu ----------->
     <transition name="fade">
       <MobileNav
-        v-if="toggleMobileMenu"
+        v-if="isMenuOpen"
         @closeMenu="toggleBurgerMenu"
         @toggle-theme="toggleTheme"
       />
@@ -128,23 +132,13 @@ const authStore = useAuthStore();
 const loggedIn = computed(() => authStore.status.loggedIn);
 
 // Toggle mobile menu
-const toggleMobileMenu = ref(false);
+const isMenuOpen = ref(false);
 
 const theme = ref<string>("");
 
 // Toggles the burger menu and updates the mobile menu state.
 const toggleBurgerMenu = () => {
-  const burger = document.getElementById("btn-burger");
-
-  if (burger) {
-    burger.classList.toggle("opened");
-    burger.setAttribute(
-      "aria-expanded",
-      burger.classList.contains("opened").toString()
-    );
-  }
-
-  toggleMobileMenu.value = !toggleMobileMenu.value;
+  isMenuOpen.value = !isMenuOpen.value;
 };
 
 // loggout and reload page to update the header
@@ -180,6 +174,7 @@ onBeforeUnmount(() => {
 </script>
 
 <style scoped lang="scss">
+/* Header */
 header {
   display: flex;
   align-items: center;
@@ -190,6 +185,7 @@ header {
   font-family: var(--roboto);
   font-weight: bold;
 
+  /* Logo */
   .logo-staycold {
     display: flex;
     align-items: center;
@@ -208,6 +204,7 @@ header {
     }
   }
 
+  /* Nav */
   nav {
     display: flex;
     align-items: center;
@@ -225,6 +222,7 @@ header {
       }
     }
 
+    /* Auth nav */
     .auth-nav {
       display: flex;
       li {
@@ -259,6 +257,7 @@ header {
     }
   }
 
+  /* Media queries */
   @include media-max(991.98px) {
     flex-direction: column;
     justify-content: center;

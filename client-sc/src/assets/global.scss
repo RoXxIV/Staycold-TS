@@ -24,6 +24,7 @@ html {
     padding: 0;
     background: var(--primary-background);
     color: var(--color-text);
+    font-family: var(--roboto);
     line-height: 1.3;
     overflow-x: hidden;
     transition: background-color 0.3s ease, color 0.3s ease;
@@ -39,8 +40,7 @@ html {
     h1,
     h2,
     h3,
-    h4,
-    .title-span {
+    h4 {
       font-family: var(--oswald);
     }
     ul {
@@ -49,6 +49,19 @@ html {
     }
     button {
       @include button(var(--color-text));
+    }
+
+    section {
+      width: 80vw;
+      margin: 0 auto;
+
+      @include media-max(991.98px) {
+        width: 80vw;
+
+        @include media-max(611.98px) {
+          width: 100vw;
+        }
+      }
     }
   }
 }
@@ -76,22 +89,6 @@ html {
       font-size: 1em;
     }
   }
-  input {
-    width: 280px;
-    margin: 10px 0px 25px 30px;
-    border: none;
-    border-bottom: 2px solid var(--primary-border);
-    background: transparent;
-    color: var(--color-text);
-    transition: border-color 0.3s;
-    &:focus {
-      outline: none;
-      border-color: var(--blue);
-    }
-    @include media-max(611.98px) {
-      margin: 20px 0;
-    }
-  }
   .submit {
     margin-top: 15px;
     text-align: center;
@@ -100,8 +97,8 @@ html {
 .error-feedback {
   display: block;
   color: var(--red);
-  margin-bottom: 10px;
-  text-align: left;
+  margin-bottom: 20px;
+  text-align: center;
 }
 /* Custom links ______*/
 .redirection-link {
@@ -113,4 +110,16 @@ html {
   p:hover {
     color: #176cf5;
   }
+}
+
+/** Animations ___________ */
+/* Fade [smooth] ______*/
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
 }

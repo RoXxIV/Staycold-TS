@@ -1,11 +1,14 @@
 <template>
   <div>
     <slot name="label"></slot>
+
+    <!-- input number -->
     <Field
       :id="fieldId"
+      class="text-input"
       :name="fieldName || ''"
       v-model="fieldValue"
-      as="textarea"
+      :type="type"
       :placeholder="placeholder"
     />
     <div class="error-field">
@@ -21,6 +24,7 @@ const props = defineProps({
   fieldId: String,
   fieldName: String,
   placeholder: String,
+  type: String,
   value: {
     type: String,
     default: null,
@@ -38,25 +42,20 @@ watch(
 );
 </script>
 <style scoped lang="scss">
-textarea {
-  width: 100%;
-  display: block;
-  height: 150px;
-  max-height: 300px;
-  resize: vertical;
-  margin: 10px auto;
-  padding: 10px;
-  border: 1px solid var(--primary-border);
-  background: var(--primary-background);
+input {
+  width: 280px;
+  margin: 10px 0px 25px 30px;
+  border: none;
+  border-bottom: 1px solid var(--primary-border);
+  background: transparent;
   color: var(--color-text);
   transition: border-color 0.3s;
   &:focus {
+    outline: none;
     border-color: var(--blue);
   }
-
   @include media-max(611.98px) {
-    width: 80%;
-    max-height: 200px;
+    margin: 20px 0;
   }
 }
 </style>

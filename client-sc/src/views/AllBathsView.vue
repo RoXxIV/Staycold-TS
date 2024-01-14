@@ -7,38 +7,68 @@
     <div class="all-baths-title">
       <h1 class="title">Toutes les <span>baignades</span></h1>
       <img
-        class="illustration-iceberg slideInLeft"
+        id="icebergAnimation"
         src="@/assets/images/iceberg.png"
         alt="illlustration d'un iceberg"
       />
     </div>
 
     <!-- Loading -->
-    <div v-if="!Allbaths.length" class="loading">
+    <div v-if="!allbaths.length" class="loading">
       <div class="skeleton" v-for="n in numberOfSkeletons" :key="n"></div>
     </div>
 
     <!-- All baths -->
     <div class="cards-list">
-      <BathCard v-for="bath in Allbaths" :key="bath._id" :bath="bath" />
+      <BathCard
+        v-for="bath in allbaths"
+        :key="bath._id"
+        :bath="bath"
+        @weatherIconLoaded="handleWeatherIconLoaded"
+      />
     </div>
 
     <!-- Pagination -->
     <div class="all-baths-pagination">
-      <button @click="changePage(-1)" :disabled="page === 1">Précédent</button>
-      <button @click="changePage(1)" :disabled="isNextDisabled">Suivant</button>
+      <button
+        @click="changePage(-1)"
+        :disabled="page === 1"
+        aria-label="Afficher les baignades précedentes"
+      >
+        Précédent
+      </button>
+      <button
+        @click="changePage(1)"
+        :disabled="isNextDisabled"
+        aria-label="Afficher les baignades suivantes"
+      >
+        Suivant
+      </button>
+    </div>
+
+    <!-- back button -->
+    <div class="back-button">
+      <button @click="router.go(-1)" aria-label="Retour à la page précédente">
+        Retour
+      </button>
     </div>
   </section>
 </template>
 
 <script setup lang="ts">
-import { ref, watchEffect, computed } from "vue";
+import { ref, watchEffect, computed, onMounted } from "vue";
+import { useRoute } from "vue-router";
+import router from "@/router";
+import { gsap } from "gsap";
 import BathDataService from "@/services/BathDataService";
 import BathCard from "@/components/baths/BathCard.vue";
 import RenderBathData from "@/helpers/renderBathData";
 import type { IBath } from "@/types/bath";
 
-const Allbaths = ref<IBath[]>([]);
+const route = useRoute();
+const allbaths = ref<IBath[]>([]);
+const allWeatherIconsLoaded = ref(false);
+let loadedIconsCount = 0;
 const page = ref<number>(1);
 const limit = ref<number>(16);
 const total = ref<number>(0);
@@ -46,15 +76,28 @@ const skeletonArray = ref([]);
 const numberOfSkeletons = 8;
 
 /**
- * @description Fetch all baths from API and format weather and date
+ * Increment the count of loaded weather icons.
+ * Once all icons are loaded, update the allWeatherIconsLoaded state.
+ */
+const handleWeatherIconLoaded = () => {
+  loadedIconsCount++;
+  if (loadedIconsCount === allbaths.value.length) {
+    allWeatherIconsLoaded.value = true;
+  }
+};
+
+/**
+ * Fetches all bath data from the API.
+ * Formats the received data for display (date and weather).
+ * This function is reactive to page changes for dynamic pagination.
  * @returns {Promise<void>}
  */
 const fetchBaths = async () => {
   try {
     const response = await BathDataService.getAll(page.value, limit.value);
 
-    Allbaths.value = response.data.baths;
-    Allbaths.value.forEach((bath) => {
+    allbaths.value = response.data.baths;
+    allbaths.value.forEach((bath) => {
       bath.formattedCreatedAt = RenderBathData.editDateFormat(bath.createdAt);
       bath.weather = RenderBathData.displayWeatherAsEmoji(bath.weather);
     });
@@ -64,28 +107,35 @@ const fetchBaths = async () => {
 };
 
 /**
- * @description Change page number
- * @param increment
+ * Updates the current page number for pagination.
+ * @param {number} increment - The value to add to the current page number.
  */
 const changePage = (increment: number) => {
   page.value += increment;
 };
 
 // check if next button is disabled
-const isNextDisabled = computed(() => Allbaths.value.length < limit.value);
+const isNextDisabled = computed(() => allbaths.value.length < limit.value);
 
 // Fetch all baths when component is mounted and when page changes
 watchEffect(() => {
-  // console.log("Fetching baths for page:", page.value);
   fetchBaths();
+});
+
+// GSAP animation for the iceberg image on component mount.
+onMounted(() => {
+  gsap.fromTo(
+    "#icebergAnimation",
+    { x: "-100%", visibility: "visible" },
+    { duration: 1, x: "0%" }
+  );
 });
 </script>
 
 <style lang="scss">
+/* all baths view */
 .all-baths-section {
-  width: 75%;
-  margin: auto;
-
+  /* Landscape banner */
   .all-bath-landscape {
     height: 90px;
     margin-top: 50px;
@@ -106,11 +156,13 @@ watchEffect(() => {
       margin-bottom: 10px;
     }
 
-    .illustration-iceberg {
+    /* iceberg animation */
+    #icebergAnimation {
       max-width: 100px;
     }
   }
 
+  /* loading skeleton */
   .loading {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -127,8 +179,8 @@ watchEffect(() => {
       );
       background-size: 200% 100%;
       border-radius: 0.75rem;
-      animation: toto 1.5s infinite;
-      @keyframes toto {
+      animation: loading-animation 1.5s infinite;
+      @keyframes loading-animation {
         0% {
           background-position: 200% 0;
         }
@@ -139,6 +191,7 @@ watchEffect(() => {
     }
   }
 
+  /* cards list */
   .cards-list {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -147,6 +200,7 @@ watchEffect(() => {
     margin-top: 20px;
   }
 
+  /* pagination */
   .all-baths-pagination {
     text-align: center;
     margin-top: 50px;
@@ -155,8 +209,11 @@ watchEffect(() => {
     }
   }
 
-  @include media-max(991.98px) {
-    width: 90%;
+  .back-button {
+    text-align: center;
+    button {
+      margin-top: 10px;
+    }
   }
 }
 </style>

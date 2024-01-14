@@ -1,25 +1,34 @@
 <template>
-  <section>
+  <section class="section-edit-bath-form">
     <h1 class="title">Modifier une <span>baignade</span></h1>
     <!-- Form -->
     <BathForm :editMode="true" />
+
+    <!-- back button -->
+    <div class="back-button">
+      <button @click="router.go(-1)" aria-label="Retour à la page précédente">
+        Retour
+      </button>
+    </div>
   </section>
 </template>
 
 <script setup lang="ts">
 import BathForm from "@/components/baths/BathForm.vue";
+import { useRoute } from "vue-router";
+import router from "@/router";
+
+const route = useRoute();
 </script>
 
 <style lang="scss" scoped>
-section {
-  width: 75%;
-  margin: auto;
-
-  h1 {
-    text-align: center;
-    .title-span {
-      display: inline-block;
-    }
+h1 {
+  text-align: center;
+}
+.back-button {
+  text-align: center;
+  button {
+    margin-top: 50px;
   }
 }
 </style>

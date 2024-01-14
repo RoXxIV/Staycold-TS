@@ -125,6 +125,7 @@ onMounted(() => {
 </script>
 
 <style scoped lang="scss">
+/* Bath details */
 .wrapper-bath-details {
   position: relative;
   width: 100%;
@@ -197,6 +198,7 @@ onMounted(() => {
       }
     }
   }
+  /* lottie animation */
   .lottie-animation {
     position: absolute;
     right: calc(-150px);

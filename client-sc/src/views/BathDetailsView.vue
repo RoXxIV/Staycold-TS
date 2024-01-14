@@ -18,12 +18,16 @@
     <!-- edit and delete buttons if owner -->
     <div v-if="loggedIn && isOwner" class="action">
       <router-link :to="`/edit-bath/${bathDetails._id}`"
-        ><button>
+        ><button aria-label="Modifier la baignade">
           Modifier
-          <font-awesome-icon :icon="['far', 'pen-to-square']" /></button
+          <font-awesome-icon
+            :icon="['far', 'pen-to-square']"
+            aria-label="true"
+          /></button
       ></router-link>
-      <button @click="showModal = true">
-        Supprimer <font-awesome-icon :icon="['far', 'trash-can']" />
+      <button @click="showModal = true" aria-label="Supprimer la baignade">
+        Supprimer
+        <font-awesome-icon :icon="['far', 'trash-can']" aria-label="true" />
       </button>
     </div>
 
@@ -42,9 +46,14 @@
         <p>êtes vous sur ?</p>
         <div>
           <!-- cancel button -->
-          <button @click="close">Annuler</button>
+          <button @click="close" aria-label="Annuler et fermer le modal">
+            Annuler
+          </button>
           <!-- delete button -->
-          <button @click="deleteOneBath(bathDetails._id, authStore.user.id)">
+          <button
+            @click="deleteOneBath(bathDetails._id, authStore.user.id)"
+            aria-label="Supprimer la baignade"
+          >
             Supprimer
           </button>
         </div></template
@@ -53,7 +62,9 @@
 
     <!-- back button -->
     <div class="back-button">
-      <button @click="router.go(-1)">Retour</button>
+      <button @click="router.go(-1)" aria-label="Retour à la page précédente">
+        Retour
+      </button>
     </div>
   </section>
 
@@ -111,7 +122,7 @@ watch(bathDetails, (newVal) => {
 });
 
 /**
- * @description fetch the bath details, format the date and weather
+ * fetch the bath details, format the date and weather
  * and check if the user is the owner
  * @param bathId
  */
@@ -133,7 +144,7 @@ const fetchOneBath = async (bathId: string) => {
 };
 
 /**
- * @description delete the bath and redirect to the home page
+ * delete the bath and redirect to the home page
  * if an error occurs, display the error message and redirect to the home page
  * @param bathId
  * @param userID
@@ -154,6 +165,7 @@ const deleteOneBath = async (bathId: string, userID: string) => {
 </script>
 
 <style lang="scss">
+/* Bath details */
 .bath-details-section {
   width: 40%;
   margin: auto;
@@ -182,6 +194,7 @@ const deleteOneBath = async (bathId: string, userID: string) => {
     }
   }
 
+  /* Modal */
   .modal-content {
     text-align: center;
     .lottie {
@@ -192,6 +205,7 @@ const deleteOneBath = async (bathId: string, userID: string) => {
     }
   }
 
+  /* media queries for bath-details-section */
   @include media-max(991.98px) {
     width: 70%;
 

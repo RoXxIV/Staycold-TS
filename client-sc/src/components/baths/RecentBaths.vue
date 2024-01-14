@@ -9,12 +9,21 @@
 
     <!-- Recent baths -->
     <div class="cards-list">
-      <BathCard v-for="bath in recentBaths" :key="bath._id" :bath="bath" />
+      <BathCard
+        v-for="bath in recentBaths"
+        :key="bath._id"
+        :bath="bath"
+        @weatherIconLoaded="handleWeatherIconLoaded"
+      />
     </div>
 
     <!-- Link to all baths -->
     <div v-if="!serverErrorMessage" class="all-baths-link">
-      <router-link to="/all-baths"><button>Voir tout</button></router-link>
+      <router-link to="/all-baths"
+        ><button aria-label="Voir toutes les baignades">
+          Voir tout
+        </button></router-link
+      >
     </div>
 
     <!-- Error -->
@@ -34,11 +43,24 @@ import type { IBath } from "@/types/bath";
 
 const recentBaths = ref<IBath[]>([]);
 const serverErrorMessage = ref<string>("");
+const allWeatherIconsLoaded = ref(false);
+let loadedIconsCount = 0;
+
 const skeletonArray = ref([]);
 const numberOfSkeletons = 4;
 
+// count number of loaded icons and set allWeatherIconsLoaded to true when all icons are loaded
+const handleWeatherIconLoaded = () => {
+  loadedIconsCount++;
+  if (loadedIconsCount === recentBaths.value.length) {
+    allWeatherIconsLoaded.value = true;
+  }
+};
+
 /**
- * @description Fetch recent baths from API and format weather and date
+ * Asynchronously fetches recent baths from the API.
+ * On success, formats the date and weather data for display.
+ * On failure, sets an error message to inform the user.
  * @returns {Promise<void>}
  */
 const fetchRecentBaths = async () => {
@@ -59,7 +81,7 @@ onMounted(() => {
   fetchRecentBaths();
 
   gsap.fromTo(
-    "h2",
+    ".recent-baths h2",
     {
       opacity: 0,
       x: "-300",
@@ -74,6 +96,7 @@ onMounted(() => {
 </script>
 
 <style scoped lang="scss">
+/* recent baths component */
 .recent-baths {
   display: flex;
   justify-content: center;
@@ -84,6 +107,7 @@ onMounted(() => {
     text-align: center;
   }
 
+  /* loading skeleton */
   .loading {
     text-align: center;
     .skeleton {
@@ -95,8 +119,8 @@ onMounted(() => {
       );
       background-size: 200% 100%;
       border-radius: 0.75rem;
-      animation: toto 1.5s infinite;
-      @keyframes toto {
+      animation: loading-animation 1.5s infinite;
+      @keyframes loading-animation {
         0% {
           background-position: 200% 0;
         }
@@ -107,6 +131,7 @@ onMounted(() => {
     }
   }
 
+  /* cards list */
   .cards-list {
     display: flex;
     justify-content: center;

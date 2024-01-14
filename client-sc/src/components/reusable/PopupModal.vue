@@ -13,8 +13,10 @@ const props = defineProps({
   isdisplayed: Boolean,
 });
 
+// Emit close event
 const emit = defineEmits(["close"]);
 
+// Close the modal
 const handleClose = () => {
   emit("close");
 };

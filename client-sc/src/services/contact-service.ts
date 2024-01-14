@@ -1,3 +1,7 @@
+/**
+ * @fileoverview contact service that manage the contact form
+ */
+
 import http from "../http-common";
 
 class ContactService {
