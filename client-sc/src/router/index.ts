@@ -17,6 +17,7 @@ import SetNewPasswordView from "@/views/auth/SetNewPasswordView.vue";
 /** User */
 import AddBath from "@/views/user/AddBath.vue";
 import EditBath from "@/views/user/EditBath.vue";
+import ProfileView from "@/views/user/ProfileView.vue";
 
 const router = createRouter({
   scrollBehavior() {
@@ -42,6 +43,13 @@ const router = createRouter({
       name: "Register",
       beforeEnter: authGuards.redirectLoggedInUser, // redirect if user is logged in
       component: RegisterView,
+    },
+    /** Profile */
+    {
+      path: "/profile",
+      name: "profile",
+      beforeEnter: authGuards.redirectAnonymousUser, // redirect if user isn't logged in
+      component: ProfileView,
     },
     /** All Baths */
     {

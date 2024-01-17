@@ -34,8 +34,10 @@
           <li><router-link to="/">Accueil </router-link></li>
           <!-- All baths link -->
           <li><router-link to="/all-baths">Baignades</router-link></li>
-          <!-- Nav user -->
-          <!-- profile if User <li></li> -->
+          <!-- User profile -->
+          <li>
+            <router-link to="/profile" v-if="loggedIn">Profil</router-link>
+          </li>
         </ul>
 
         <!-- Nav auth -->

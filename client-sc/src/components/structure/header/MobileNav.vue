@@ -15,6 +15,10 @@
       <li @click="closeMenuAndEmit">
         <router-link to="/">Accueil</router-link>
       </li>
+      <!-- User profile -->
+      <li @click="closeMenuAndEmit">
+        <router-link to="/profile" v-if="loggedIn">Profil</router-link>
+      </li>
       <!-- All baths link -->
       <li @click="closeMenuAndEmit">
         <router-link to="/all-baths">Baignades</router-link>
