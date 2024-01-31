@@ -48,28 +48,24 @@
     </ul>
 
     <!-- social -->
-    <nav>
-      <ul class="footer-social">
-        <li>
-          <a
-            href="https://www.linkedin.com/in/evan-hermier-799b48121/"
-            target="_blank"
-            rel="noopener noreferrer"
-            ><img
-              src="@/assets/images/reseaux/linkedin.png"
-              alt="logo linkedin"
-          /></a>
-        </li>
-        <li>
-          <a
-            href="https://github.com/RoXxIV"
-            target="_blank"
-            rel="noopener noreferrer"
-            ><img src="@/assets/images/reseaux/github.png" alt="logo github"
-          /></a>
-        </li>
-      </ul>
-    </nav>
+    <ul class="footer-social">
+      <li>
+        <a
+          href="https://www.linkedin.com/in/evan-hermier-799b48121/"
+          target="_blank"
+          rel="noopener noreferrer"
+          ><img src="@/assets/images/reseaux/linkedin.png" alt="logo linkedin"
+        /></a>
+      </li>
+      <li>
+        <a
+          href="https://github.com/RoXxIV"
+          target="_blank"
+          rel="noopener noreferrer"
+          ><img src="@/assets/images/reseaux/github.png" alt="logo github"
+        /></a>
+      </li>
+    </ul>
   </footer>
 </template>
 
@@ -118,12 +114,11 @@ footer {
     }
     /* contact */
     &.footer-contact {
-      text-align: center;
-
       li {
         padding: 0px 10px;
         line-height: 2.5;
         font-size: 1.1em;
+        text-align: center;
         &:hover {
           color: var(--blue);
           transition: all 0.2s ease 0s;

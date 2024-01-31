@@ -198,6 +198,10 @@ onMounted(() => {
     grid-auto-rows: minmax(200px, auto);
     grid-gap: 1rem;
     margin-top: 20px;
+
+    @include media-max(770px) {
+      grid-template-columns: repeat(auto-fill, minmax(60%, 1fr));
+    }
   }
 
   /* pagination */

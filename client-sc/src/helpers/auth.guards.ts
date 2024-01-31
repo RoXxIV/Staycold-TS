@@ -1,7 +1,7 @@
 /**
  * @fileoverview create auth guards for the router
  */
-import { createPinia, type Pinia } from "pinia";
+import { type Pinia } from "pinia";
 import { useAuthStore } from "@/stores/authStore";
 
 /**
@@ -27,7 +27,7 @@ class AuthGuards {
   public redirectLoggedInUser(to: any, from: any, next: any) {
     // Get the auth store and check if the user is logged in
     const authStore = useAuthStore(this.pinia);
-    if (authStore.status.loggedIn) {
+    if (authStore.status.loggedIn === true) {
       next({ name: "home" });
     } else {
       next();
@@ -40,7 +40,7 @@ class AuthGuards {
   public redirectAnonymousUser(to: any, from: any, next: any) {
     // Get the auth store and check if the user is logged in
     const authStore = useAuthStore(this.pinia);
-    if (!authStore.status.loggedIn) {
+    if (authStore.status.loggedIn === false) {
       next({ name: "login" });
     } else {
       next();
@@ -48,7 +48,4 @@ class AuthGuards {
   }
 }
 
-// create pinia instance, authGuards instance and export it
-const pinia = createPinia();
-const authGuards = new AuthGuards(pinia);
-export default authGuards;
+export default AuthGuards;

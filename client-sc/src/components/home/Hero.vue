@@ -89,12 +89,15 @@ onMounted(() => {
 
   /* media queries */
   @include media-max(991.98px) {
+    padding: 10px;
     .hero-intro {
       h2 {
         font-size: 1.8em;
       }
       p {
         font-size: 1em;
+        word-wrap: break-word;
+        width: 90%;
       }
     }
     @include media-max(667.98px) {

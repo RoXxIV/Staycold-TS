@@ -1,13 +1,14 @@
 <template>
   <!-- User Information -->
   <UserCard
+    :username="authStore.user?.username"
     :registrationDate="registrationDate"
     :totalBaths="totalBaths"
     :timeInWater="timeInWater"
     :lowestTemperature="lowestTemperature"
   />
   <section class="section-user-baths">
-    <h2>Mes Baignades</h2>
+    <h2 class="title">Mes <span>Baignades</span></h2>
 
     <!-- All User baths -->
     <div class="cards-list">
@@ -19,12 +20,17 @@
       />
     </div>
     <!-- display more baths -->
-    <button @click="lastIndex += 4">Voir plus</button>
+    <button
+      @click="lastIndex += 4"
+      :disabled="lastIndex >= allUserBaths.length"
+    >
+      Voir plus
+    </button>
   </section>
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, computed } from "vue";
+import { ref, onMounted, computed, watchEffect } from "vue";
 import router from "@/router";
 import { useAuthStore } from "@/stores/authStore";
 import RenderBathData from "@/helpers/renderBathData";
@@ -42,11 +48,6 @@ let loadedIconsCount = 0;
 const lastIndex = ref(4);
 
 onMounted(() => {
-  // Redirect to login if user is not authenticated
-  if (!authStore.user?.id) {
-    router.push("/login");
-    return;
-  }
   // Format user's registration date for display
   registrationDate.value = RenderBathData.editDateFormat(
     authStore.user?.createdAt
@@ -101,6 +102,9 @@ const handleWeatherIconLoaded = () => {
 
 <style lang="scss" scoped>
 .section-user-baths {
+  h2 {
+    text-align: center;
+  }
   /* cards list */
   .cards-list {
     display: grid;
@@ -112,6 +116,11 @@ const handleWeatherIconLoaded = () => {
   button {
     display: block;
     margin: 30px auto;
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
   }
 }
 </style>

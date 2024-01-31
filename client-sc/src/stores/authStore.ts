@@ -32,6 +32,7 @@ export const useAuthStore = defineStore({
         this.user = user;
         this.status.loggedIn = true;
         localStorage.setItem("user", JSON.stringify(user));
+        console.log("status", this.status.loggedIn);
       } catch (error) {
         this.logout();
         throw error;
@@ -62,6 +63,7 @@ export const useAuthStore = defineStore({
       this.user = null;
       this.status.loggedIn = false;
       localStorage.removeItem("user");
+      console.log("status", this.status.loggedIn);
     },
   },
 });

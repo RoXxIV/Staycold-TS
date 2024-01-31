@@ -4,9 +4,9 @@
       <div class="profile-picture"></div>
       <ul class="user-link">
         <li><RouterLink to="/">Retour à l'accueil</RouterLink></li>
-        <li><RouterLink to="add-bath">Ajouter une baignade</RouterLink></li>
+        <li><RouterLink to="/breath">Réspiration guidée</RouterLink></li>
       </ul>
-      <h1 class="pseudo">Pseudo</h1>
+      <h1 class="pseudo">{{ username }}</h1>
       <p class="timestamp">inscrit depuis le {{ registrationDate }}</p>
 
       <ul class="statistics">
@@ -36,6 +36,7 @@ const props = defineProps({
   timeInWater: Number,
   totalBaths: Number,
   lowestTemperature: Number,
+  username: String,
 });
 
 /**
@@ -56,8 +57,8 @@ function convertMinutesToHours(minutes: number | undefined): string {
 .section-user-profile {
   display: flex;
   justify-content: center;
-  align-items: center;
-  height: 100vh;
+  margin: 150px auto 50px auto;
+  //height: 100vh;
   width: 60%;
 
   .user-bloc {
@@ -79,7 +80,11 @@ function convertMinutesToHours(minutes: number | undefined): string {
       background-size: 160%;
       background-position-y: 10%;
       background-position-x: 50%;
-      border: 1px solid var(--blue);
+      border: 2px solid var(--primary-border);
+
+      @include media-max(991.98px) {
+        display: none;
+      }
     }
 
     .user-link {
@@ -100,6 +105,15 @@ function convertMinutesToHours(minutes: number | undefined): string {
           text-decoration-color: var(--white);
         }
       }
+
+      @include media-max(991.98px) {
+        flex-direction: column;
+
+        li {
+          margin-bottom: 20px;
+          text-underline-offset: 3px;
+        }
+      }
     }
 
     h1 {
@@ -107,6 +121,11 @@ function convertMinutesToHours(minutes: number | undefined): string {
       margin-bottom: 0;
       text-align: center;
       font-size: 2em;
+
+      @include media-max(991.98px) {
+        margin-top: 30px;
+        padding-bottom: 10px;
+      }
     }
     .timestamp {
       text-align: center;
@@ -131,6 +150,25 @@ function convertMinutesToHours(minutes: number | undefined): string {
       display: block;
       margin: auto;
     }
+
+    @include media-max(991.98px) {
+      border: none;
+    }
+  }
+  /* Section Responsive __________*/
+  @include media-max(1450px) {
+    width: 90%;
+
+    @include media-max(991.98px) {
+      width: 90%;
+      margin-top: 10px;
+      margin-bottom: 10px;
+      border: none;
+    }
+  }
+  @include media-max(611.98px) {
+    min-height: 70vh;
+    width: 90%;
   }
 }
 </style>

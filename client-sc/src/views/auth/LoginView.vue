@@ -98,7 +98,9 @@ const onSubmit = handleSubmit(async (values) => {
       username: values.username,
       password: values.password,
     });
-    router.push("/");
+    router.push("/").then(() => {
+      router.go(0); // Pour forcer la mise à jour de l'application
+    });
   } catch (error) {
     serverErrorMessage.value =
       (error as any)?.response?.data?.message || "Erreur lors de la connexion";

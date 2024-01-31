@@ -6,9 +6,9 @@
 
     <!-- back button -->
     <div class="back-button">
-      <button @click="router.go(-1)" aria-label="Retour à la page précédente">
-        Retour
-      </button>
+      <a @click="router.go(-1)" aria-label="Retour à la page précédente">
+        Retour à la page précédente
+      </a>
     </div>
   </section>
 </template>
@@ -27,8 +27,10 @@ h1 {
 }
 .back-button {
   text-align: center;
-  button {
-    margin-top: 50px;
+  margin-top: 50px;
+  text-decoration: underline;
+  a {
+    cursor: pointer;
   }
 }
 </style>

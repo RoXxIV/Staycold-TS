@@ -1,10 +1,12 @@
 import { createRouter, createWebHistory } from "vue-router";
+import { createPinia } from "pinia";
 import authGuards from "@/helpers/auth.guards";
 
 /** Routes */
 import HomeView from "@/views/HomeView.vue";
 import NotFoundView from "../views/NotFoundView.vue";
 import ContactFormView from "@/views/ContactFormView.vue";
+import BreathView from "@/views/BreathView.vue";
 /** Baths */
 import AllBathView from "@/views/AllBathsView.vue";
 import BathDetailsView from "@/views/BathDetailsView.vue";
@@ -18,6 +20,9 @@ import SetNewPasswordView from "@/views/auth/SetNewPasswordView.vue";
 import AddBath from "@/views/user/AddBath.vue";
 import EditBath from "@/views/user/EditBath.vue";
 import ProfileView from "@/views/user/ProfileView.vue";
+
+const pinia = createPinia();
+const AuthGuards = new authGuards(pinia);
 
 const router = createRouter({
   scrollBehavior() {
@@ -33,22 +38,22 @@ const router = createRouter({
     /** Login Form  */
     {
       path: "/login",
-      name: "Login",
-      beforeEnter: authGuards.redirectLoggedInUser, // redirect if user is logged in
+      name: "login",
+      beforeEnter: AuthGuards.redirectLoggedInUser, // redirect if user is logged in
       component: LoginView,
     },
     /** Register Form */
     {
       path: "/register",
       name: "Register",
-      beforeEnter: authGuards.redirectLoggedInUser, // redirect if user is logged in
+      beforeEnter: AuthGuards.redirectLoggedInUser, // redirect if user is logged in
       component: RegisterView,
     },
     /** Profile */
     {
       path: "/profile",
       name: "profile",
-      beforeEnter: authGuards.redirectAnonymousUser, // redirect if user isn't logged in
+      beforeEnter: AuthGuards.redirectAnonymousUser, // redirect if user isn't logged in
       component: ProfileView,
     },
     /** All Baths */
@@ -67,35 +72,35 @@ const router = createRouter({
     {
       path: "/add-bath",
       name: "Add-bath",
-      beforeEnter: authGuards.redirectAnonymousUser, // redirect if user isn't logged in
+      beforeEnter: AuthGuards.redirectAnonymousUser, // redirect if user isn't logged in
       component: AddBath,
     },
     /** Edit bath */
     {
       path: "/edit-bath/:bathId",
       name: "Edit-bath",
-      beforeEnter: authGuards.redirectAnonymousUser, // redirect if user isn't logged in
+      beforeEnter: AuthGuards.redirectAnonymousUser, // redirect if user isn't logged in
       component: EditBath,
     },
     /** Confirmation user account view  */
     {
       path: "/confirm-mail-redirection/:confirmationCode",
       name: "Confirm-mail",
-      beforeEnter: authGuards.redirectLoggedInUser, // redirect if user is logged in
+      beforeEnter: AuthGuards.redirectLoggedInUser, // redirect if user is logged in
       component: ConfirmMailView,
     },
     /** Reset password view  */
     {
       path: "/reset-password",
       name: "Reset-password",
-      beforeEnter: authGuards.redirectLoggedInUser, // redirect if user is logged in
+      beforeEnter: AuthGuards.redirectLoggedInUser, // redirect if user is logged in
       component: ResetPasswordView,
     },
     /** Set new password view  */
     {
       path: "/set-new-password/:confirmationCode",
       name: "Set-new-password",
-      beforeEnter: authGuards.redirectLoggedInUser, // redirect if user is logged in
+      beforeEnter: AuthGuards.redirectLoggedInUser, // redirect if user is logged in
       component: SetNewPasswordView,
     },
     /** Contact form view  */
@@ -103,6 +108,12 @@ const router = createRouter({
       path: "/contact-form",
       name: "Contact-form",
       component: ContactFormView,
+    },
+    /** Breath view  */
+    {
+      path: "/breath",
+      name: "Breath",
+      component: BreathView,
     },
     /** redirect incorrect routes to 404  */
     { path: "/:pathMatch(.*)*", name: "Not-found", component: NotFoundView },

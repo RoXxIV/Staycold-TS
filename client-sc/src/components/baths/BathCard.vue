@@ -103,5 +103,9 @@ onMounted(async () => {
       font-style: italic;
     }
   }
+  @include media-max(770px) {
+    text-align: center;
+    margin: 5px auto;
+  }
 }
 </style>
