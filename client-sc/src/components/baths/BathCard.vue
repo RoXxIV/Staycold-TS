@@ -3,10 +3,8 @@
   <router-link :to="`/bath-details/${bath._id}`" tag="div" class="card">
     <div>
       <!-- weather icon -->
-      <span v-if="isLoading">Chargement...</span>
       <img
-        v-else
-        :src="weatherIconUrl"
+        :src="weatherIconPath"
         class="weather-icon"
         alt="icone indiquant la météo"
         aria-label="Time in water"
@@ -37,8 +35,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from "vue";
-import { useImage } from "@vueuse/core";
+import { ref, watchEffect } from "vue";
 import { getWeatherIconPath } from "@/helpers/getWeatherIconPath";
 import type { IBath } from "@/types/bath";
 
@@ -49,20 +46,20 @@ const props = defineProps({
   },
 });
 
-const weatherIconUrl = ref("");
+const weatherIconPath = ref<string>("");
 
-// get weather icon path
-watch(
-  () => props.bath.weather,
-  async (newWeather) => {
-    const iconPath = await getWeatherIconPath(newWeather);
-    weatherIconUrl.value = iconPath;
-  },
-  { immediate: true }
-);
-
-// loading state
-const { isLoading } = useImage({ src: weatherIconUrl.value });
+// Get weather icon path when component is mounted
+watchEffect(() => {
+  if (props.bath && props.bath.weather) {
+    getWeatherIconPath(props.bath.weather)
+      .then((path) => {
+        weatherIconPath.value = path;
+      })
+      .catch((error) => {
+        console.error("Erreur lors du chargement de l'icône météo:", error);
+      });
+  }
+});
 </script>
 
 <style scoped lang="scss">
