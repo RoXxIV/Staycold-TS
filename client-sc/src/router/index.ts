@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
 import { createPinia } from "pinia";
-import authGuards from "@/helpers/auth.guards";
+import authGuards from "@/router/guards/auth.guards";
 
 /** Routes */
 import HomeView from "@/views/HomeView.vue";
@@ -8,18 +8,18 @@ import NotFoundView from "../views/NotFoundView.vue";
 import ContactFormView from "@/views/ContactFormView.vue";
 import BreathView from "@/views/BreathView.vue";
 /** Baths */
-import AllBathView from "@/views/AllBathsView.vue";
-import BathDetailsView from "@/views/BathDetailsView.vue";
+import AllBathView from "@/views/BathView/AllBathsView.vue";
+import BathDetailsView from "@/views/BathView/BathDetailsView.vue";
 /** Auth */
-import LoginView from "@/views/auth/LoginView.vue";
-import RegisterView from "@/views/auth/RegisterView.vue";
-import ConfirmMailView from "@/views/auth/ConfirmMailView.vue";
-import ResetPasswordView from "@/views/auth/ResetPasswordView.vue";
-import SetNewPasswordView from "@/views/auth/SetNewPasswordView.vue";
+import LoginView from "@/views/AuthView/LoginView.vue";
+import RegisterView from "@/views/AuthView/RegisterView.vue";
+import ConfirmMailView from "@/views/AuthView/ConfirmMailView.vue";
+import ResetPasswordView from "@/views/AuthView/ResetPasswordView.vue";
+import SetNewPasswordView from "@/views/AuthView/SetNewPasswordView.vue";
 /** User */
-import AddBath from "@/views/user/AddBath.vue";
-import EditBath from "@/views/user/EditBath.vue";
-import ProfileView from "@/views/user/ProfileView.vue";
+import AddBath from "@/views/UserView/AddBath.vue";
+import EditBath from "@/views/UserView/EditBath.vue";
+import ProfileView from "@/views/UserView/ProfileView.vue";
 
 const pinia = createPinia();
 const AuthGuards = new authGuards(pinia);

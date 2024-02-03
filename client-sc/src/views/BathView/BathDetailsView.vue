@@ -55,17 +55,17 @@
             aria-label="Supprimer la baignade"
           >
             Supprimer
-          </button>
-        </div></template
-      >
+            <font-awesome-icon :icon="['far', 'trash-can']" aria-label="true" />
+          </button></div
+      ></template>
     </PopupModal>
 
     <!-- back button -->
-    <div class="back-button">
-      <button @click="router.go(-1)" aria-label="Retour à la page précédente">
-        Retour
-      </button>
-    </div>
+    <BackLink
+      path="back"
+      ariaLabel="Retour à la page précédente"
+      content="Page précédente"
+    />
   </section>
 
   <div v-else>
@@ -82,13 +82,14 @@ import { ref, onMounted, computed, watch } from "vue";
 import { useRoute } from "vue-router";
 import router from "@/router";
 import { useAuthStore } from "@/stores/authStore";
-import BathCardDetails from "@/components/baths/BathCardDetails.vue";
+import BathCardDetails from "@/components/Baths/BathCardDetails.vue";
 import BathDataService from "@/services/BathDataService";
-import RenderBathData from "../helpers/renderBathData";
-import ServerResponses from "@/components/reusable/ServerResponses.vue";
-import PopupModal from "@/components/reusable/PopupModal.vue";
+import RenderBathData from "@/helpers/renderBathData";
+import ServerResponses from "@/components/Common/ServerResponses.vue";
+import PopupModal from "@/components/Common/PopupModal.vue";
+import BackLink from "@/components/Common/BackLink.vue";
 import deleteLottie from "@/assets/lotties/delete.json";
-import { useLottieOptions } from "@/helpers/useLottieOptions";
+import { useLottieOptions } from "@/composables/useLottieOptions";
 import type { IBath } from "@/types/bath";
 
 const authStore = useAuthStore();
@@ -187,16 +188,13 @@ const deleteOneBath = async (bathId: string, userID: string) => {
     }
   }
 
-  .back-button {
-    text-align: center;
-    button {
-      margin-top: 10px;
-    }
-  }
-
   /* Modal */
   .modal-content {
     text-align: center;
+    p {
+      margin: 20px 0;
+      font-weight: bold;
+    }
     .lottie {
       max-width: 200px;
     }
@@ -216,11 +214,6 @@ const deleteOneBath = async (bathId: string, userID: string) => {
 
     .action {
       text-align: center;
-    }
-
-    .back-button {
-      text-align: center;
-      margin-top: 30px;
     }
 
     @include media-max(550px) {

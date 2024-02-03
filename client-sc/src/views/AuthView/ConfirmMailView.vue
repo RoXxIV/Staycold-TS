@@ -32,7 +32,7 @@ import { ref, onMounted } from "vue";
 import { useRoute } from "vue-router";
 import router from "@/router";
 import AuthService from "@/services/auth-service";
-import ServerResponses from "@/components/reusable/ServerResponses.vue";
+import ServerResponses from "@/components/Common/ServerResponses.vue";
 
 const route = useRoute();
 const isConfirmed = ref<boolean>(false);

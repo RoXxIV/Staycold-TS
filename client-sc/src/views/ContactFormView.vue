@@ -103,6 +103,11 @@
         />
       </div>
     </div>
+    <BackLink
+      path="/"
+      ariaLabel="Retour à la page d'accueil"
+      content="Retour à l'accueil"
+    />
   </section>
 </template>
 
@@ -111,10 +116,11 @@ import { ref } from "vue";
 import * as yup from "yup";
 import { useForm, useField } from "vee-validate";
 import ContactService from "@/services/contact-service";
-import ServerResponses from "@/components/reusable/ServerResponses.vue";
-import CustomTextInput from "@/components/forms/CustomTextInput.vue";
-import CustomSelectInput from "@/components/forms/CustomSelectInput.vue";
-import CustomTextArea from "@/components/forms/CustomTextArea.vue";
+import ServerResponses from "@/components/Common/ServerResponses.vue";
+import CustomTextInput from "@/components/FormInputs/CustomTextInput.vue";
+import CustomSelectInput from "@/components/FormInputs/CustomSelectInput.vue";
+import CustomTextArea from "@/components/FormInputs/CustomTextArea.vue";
+import BackLink from "@/components/Common/BackLink.vue";
 
 const submited = ref<boolean>(false);
 const serverMessage = ref<string>("");

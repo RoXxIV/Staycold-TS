@@ -10,13 +10,20 @@
   <section class="section-user-baths">
     <h2 class="title">Mes <span>Baignades</span></h2>
 
+    <!-- Loading -->
+    <BathSkeleton v-if="isLoading" :numberOfSkeletons="4" />
+
+    <!-- Error -->
+    <div v-if="errorServer" class="error-server">
+      <p>Une erreur est survenue lors de la récupération des baignades.</p>
+    </div>
+
     <!-- All User baths -->
     <div class="cards-list">
       <BathCard
         v-for="bath in allUserBaths.slice(0, lastIndex)"
         :key="bath._id"
         :bath="bath"
-        @weatherIconLoaded="handleWeatherIconLoaded"
       />
     </div>
     <!-- display more baths -->
@@ -26,6 +33,13 @@
     >
       Voir plus
     </button>
+
+    <!-- Back button -->
+    <BackLink
+      path="/"
+      ariaLabel="Retour à la page d'accueil"
+      content="Retour à l'accueil"
+    />
   </section>
 </template>
 
@@ -35,17 +49,19 @@ import router from "@/router";
 import { useAuthStore } from "@/stores/authStore";
 import RenderBathData from "@/helpers/renderBathData";
 import BathDataService from "@/services/BathDataService";
-import UserCard from "@/components/user/UserCard.vue";
-import BathCard from "@/components/baths/BathCard.vue";
+import UserCard from "@/components/User/UserCard.vue";
+import BathCard from "@/components/Baths/BathCard.vue";
+import BathSkeleton from "@/components/Baths/BathSkeleton.vue";
+import BackLink from "@/components/Common/BackLink.vue";
 import type { IBath } from "@/types/bath";
 
 const authStore = useAuthStore();
 const loggedIn = computed(() => authStore.status.loggedIn);
 const allUserBaths = ref<IBath[]>([]);
-const allWeatherIconsLoaded = ref(false);
 const registrationDate = ref<string>("");
-let loadedIconsCount = 0;
 const lastIndex = ref(4);
+const errorServer = ref<boolean>(false);
+const isLoading = ref<boolean>(false);
 
 onMounted(() => {
   // Format user's registration date for display
@@ -61,12 +77,17 @@ onMounted(() => {
  * @param userId
  */
 const fetchUserBaths = async (userId: string) => {
+  isLoading.value = true;
   try {
     const response = await BathDataService.getByAuthor(userId);
     allUserBaths.value = response.data as IBath[];
     processBathData();
+    errorServer.value = false;
   } catch (error) {
     console.error("Erreur lors de la récupération des baignades:", error);
+    errorServer.value = true;
+  } finally {
+    isLoading.value = false;
   }
 };
 
@@ -89,21 +110,21 @@ const lowestTemperature = computed(() =>
     100
   )
 );
-
-// Handler for when a weather icon is loaded
-const handleWeatherIconLoaded = () => {
-  loadedIconsCount++;
-  // Mark all weather icons as loaded once count reaches total baths
-  if (loadedIconsCount === allUserBaths.value.length) {
-    allWeatherIconsLoaded.value = true;
-  }
-};
 </script>
 
 <style lang="scss" scoped>
 .section-user-baths {
   h2 {
     text-align: center;
+  }
+
+  /* error message */
+  .error-server {
+    text-align: center;
+    margin-top: 50px;
+    p {
+      font-weight: bold;
+    }
   }
   /* cards list */
   .cards-list {

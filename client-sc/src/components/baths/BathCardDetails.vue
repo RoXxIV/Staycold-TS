@@ -68,8 +68,9 @@
 import { ref, onMounted } from "vue";
 import { watchEffect } from "vue";
 import gsap from "gsap";
-import { getWeatherIconPath } from "@/helpers/pathHelper";
-import { useLottieOptions } from "@/helpers/useLottieOptions";
+import { useMediaQuery } from "@vueuse/core";
+import { getWeatherIconPath } from "@/helpers/getWeatherIconPath";
+import { useLottieOptions } from "@/composables/useLottieOptions";
 import sharkDetails from "@/assets/lotties/shark_details.json";
 import type { IBath } from "@/types/bath";
 
@@ -113,19 +114,17 @@ watchEffect(() => {
 });
 
 onMounted(() => {
-  /**
-   * Animate the bath details blocs when component is mounted (gsap)
-   * @param {string} selector - The selector of the element to animate
-   * @param {number} xStart - The starting position of the element
-   */
-  animations.forEach(({ selector, xStart }) => {
-    gsap.fromTo(selector, { x: xStart }, { duration: 1, x: 0 });
-  });
+  // start animations only if screen is bigger than 991.98px
+  const isSmallScreen = useMediaQuery("(max-width: 991.98px)");
+  if (!isSmallScreen.value) {
+    animations.forEach(({ selector, xStart }) => {
+      gsap.fromTo(selector, { x: xStart }, { duration: 1, x: 0 });
+    });
+  }
 });
 </script>
 
 <style scoped lang="scss">
-/* Bath details */
 .wrapper-bath-details {
   position: relative;
   width: 100%;
@@ -180,6 +179,7 @@ onMounted(() => {
         margin: 10px 20px 0 0;
       }
 
+      /*wave animation */
       @keyframes filling {
         50% {
           background-position: 2000px 100px;
@@ -210,10 +210,8 @@ onMounted(() => {
     .lottie {
       max-width: 150px;
     }
-  }
-
-  @include media-max(991.98px) {
-    .lottie-animation {
+    /* Media queries .lottie */
+    @include media-max(991.98px) {
       display: none;
     }
   }

@@ -3,59 +3,41 @@
     <h2 class="title">Baignades <span>récentes</span></h2>
 
     <!-- Loading -->
-    <div v-if="!recentBaths.length" class="loading">
-      <div class="skeleton" v-for="n in numberOfSkeletons" :key="n"></div>
+    <BathSkeleton v-if="isLoading" :numberOfSkeletons="4" />
+
+    <!-- Error -->
+    <div v-if="errorServer" class="error-server">
+      <p>Une erreur est survenue lors de la récupération des baignades.</p>
     </div>
 
     <!-- Recent baths -->
-    <div class="cards-list">
-      <BathCard
-        v-for="bath in recentBaths"
-        :key="bath._id"
-        :bath="bath"
-        @weatherIconLoaded="handleWeatherIconLoaded"
-      />
+    <div v-else class="cards-list">
+      <BathCard v-for="bath in recentBaths" :key="bath._id" :bath="bath" />
     </div>
 
     <!-- Link to all baths -->
-    <div v-if="!serverErrorMessage" class="all-baths-link">
+    <div class="all-baths-link">
       <router-link to="/all-baths"
         ><button aria-label="Voir toutes les baignades">
           Voir tout
         </button></router-link
       >
     </div>
-
-    <!-- Error -->
-    <div v-if="serverErrorMessage" class="error-message">
-      <p>{{ serverErrorMessage }}</p>
-    </div>
   </section>
 </template>
 
 <script setup lang="ts">
 import { ref, onMounted, type Ref } from "vue";
-import BathCard from "@/components/baths/BathCard.vue";
+import BathCard from "../Baths/BathCard.vue";
 import BathDataService from "@/services/BathDataService";
 import RenderBathData from "@/helpers/renderBathData";
+import BathSkeleton from "@/components/Baths/BathSkeleton.vue";
 import gsap from "gsap";
 import type { IBath } from "@/types/bath";
 
 const recentBaths = ref<IBath[]>([]);
-const serverErrorMessage = ref<string>("");
-const allWeatherIconsLoaded = ref(false);
-let loadedIconsCount = 0;
-
-const skeletonArray = ref([]);
-const numberOfSkeletons = 4;
-
-// count number of loaded icons and set allWeatherIconsLoaded to true when all icons are loaded
-const handleWeatherIconLoaded = () => {
-  loadedIconsCount++;
-  if (loadedIconsCount === recentBaths.value.length) {
-    allWeatherIconsLoaded.value = true;
-  }
-};
+const errorServer = ref<boolean>(false);
+const isLoading = ref<boolean>(false);
 
 /**
  * Asynchronously fetches recent baths from the API.
@@ -64,6 +46,7 @@ const handleWeatherIconLoaded = () => {
  * @returns {Promise<void>}
  */
 const fetchRecentBaths = async () => {
+  isLoading.value = true;
   try {
     const response = await BathDataService.getRecent();
     recentBaths.value = response.data;
@@ -72,8 +55,11 @@ const fetchRecentBaths = async () => {
       bath.formattedCreatedAt = RenderBathData.editDateFormat(bath.createdAt);
       bath.weather = RenderBathData.displayWeatherAsEmoji(bath.weather);
     });
+    errorServer.value = false;
   } catch (error) {
-    serverErrorMessage.value = "Impossible de récupérer les baignades récentes";
+    errorServer.value = true;
+  } finally {
+    isLoading.value = false;
   }
 };
 // Fetch recent baths when component is mounted and animate title (gsap)
@@ -96,7 +82,6 @@ onMounted(() => {
 </script>
 
 <style scoped lang="scss">
-/* recent baths component */
 .recent-baths {
   display: flex;
   justify-content: center;
@@ -107,27 +92,12 @@ onMounted(() => {
     text-align: center;
   }
 
-  /* loading skeleton */
-  .loading {
+  /* error message */
+  .error-server {
     text-align: center;
-    .skeleton {
-      background: linear-gradient(
-        90deg,
-        var(--secondary-background) 25%,
-        var(--skeleton-background) 50%,
-        var(--secondary-background) 75%
-      );
-      background-size: 200% 100%;
-      border-radius: 0.75rem;
-      animation: loading-animation 1.5s infinite;
-      @keyframes loading-animation {
-        0% {
-          background-position: 200% 0;
-        }
-        100% {
-          background-position: -200% 0;
-        }
-      }
+    margin-top: 50px;
+    p {
+      font-weight: bold;
     }
   }
 
@@ -142,10 +112,6 @@ onMounted(() => {
   .all-baths-link {
     text-align: center;
     margin-top: 50px;
-  }
-
-  .error-message {
-    text-align: center;
   }
 }
 </style>

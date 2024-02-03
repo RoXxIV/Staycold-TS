@@ -20,11 +20,18 @@
         {{ isActivated ? "Arreter" : "Commencer" }}
       </button>
     </div>
+    <!-- back button -->
+    <BackLink
+      path="/"
+      ariaLabel="Retour à la page d'accueil"
+      content="Retour à l'accueil"
+    />
   </section>
 </template>
 
 <script setup lang="ts">
 import { ref, onMounted, onBeforeUnmount } from "vue";
+import BackLink from "@/components/Common/BackLink.vue";
 
 const text = ref<string>("");
 const totalTime = ref<number>(12000);
@@ -140,6 +147,7 @@ onBeforeUnmount(() => {
   .breathing-launcher {
     text-align: center;
   }
+
   /* Section Responsive __________*/
   @include media-max(611.98px) {
     min-height: 70vh;

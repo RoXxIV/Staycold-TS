@@ -13,9 +13,8 @@
 
 <script setup lang="ts">
 import { RouterView } from "vue-router";
-
-import MyHeader from "./components/structure/header/MyHeader.vue";
-import MyFooter from "./components/structure/footer/MyFooter.vue";
+import MyHeader from "./components/Structure/Header/MyHeader.vue";
+import MyFooter from "./components/Structure/Footer/MyFooter.vue";
 </script>
 
 <style lang="scss">

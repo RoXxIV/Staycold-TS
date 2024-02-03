@@ -61,8 +61,8 @@ import { ref } from "vue";
 import * as yup from "yup";
 import { useForm, useField } from "vee-validate";
 import AuthService from "@/services/auth-service";
-import ServerResponses from "@/components/reusable/ServerResponses.vue";
-import CustomTextInput from "@/components/forms/CustomTextInput.vue";
+import ServerResponses from "@/components/Common/ServerResponses.vue";
+import CustomTextInput from "@/components/FormInputs/CustomTextInput.vue";
 
 const successful = ref<boolean>(false);
 const serverMessage = ref<string>("");

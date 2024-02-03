@@ -12,11 +12,11 @@
 </template>
 
 <script setup lang="ts">
-import Banner from "@/components/home/Banner.vue";
-import Hero from "@/components/home/Hero.vue";
-import BannerLandscape from "@/components/home/BannerLandscape.vue";
-import RecentBaths from "@/components/baths/RecentBaths.vue";
-import BreathLink from "@/components/reusable/BreathLink.vue";
+import Banner from "@/components/Home/Banner.vue";
+import Hero from "@/components/Home/Hero.vue";
+import BannerLandscape from "@/components/Home/BannerLandscape.vue";
+import RecentBaths from "@/components/Baths/RecentBaths.vue";
+import BreathLink from "@/components/Common/BreathLink.vue";
 </script>
 
 <style lang="scss">

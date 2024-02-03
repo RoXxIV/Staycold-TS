@@ -2,7 +2,7 @@ import { describe, it, expect, beforeEach } from "vitest";
 import { mount } from "@vue/test-utils";
 import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "@/views/HomeView.vue";
-import MyFooter from "@/components/structure/footer/MyFooter.vue";
+import MyFooter from "@/components/Structure/footer/MyFooter.vue";
 
 const router = createRouter({
   history: createWebHistory(),

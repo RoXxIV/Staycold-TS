@@ -224,12 +224,13 @@ import { useForm, useField } from "vee-validate";
 import { useRoute } from "vue-router";
 import { useAuthStore } from "@/stores/authStore";
 import BathDataService from "@/services/BathDataService";
-import CustomNumberInput from "@/components/forms/CustomNumberInput.vue";
-import CustomSelectInput from "../forms/CustomSelectInput.vue";
-import CustomTextArea from "../forms/CustomTextArea.vue";
-import ServerResponses from "../reusable/ServerResponses.vue";
+import CustomNumberInput from "@/components/FormInputs/CustomNumberInput.vue";
+import CustomSelectInput from "../FormInputs/CustomSelectInput.vue";
+import CustomTextArea from "../FormInputs/CustomTextArea.vue";
+import ServerResponses from "../Common/ServerResponses.vue";
 import type { IBath } from "@/types/bath";
 
+// define wether the form is in edit mode or not
 const props = defineProps({
   editMode: {
     type: Boolean,
@@ -355,7 +356,6 @@ const addOnSubmit = async (values: IBath) => {
     isSubmited.value = true;
     serverMessage.value =
       (error as any)?.response?.data?.message || "Une erreur est survenue";
-    // console.log(error);
   }
 };
 
@@ -385,7 +385,6 @@ const editOnSubmit = async (bathId: string, values: IBath) => {
     redirectionPath.value = "/";
     serverMessage.value =
       (error as any)?.response?.data?.message || "Une erreur est survenue";
-    // console.log(error);
   }
 };
 
@@ -406,7 +405,7 @@ const fetchOneBath = async (bathId: string) => {
     globalFeeling.value = response.data.globalFeeling;
     commentary.value = response.data.commentary;
   } catch (error) {
-    // console.error("Erreur lors de la récupération de la baignades:", error);
+    console.error("Erreur lors de la récupération de la baignades:", error);
   }
 };
 </script>

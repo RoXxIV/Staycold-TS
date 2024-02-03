@@ -5,18 +5,19 @@
     <BathForm :editMode="false" />
 
     <!-- back button -->
-    <div class="back-button">
-      <a @click="router.go(-1)" aria-label="Retour à la page précédente">
-        Retour à la page précédente
-      </a>
-    </div>
+    <BackLink
+      path="back"
+      ariaLabel="Retour à la page précédente"
+      content="Page précédente"
+    />
   </section>
 </template>
 
 <script setup lang="ts">
-import BathForm from "@/components/baths/BathForm.vue";
 import { useRoute } from "vue-router";
 import router from "@/router";
+import BathForm from "@/components/Baths/BathForm.vue";
+import BackLink from "@/components/Common/BackLink.vue";
 
 const route = useRoute();
 </script>
@@ -24,13 +25,5 @@ const route = useRoute();
 <style lang="scss" scoped>
 h1 {
   text-align: center;
-}
-.back-button {
-  text-align: center;
-  margin-top: 50px;
-  text-decoration: underline;
-  a {
-    cursor: pointer;
-  }
 }
 </style>

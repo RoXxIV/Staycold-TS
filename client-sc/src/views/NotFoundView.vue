@@ -21,7 +21,7 @@
 </template>
 
 <script setup lang="ts">
-import { useLottieOptions } from "@/helpers/useLottieOptions";
+import { useLottieOptions } from "@/composables/useLottieOptions";
 import LottieNotFound from "@/assets/lotties/not-found.json";
 
 // lottie options

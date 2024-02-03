@@ -12,8 +12,8 @@
 
 <script setup lang="ts">
 import { onMounted } from "vue";
-import { useRedirectionTimer } from "@/helpers/redirectionHelper";
-import { useLottieOptions } from "@/helpers/useLottieOptions";
+import { useRedirectionTimer } from "@/composables/useRedirectionTimer";
+import { useLottieOptions } from "@/composables/useLottieOptions";
 import loader from "@/assets/lotties/snow-loader.json";
 
 const props = defineProps({

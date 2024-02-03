@@ -1,18 +1,19 @@
 <template>
-  <!-- Dynamic link creation to bath details using bath's ID -->
+  <!-- Dynamic link to bath details using bath's ID -->
   <router-link :to="`/bath-details/${bath._id}`" tag="div" class="card">
     <div>
-      <!-- weather -->
-      <!-- Displaying weather icon. On load, handleImageLoaded is triggered -->
+      <!-- weather icon -->
+      <span v-if="isLoading">Chargement...</span>
       <img
+        v-else
+        :src="weatherIconUrl"
         class="weather-icon"
-        :src="weatherIconPath"
         alt="icone indiquant la météo"
         aria-label="Time in water"
-        @load="handleImageLoaded"
       />
     </div>
 
+    <!-- card details -->
     <ul class="card-details">
       <!-- username -->
       <li class="card-username">{{ bath.author.username }}</li>
@@ -36,11 +37,11 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from "vue";
-import { getWeatherIconPath } from "@/helpers/pathHelper";
+import { ref, watch } from "vue";
+import { useImage } from "@vueuse/core";
+import { getWeatherIconPath } from "@/helpers/getWeatherIconPath";
 import type { IBath } from "@/types/bath";
 
-// define props
 const props = defineProps({
   bath: {
     type: Object as () => IBath,
@@ -48,35 +49,28 @@ const props = defineProps({
   },
 });
 
-const emit = defineEmits(["weatherIconLoaded"]);
+const weatherIconUrl = ref("");
 
-const weatherIconPath = ref<string>("");
-const isWeatherIconLoaded = ref(false);
+// get weather icon path
+watch(
+  () => props.bath.weather,
+  async (newWeather) => {
+    const iconPath = await getWeatherIconPath(newWeather);
+    weatherIconUrl.value = iconPath;
+  },
+  { immediate: true }
+);
 
-// Emitting an event when the weather icon loads
-const handleImageLoaded = () => {
-  isWeatherIconLoaded.value = true;
-  emit("weatherIconLoaded", true);
-};
-
-// Fetching weather icon path when component mounts
-onMounted(async () => {
-  try {
-    weatherIconPath.value = await getWeatherIconPath(props.bath.weather);
-  } catch (error) {
-    console.error("Failed to load weather icon:", error);
-    // Error handling logic here
-  }
-});
+// loading state
+const { isLoading } = useImage({ src: weatherIconUrl.value });
 </script>
 
 <style scoped lang="scss">
-/* card component */
 .card {
   display: flex;
   align-items: center;
   padding: 0px 50px 0px 0px;
-  border: 2px solid var(--secondary-border);
+  border: 3px solid var(--secondary-border);
   border-radius: 0.75rem;
   background: var(--secondary-background);
   -webkit-box-shadow: 0 30px 33px -60px #000000;
@@ -103,6 +97,7 @@ onMounted(async () => {
       font-style: italic;
     }
   }
+  /* Media queries card */
   @include media-max(770px) {
     text-align: center;
     margin: 5px auto;

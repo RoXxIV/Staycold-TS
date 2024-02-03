@@ -106,8 +106,8 @@ import * as yup from "yup";
 import { useForm, useField } from "vee-validate";
 import { gsap } from "gsap";
 import { useAuthStore } from "@/stores/authStore";
-import ServerResponses from "../../components/reusable/ServerResponses.vue";
-import CustomTextInput from "@/components/forms/CustomTextInput.vue";
+import ServerResponses from "../../components/Common/ServerResponses.vue";
+import CustomTextInput from "@/components/FormInputs/CustomTextInput.vue";
 
 const authStore = useAuthStore();
 const serverErrorMessage = ref<string>("");

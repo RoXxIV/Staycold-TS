@@ -69,7 +69,7 @@ import { useForm, useField } from "vee-validate";
 import * as yup from "yup";
 import { useRouter, RouterLink } from "vue-router";
 import { useAuthStore } from "@/stores/authStore";
-import CustomTextInput from "@/components/forms/CustomTextInput.vue";
+import CustomTextInput from "@/components/FormInputs/CustomTextInput.vue";
 
 const router = useRouter();
 const authStore = useAuthStore();

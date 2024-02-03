@@ -1,13 +1,13 @@
 <template>
-  <section class="breath-link-section">
+  <aside class="breath-link-aside">
     <router-link to="/breath"><span>Respiration guidée</span></router-link>
-  </section>
+  </aside>
 </template>
 
 <script lang="ts" setup></script>
 
 <style lang="scss" scoped>
-.breath-link-section {
+.breath-link-aside {
   width: 55%;
   margin: 70px auto 50px auto;
   height: 100px;
