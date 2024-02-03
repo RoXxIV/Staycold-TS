@@ -9,6 +9,8 @@
   <RecentBaths />
   <!-- Breath link -->
   <BreathLink />
+  <!-- Advices -->
+  <Advices />
 </template>
 
 <script setup lang="ts">
@@ -17,6 +19,7 @@ import Hero from "@/components/Home/Hero.vue";
 import BannerLandscape from "@/components/Home/BannerLandscape.vue";
 import RecentBaths from "@/components/Baths/RecentBaths.vue";
 import BreathLink from "@/components/Common/BreathLink.vue";
+import Advices from "@/components/Home/Advices.vue";
 </script>
 
 <style lang="scss">
