@@ -60,7 +60,7 @@
         </div>
         <vue3-lottie
           :options="lottieSharkEatingOptions"
-          class="lottie lottie-coffee"
+          class="lottie lottie-shark-eating"
           :animationData="lottieSharkEatingOptions.animationData"
         ></vue3-lottie>
       </li>
@@ -93,6 +93,10 @@ const lottieFireOptions = useLottieOptions(fireLottie);
   h2 {
     text-align: center;
     margin-bottom: 50px;
+
+    @include media-max(611.98px) {
+      font-size: 1.5em;
+    }
   }
   /* Advices */
   ul {
@@ -104,10 +108,18 @@ const lottieFireOptions = useLottieOptions(fireLottie);
       h3 {
         color: var(--blue);
         font-size: 1.3em;
+
+        @include media-max(611.98px) {
+          font-size: 1.2em;
+        }
       }
       p {
         margin-bottom: 20px;
         line-height: 1.5em;
+
+        @include media-max(611.98px) {
+          font-size: 0.9em;
+        }
       }
       &.warm-up-advice {
         display: flex;
@@ -119,7 +131,14 @@ const lottieFireOptions = useLottieOptions(fireLottie);
         @include media-max(991.98px) {
           flex-direction: column;
           .lottie-fire {
-            max-width: 250px;
+            max-width: 150px;
+          }
+
+          @include media-max(611.98px) {
+            .lottie-fire {
+              width: 100px;
+              margin: auto;
+            }
           }
         }
 
@@ -134,15 +153,22 @@ const lottieFireOptions = useLottieOptions(fireLottie);
         flex-direction: row-reverse;
         justify-content: space-around;
         align-items: center;
-        .lottie-coffee {
+        .lottie-shark-eating {
           max-width: 150px;
           margin-right: 50px;
         }
         @include media-max(991.98px) {
           flex-direction: column;
-          .lottie-coffee {
+          .lottie-shark-eating {
             width: 150px;
             margin: auto;
+          }
+
+          @include media-max(611.98px) {
+            .lottie-shark-eating {
+              width: 95px;
+              margin: auto;
+            }
           }
         }
       }
@@ -152,6 +178,10 @@ const lottieFireOptions = useLottieOptions(fireLottie);
     @include media-max(991.98px) {
       width: 100%;
       text-align: center;
+
+      @include media-max(611.98px) {
+        width: 95%;
+      }
     }
   }
 }

@@ -43,7 +43,7 @@
         >
       </li>
       <li>
-        <router-link to="/">Mentions légales</router-link>
+        <router-link to="/legal-notices">Mentions légales</router-link>
       </li>
     </ul>
 

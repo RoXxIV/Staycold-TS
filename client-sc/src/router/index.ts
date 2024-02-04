@@ -7,6 +7,7 @@ import HomeView from "@/views/HomeView.vue";
 import NotFoundView from "../views/NotFoundView.vue";
 import ContactFormView from "@/views/ContactFormView.vue";
 import BreathView from "@/views/BreathView.vue";
+import LegalNoticesView from "@/views/LegalNoticesView.vue";
 /** Baths */
 import AllBathView from "@/views/BathView/AllBathsView.vue";
 import BathDetailsView from "@/views/BathView/BathDetailsView.vue";
@@ -114,6 +115,12 @@ const router = createRouter({
       path: "/breath",
       name: "Breath",
       component: BreathView,
+    },
+    /** Legal notices view  */
+    {
+      path: "/legal-notices",
+      name: "Legal-notices",
+      component: LegalNoticesView,
     },
     /** redirect incorrect routes to 404  */
     { path: "/:pathMatch(.*)*", name: "Not-found", component: NotFoundView },
