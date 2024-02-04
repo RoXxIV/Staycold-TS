@@ -113,6 +113,7 @@
 
 <script setup lang="ts">
 import { ref } from "vue";
+import { useTitle } from "@vueuse/core";
 import * as yup from "yup";
 import { useForm, useField } from "vee-validate";
 import ContactService from "@/services/contact-service";
@@ -121,6 +122,9 @@ import CustomTextInput from "@/components/FormInputs/CustomTextInput.vue";
 import CustomSelectInput from "@/components/FormInputs/CustomSelectInput.vue";
 import CustomTextArea from "@/components/FormInputs/CustomTextArea.vue";
 import BackLink from "@/components/Common/BackLink.vue";
+
+// Page title
+const title = useTitle("StayCold - Contactez-moi");
 
 const submited = ref<boolean>(false);
 const serverMessage = ref<string>("");

@@ -44,7 +44,8 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, computed, watchEffect } from "vue";
+import { ref, onMounted, computed } from "vue";
+import { useTitle } from "@vueuse/core";
 import router from "@/router";
 import { useAuthStore } from "@/stores/authStore";
 import RenderBathData from "@/helpers/renderBathData";
@@ -54,6 +55,9 @@ import BathCard from "@/components/Baths/BathCard.vue";
 import BathSkeleton from "@/components/Baths/BathSkeleton.vue";
 import BackLink from "@/components/Common/BackLink.vue";
 import type { IBath } from "@/types/bath";
+
+// Page title
+const title = useTitle("StayCold - Mon Profil");
 
 const authStore = useAuthStore();
 const loggedIn = computed(() => authStore.status.loggedIn);

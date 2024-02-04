@@ -15,9 +15,13 @@
 
 <script setup lang="ts">
 import { useRoute } from "vue-router";
+import { useTitle } from "@vueuse/core";
 import router from "@/router";
 import BathForm from "@/components/Baths/BathForm.vue";
 import BackLink from "@/components/Common/BackLink.vue";
+
+// Page title
+const title = useTitle("StayCold - Ajouter une baignade");
 
 const route = useRoute();
 </script>

@@ -22,7 +22,11 @@
 
 <script setup lang="ts">
 import { useLottieOptions } from "@/composables/useLottieOptions";
+import { useTitle } from "@vueuse/core";
 import LottieNotFound from "@/assets/lotties/not-found.json";
+
+// Page title
+const title = useTitle("StayCold - Page non trouvée :(");
 
 // lottie options
 const lottieOptions = useLottieOptions(LottieNotFound);

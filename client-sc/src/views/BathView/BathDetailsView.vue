@@ -79,6 +79,7 @@
 
 <script setup lang="ts">
 import { ref, onMounted, computed, watch } from "vue";
+import { useTitle } from "@vueuse/core";
 import { useRoute } from "vue-router";
 import router from "@/router";
 import { useAuthStore } from "@/stores/authStore";
@@ -91,6 +92,9 @@ import BackLink from "@/components/Common/BackLink.vue";
 import deleteLottie from "@/assets/lotties/delete.json";
 import { useLottieOptions } from "@/composables/useLottieOptions";
 import type { IBath } from "@/types/bath";
+
+// Page title
+const title = useTitle("StayCold - Détails de la baignade");
 
 const authStore = useAuthStore();
 const loggedIn = computed(() => authStore.status.loggedIn);

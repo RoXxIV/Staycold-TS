@@ -55,6 +55,7 @@
 
 <script setup lang="ts">
 import { ref, watchEffect, computed, onMounted } from "vue";
+import { useTitle } from "@vueuse/core";
 import { useRoute } from "vue-router";
 import router from "@/router";
 import { gsap } from "gsap";
@@ -64,6 +65,9 @@ import RenderBathData from "@/helpers/renderBathData";
 import BathSkeleton from "@/components/Baths/BathSkeleton.vue";
 import BackLink from "@/components/Common/BackLink.vue";
 import type { IBath } from "@/types/bath";
+
+// Page title
+const title = useTitle("StayCold - Toutes les baignades");
 
 const route = useRoute();
 

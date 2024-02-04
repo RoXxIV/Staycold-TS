@@ -58,11 +58,15 @@
 
 <script setup lang="ts">
 import { ref } from "vue";
+import { useTitle } from "@vueuse/core";
 import * as yup from "yup";
 import { useForm, useField } from "vee-validate";
 import AuthService from "@/services/auth-service";
 import ServerResponses from "@/components/Common/ServerResponses.vue";
 import CustomTextInput from "@/components/FormInputs/CustomTextInput.vue";
+
+// Page title
+const title = useTitle("StayCold - Demander un nouveau mot de passe");
 
 const successful = ref<boolean>(false);
 const serverMessage = ref<string>("");

@@ -31,7 +31,11 @@
 
 <script setup lang="ts">
 import { ref, onMounted, onBeforeUnmount } from "vue";
+import { useTitle } from "@vueuse/core";
 import BackLink from "@/components/Common/BackLink.vue";
+
+// Page title
+const title = useTitle("StayCold - Respiration guidée");
 
 const text = ref<string>("");
 const totalTime = ref<number>(12000);

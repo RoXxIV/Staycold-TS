@@ -65,7 +65,12 @@
   </section>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { useTitle } from "@vueuse/core";
+
+// Page title
+const title = useTitle("StayCold - Mentions légales");
+</script>
 
 <style lang="scss">
 .legal-notices-section {

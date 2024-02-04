@@ -102,12 +102,16 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
+import { useTitle } from "@vueuse/core";
 import * as yup from "yup";
 import { useForm, useField } from "vee-validate";
 import { gsap } from "gsap";
 import { useAuthStore } from "@/stores/authStore";
 import ServerResponses from "../../components/Common/ServerResponses.vue";
 import CustomTextInput from "@/components/FormInputs/CustomTextInput.vue";
+
+// Page title
+const title = useTitle("StayCold - Inscription");
 
 const authStore = useAuthStore();
 const serverErrorMessage = ref<string>("");

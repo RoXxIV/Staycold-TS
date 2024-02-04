@@ -29,10 +29,14 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
+import { useTitle } from "@vueuse/core";
 import { useRoute } from "vue-router";
 import router from "@/router";
 import AuthService from "@/services/auth-service";
 import ServerResponses from "@/components/Common/ServerResponses.vue";
+
+// page title
+const title = useTitle("StayCold - Confirmation de l'email");
 
 const route = useRoute();
 const isConfirmed = ref<boolean>(false);

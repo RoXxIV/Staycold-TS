@@ -65,11 +65,15 @@
 
 <script setup lang="ts">
 import { ref, type Ref } from "vue";
+import { useTitle } from "@vueuse/core";
 import { useForm, useField } from "vee-validate";
 import * as yup from "yup";
 import { useRouter, RouterLink } from "vue-router";
 import { useAuthStore } from "@/stores/authStore";
 import CustomTextInput from "@/components/FormInputs/CustomTextInput.vue";
+
+// Page title
+const title = useTitle("StayCold - Connexion");
 
 const router = useRouter();
 const authStore = useAuthStore();

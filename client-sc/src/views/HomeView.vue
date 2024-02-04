@@ -22,6 +22,7 @@
 
 <script setup lang="ts">
 import { useLottieOptions } from "@/composables/useLottieOptions";
+import { useTitle } from "@vueuse/core";
 import Banner from "@/components/Home/Banner.vue";
 import Hero from "@/components/Home/Hero.vue";
 import BannerLandscape from "@/components/Home/BannerLandscape.vue";
@@ -29,6 +30,9 @@ import RecentBaths from "@/components/Baths/RecentBaths.vue";
 import BreathLink from "@/components/Common/BreathLink.vue";
 import Advices from "@/components/Home/Advices.vue";
 import SilentShark from "@/assets/lotties/silent_shark.json";
+
+// Page title
+const title = useTitle("StayCold - Accueil");
 
 // lottie options
 const lottieSilentSharkOptions = useLottieOptions(SilentShark);
