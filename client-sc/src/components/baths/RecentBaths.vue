@@ -27,8 +27,8 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, type Ref } from "vue";
-import BathCard from "../Baths/BathCard.vue";
+import { ref, onMounted } from "vue";
+import BathCard from "@/components/Baths/BathCard.vue";
 import BathDataService from "@/services/BathDataService";
 import RenderBathData from "@/helpers/renderBathData";
 import BathSkeleton from "@/components/Baths/BathSkeleton.vue";

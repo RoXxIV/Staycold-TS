@@ -225,9 +225,9 @@ import { useRoute } from "vue-router";
 import { useAuthStore } from "@/stores/authStore";
 import BathDataService from "@/services/BathDataService";
 import CustomNumberInput from "@/components/FormInputs/CustomNumberInput.vue";
-import CustomSelectInput from "../FormInputs/CustomSelectInput.vue";
-import CustomTextArea from "../FormInputs/CustomTextArea.vue";
-import ServerResponses from "../Common/ServerResponses.vue";
+import CustomSelectInput from "@/components/FormInputs/CustomSelectInput.vue";
+import CustomTextArea from "@/components/FormInputs/CustomTextArea.vue";
+import ServerResponses from "@/components/Common/ServerResponses.vue";
 import type { IBath } from "@/types/bath";
 
 // define wether the form is in edit mode or not
@@ -350,12 +350,12 @@ const addOnSubmit = async (values: IBath) => {
     if (response.status === 201) {
       redirectionPath.value = `/bath-details/${response.data.bath._id}`;
       serverMessage.value = response.data.message;
-      isSubmited.value = true;
     }
   } catch (error) {
-    isSubmited.value = true;
     serverMessage.value =
       (error as any)?.response?.data?.message || "Une erreur est survenue";
+  } finally {
+    isSubmited.value = true;
   }
 };
 
