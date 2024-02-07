@@ -19,7 +19,7 @@
         </li>
         <li>
           Temperature de l'eau la plus froide:
-          <span>{{ lowestTemperature }}&#8451;</span>
+          <span>{{ displayLowestTemperature }}&#8451;</span>
         </li>
       </ul>
 
@@ -31,12 +31,23 @@
 </template>
 
 <script setup lang="ts">
+import { defineProps, type PropType, computed } from "vue";
+
 const props = defineProps({
   registrationDate: String,
   timeInWater: Number,
   totalBaths: Number,
-  lowestTemperature: Number,
+  lowestTemperature: {
+    type: Number as PropType<Number | null>,
+    default: null,
+  },
   username: String,
+});
+
+const displayLowestTemperature = computed(() => {
+  return props.lowestTemperature === null
+    ? "N/A"
+    : props.lowestTemperature.toString();
 });
 
 /**

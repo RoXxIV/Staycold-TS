@@ -19,15 +19,24 @@
     </div>
 
     <!-- All User baths -->
-    <div class="cards-list">
+    <div v-if="allUserBaths.length === 0" class="empty-bath-list">
+      <p>Aucune baignade enregistrée</p>
+    </div>
+    <div v-else class="cards-list">
       <BathCard
         v-for="bath in allUserBaths.slice(0, lastIndex)"
         :key="bath._id"
         :bath="bath"
       />
     </div>
+    <div v-if="allUserBaths.length === 0">
+      <button>
+        <RouterLink to="add-bath">Ajouter une baignade</RouterLink>
+      </button>
+    </div>
     <!-- display more baths -->
     <button
+      v-else
       @click="lastIndex += 4"
       :disabled="lastIndex >= allUserBaths.length"
     >
@@ -108,12 +117,14 @@ const totalBaths = computed(() => allUserBaths.value.length);
 const timeInWater = computed(() =>
   allUserBaths.value.reduce((acc, bath) => acc + bath.timeInWater, 0)
 );
-const lowestTemperature = computed(() =>
-  allUserBaths.value.reduce(
+const lowestTemperature = computed(() => {
+  if (allUserBaths.value.length === 0) return null; // Gère le cas d'un tableau vide
+
+  return allUserBaths.value.reduce(
     (acc, bath) => Math.min(acc, bath.waterTemperature),
-    100
-  )
-);
+    allUserBaths.value[0].waterTemperature // Initialise avec la première température
+  );
+});
 </script>
 
 <style lang="scss" scoped>
@@ -126,6 +137,13 @@ const lowestTemperature = computed(() =>
   .error-server {
     text-align: center;
     margin-top: 50px;
+    p {
+      font-weight: bold;
+    }
+  }
+  .empty-bath-list {
+    text-align: center;
+    margin: 50px auto;
     p {
       font-weight: bold;
     }
