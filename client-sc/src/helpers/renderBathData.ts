@@ -1,7 +1,3 @@
-/**
- * @fileoverview helper to render weather icon and date format
- */
-
 class RenderBathData {
   // select weather icon depending on weather data from the API
   displayWeatherAsEmoji(data: any) {

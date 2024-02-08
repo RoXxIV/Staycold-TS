@@ -37,10 +37,19 @@ onMounted(() => {
 
 <style scoped lang="scss">
 .server-messages {
-  margin-top: 50px;
+  margin-top: 100px;
+  width: auto;
+  margin: 100px auto;
+  padding: 30px;
+  border: 2px solid var(--secondary-border);
 
+  @include media-max(611.98px) {
+    width: 80%;
+    margin: 50px auto;
+    padding: 5px;
+  }
   .lottie {
-    max-width: 250px;
+    max-width: 150px;
   }
   p {
     text-align: center;

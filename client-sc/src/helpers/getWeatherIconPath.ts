@@ -1,9 +1,5 @@
 /**
- * @fileoverview get weather icon path from weather icon id
- */
-
-/**
- * @param weatherIconId
+ * @param weatherIconId - weather icon id
  * @returns weather icon path
  */
 export const getWeatherIconPath = async (
@@ -16,6 +12,6 @@ export const getWeatherIconPath = async (
     return module.default;
   } catch (e) {
     console.error("Erreur lors du chargement de l'icône météo", e);
-    return ""; // Retourne un chemin par défaut ou une chaîne vide si l'image n'est pas trouvée
+    return "";
   }
 };
