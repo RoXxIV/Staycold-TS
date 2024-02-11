@@ -22,6 +22,10 @@ import AddBath from "@/views/UserView/AddBath.vue";
 import EditBath from "@/views/UserView/EditBath.vue";
 import ProfileView from "@/views/UserView/ProfileView.vue";
 
+/** Admin */
+import AdminHomeView from "@/views/AdminView/AdminHomeView.vue";
+import AdminUsersList from "@/views/AdminView/AdminUsersList.vue";
+
 const pinia = createPinia();
 const AuthGuards = new authGuards(pinia);
 
@@ -121,6 +125,18 @@ const router = createRouter({
       path: "/legal-notices",
       name: "Legal-notices",
       component: LegalNoticesView,
+    },
+    /** Admin panel */
+    {
+      path: "/admin",
+      name: "Admin",
+      component: AdminHomeView,
+    },
+    /** Admin users list */
+    {
+      path: "/admin/users",
+      name: "Admin-users-list",
+      component: AdminUsersList,
     },
     /** redirect incorrect routes to 404  */
     { path: "/:pathMatch(.*)*", name: "Not-found", component: NotFoundView },
